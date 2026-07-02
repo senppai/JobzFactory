@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title — Jobz Factory Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/admin-modern.css" rel="stylesheet" />
+</head>
+<body class="jf-ad">
+    <div class="jf-ad-app">
+        <aside class="jf-ad-sidebar">
+            <a href="~/Default/Index" class="jf-ad-brand">
+                <span>JF</span> Admin
+            </a>
+
+            <ul class="jf-ad-nav">
+                <li>
+                    <a href="~/Default/Index" class="@(ViewBag.Section == "Dashboard" ? "active" : "")">
+                        <i class="fa-solid fa-gauge-high"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="~/Offre/Index" class="@(ViewBag.Section == "Offers" ? "active" : "")">
+                        <i class="fa-solid fa-briefcase"></i> Offers
+                    </a>
+                </li>
+                <li>
+                    <a href="~/Recruteur/Index" class="@(ViewBag.Section == "Recruiters" ? "active" : "")">
+                        <i class="fa-solid fa-building"></i> Recruiters
+                    </a>
+                </li>
+            </ul>
+
+            <div class="jf-ad-sidebar__footer">
+                <a href="@System.Configuration.ConfigurationManager.AppSettings["UrlMain"]" class="jf-ad-btn jf-ad-btn--ghost" style="width:100%;" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-solid fa-globe"></i> View job site
+                </a>
+                <a href="~/Account/LogOut" class="jf-ad-btn jf-ad-btn--ghost" style="width:100%;margin-top:0.5rem;">
+                    <i class="fa-solid fa-right-from-bracket"></i> Sign out
+                </a>
+            </div>
+        </aside>
+
+        <div class="jf-ad-main">
+            <main class="jf-ad-content">
+                @RenderBody()
+            </main>
+            <footer class="jf-ad-footer">
+                &copy; @DateTime.Now.Year Jobz Factory — Administration
+            </footer>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://kit.fontawesome.com/b9b5a2cd02.js" crossorigin="anonymous"></script>
+    <script>
+        (function () {
+            function initSelects() {
+                if (!window.jQuery || !jQuery.fn.select2) return;
+                jQuery('.jf-ad-select').each(function () {
+                    var $el = jQuery(this);
+                    if ($el.hasClass('select2-hidden-accessible')) return;
+                    $el.select2({ width: '100%', placeholder: $el.data('placeholder') || 'Select…', allowClear: true, minimumResultsForSearch: 0 });
+                });
+            }
+            jQuery(initSelects);
+        })();
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

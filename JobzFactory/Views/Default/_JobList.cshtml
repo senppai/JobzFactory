@@ -1,0 +1,92 @@
+@using PagedList;
+@using PagedList.Mvc;
+@using JF.DAL.Context;
+
+@model PagedList.IPagedList<Offre>
+@{
+    var currentPage = Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber;
+    var search = ViewBag.Search as string ?? string.Empty;
+    var city = ViewBag.City as int?;
+    var sector = ViewBag.Sector as int?;
+    var hasFilters = !string.IsNullOrWhiteSpace(search) || city.HasValue || sector.HasValue;
+}
+
+<div id="job-list-results"
+     class="jf-job-list-results"
+     data-page="@currentPage"
+     data-page-count="@Model.PageCount"
+     data-on-page="@Model.Count"
+     data-total="@Model.TotalItemCount">
+
+    @if (Model.Any())
+    {
+        <div class="jf-jobs__grid">
+            @foreach (var item in Model)
+            {
+                var isConfidential = item.isConfidentiel.GetValueOrDefault();
+                var companyName = isConfidential || item.Recruteur == null ? "Confidential" : item.Recruteur.nomRecruteur;
+                var companyInitial = string.IsNullOrEmpty(companyName) ? "?" : companyName.Substring(0, 1);
+                var sectorName = item.SecteurActivite != null ? item.SecteurActivite.SecteurActivite1 : "General";
+                var cityName = item.Ville != null ? item.Ville.ville1 : "Morocco";
+                var countryName = item.Ville != null && item.Ville.Pays != null ? item.Ville.Pays.pays1 : "Morocco";
+
+                <article class="jf-job-card">
+                    <div class="jf-job-card__avatar" aria-hidden="true">@companyInitial</div>
+                    <div class="jf-job-card__body">
+                        <div class="jf-job-card__top">
+                            <h3 class="jf-job-card__title">@item.titreOffre</h3>
+                            <span class="jf-job-card__badge">@sectorName</span>
+                        </div>
+                        <div class="jf-job-card__meta">
+                            <span>
+                                <span class="icon-layers"></span>
+                                @if (isConfidential || item.Recruteur == null)
+                                {
+                                    <span>Confidential employer</span>
+                                }
+                                else
+                                {
+                                    <a href="~/Recruteur/@item.Recruteur.url">@item.Recruteur.nomRecruteur</a>
+                                }
+                            </span>
+                            <span>
+                                <span class="icon-my_location"></span>
+                                @cityName, @countryName
+                            </span>
+                        </div>
+                    </div>
+                    <div class="jf-job-card__action">
+                        <a href="~/job/@item.url" class="jf-btn jf-btn--primary">View &amp; Apply</a>
+                    </div>
+                </article>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="jf-empty">
+            <div class="jf-empty__icon"><span class="icon-search"></span></div>
+            <h3>No jobs found</h3>
+            <p>@(hasFilters ? "Try adjusting your search or filters." : "Check back soon — new opportunities are added regularly.")</p>
+        </div>
+    }
+
+    @if (Model.PageCount > 1)
+    {
+        <nav class="jf-pagination" aria-label="Job listings pagination">
+            <p class="jf-pagination__info" id="jf-pagination-info">
+                Showing @Model.Count of @Model.TotalItemCount — Page @currentPage of @Model.PageCount
+            </p>
+            @Html.PagedListPager(
+                Model,
+                page => Url.Action("Index", "Default", new { page = page, search = search, city = city, sector = sector }),
+                new PagedListRenderOptions { LiElementClasses = new[] { "jf-page-item" } })
+        </nav>
+    }
+    else if (Model.TotalItemCount > 0)
+    {
+        <p class="jf-pagination__info" id="jf-pagination-info">
+            Showing @Model.TotalItemCount job@(Model.TotalItemCount == 1 ? "" : "s")
+        </p>
+    }
+</div>

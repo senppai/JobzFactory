@@ -1,0 +1,60 @@
+﻿@model IEnumerable<JF.DAL.Context.Recruteur>
+@{
+    ViewBag.Title = "Recruiters";
+    ViewBag.Section = "Recruiters";
+}
+
+<div class="jf-ad-header">
+    <div>
+        <h1>Recruiters</h1>
+        <p>Manage employer accounts and company profiles.</p>
+    </div>
+    <a href="~/Recruteur/Create" class="jf-ad-btn jf-ad-btn--primary"><i class="fa-solid fa-plus"></i> New recruiter</a>
+</div>
+
+<div class="jf-ad-card jf-ad-card--flush">
+    @if (!Model.Any())
+    {
+        <div class="jf-ad-empty">
+            <h2>No recruiters yet</h2>
+            <p>Add a recruiter account to associate with job offers.</p>
+            <a href="~/Recruteur/Create" class="jf-ad-btn jf-ad-btn--primary">Add recruiter</a>
+        </div>
+    }
+    else
+    {
+        <div class="jf-ad-table-wrap">
+            <table class="jf-ad-table">
+                <thead>
+                    <tr>
+                        <th>Company</th>
+                        <th>Email</th>
+                        <th>Website</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <a href="@Url.Action("Details", new { id = item.id })">@item.nomRecruteur</a>
+                            </td>
+                            <td>@(string.IsNullOrWhiteSpace(item.adresseMail) ? "—" : item.adresseMail)</td>
+                            <td>@(string.IsNullOrWhiteSpace(item.siteweb) ? "—" : item.siteweb)</td>
+                            <td>@item.dateCreation.ToString("d")</td>
+                            <td>
+                                <div class="jf-ad-row-actions">
+                                    <a href="@Url.Action("Edit", new { id = item.id })"><i class="fa-solid fa-pen"></i> Edit</a>
+                                    <a href="@Url.Action("Details", new { id = item.id })"><i class="fa-solid fa-eye"></i> Details</a>
+                                    <a href="@Url.Action("Delete", new { id = item.id })" class="jf-ad-row-actions__danger"><i class="fa-solid fa-trash"></i> Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

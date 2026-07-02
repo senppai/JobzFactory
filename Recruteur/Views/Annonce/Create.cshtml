@@ -1,0 +1,130 @@
+@model JF.DAL.Context.Offre
+@{
+    ViewBag.Title = "New offer";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+
+<div class="jf-rc-header">
+    <div>
+        <h1>Create a new offer</h1>
+        <p>Publish a professional job listing on Jobz Factory.</p>
+    </div>
+    <a href="~/Annonce/Index" class="jf-rc-btn jf-rc-btn--ghost"><i class="fa-solid fa-arrow-left"></i> Back to list</a>
+</div>
+
+<div class="jf-rc-create-layout">
+    <div class="jf-rc-card jf-rc-form jf-rc-create-form">
+        @using (Html.BeginForm("Create", "Annonce", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "jf-rc-form-error" })
+
+            <section class="jf-rc-form-section">
+                <div class="jf-rc-form-section__head">
+                    <span class="jf-rc-form-section__icon"><i class="fa-solid fa-briefcase"></i></span>
+                    <div>
+                        <h2>Basic information</h2>
+                        <p>Give your role a clear, searchable title.</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="titreOffre">Job title</label>
+                    @Html.EditorFor(model => model.titreOffre, new { htmlAttributes = new { @class = "form-control", id = "titreOffre", placeholder = "e.g. Senior Software Engineer" } })
+                </div>
+            </section>
+
+            <section class="jf-rc-form-section">
+                <div class="jf-rc-form-section__head">
+                    <span class="jf-rc-form-section__icon"><i class="fa-solid fa-align-left"></i></span>
+                    <div>
+                        <h2>Job description</h2>
+                        <p>Describe responsibilities, requirements, and benefits.</p>
+                    </div>
+                </div>
+                <div class="form-group jf-rc-editor-wrap">
+                    <label for="RichBox">Description</label>
+                    @Html.TextAreaFor(model => model.message, new { @class = "form-control", id = "RichBox" })
+                </div>
+            </section>
+
+            <section class="jf-rc-form-section">
+                <div class="jf-rc-form-section__head">
+                    <span class="jf-rc-form-section__icon"><i class="fa-solid fa-location-dot"></i></span>
+                    <div>
+                        <h2>Location &amp; contact</h2>
+                        <p>Where is the role based and how should candidates reach you?</p>
+                    </div>
+                </div>
+                <div class="jf-rc-form-grid jf-rc-form-grid--3">
+                    <div class="form-group">
+                        <label for="C_idSecteurActivite">Sector</label>
+                        @Html.DropDownList("C_idSecteurActivite", null, "Search or select sector…", htmlAttributes: new { @class = "form-control jf-rc-select", data_placeholder = "Search or select sector…", data_search_placeholder = "Type to search sectors…" })
+                    </div>
+                    <div class="form-group">
+                        <label for="C_idVille">City</label>
+                        @Html.DropDownList("C_idVille", null, "Search or select city…", htmlAttributes: new { @class = "form-control jf-rc-select", data_placeholder = "Search or select city…", data_search_placeholder = "Type to search cities…" })
+                    </div>
+                    <div class="form-group">
+                        <label for="adresseMailAPostuler">Application email</label>
+                        @Html.EditorFor(model => model.adresseMailAPostuler, new { htmlAttributes = new { @class = "form-control", id = "adresseMailAPostuler", type = "email", placeholder = "careers@company.com" } })
+                    </div>
+                </div>
+            </section>
+
+            <div class="jf-rc-form-footer">
+                <p><i class="fa-solid fa-circle-info"></i> New offers are saved as <strong>drafts</strong> until you publish them.</p>
+                <div class="jf-rc-form-footer__actions">
+                    <a href="~/Annonce/Index" class="jf-rc-btn jf-rc-btn--ghost">Cancel</a>
+                    <button type="submit" class="jf-rc-btn jf-rc-btn--primary"><i class="fa-solid fa-paper-plane"></i> Create offer</button>
+                </div>
+            </div>
+        }
+    </div>
+
+    <aside class="jf-rc-create-aside">
+        <div class="jf-rc-sidebar-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> Tips for a great listing</h3>
+            <ul class="jf-rc-tips-list">
+                <li>Use a specific job title candidates would search for.</li>
+                <li>Include must-have skills and nice-to-have extras.</li>
+                <li>Mention salary range or benefits when possible.</li>
+                <li>Keep the description scannable with bullet points.</li>
+            </ul>
+        </div>
+
+        <div class="jf-rc-sidebar-card">
+            <h3><i class="fa-solid fa-route"></i> What happens next?</h3>
+            <ol class="jf-rc-steps-list">
+                <li>Your offer is created as a draft.</li>
+                <li>Review it from the offers board.</li>
+                <li>Publish when you're ready to go live.</li>
+                <li>Track applications in the Candidates tab.</li>
+            </ol>
+        </div>
+    </aside>
+</div>
+
+@section scripts {
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <script>
+        $('#RichBox').summernote({
+            placeholder: 'Describe the role, requirements, and benefits…',
+            tabsize: 2,
+            height: 240,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link']],
+                ['view', ['fullscreen', 'codeview']]
+            ]
+        });
+
+        if (window.jfRcInitSelects) {
+            window.jfRcInitSelects();
+        }
+    </script>
+}

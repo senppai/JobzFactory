@@ -1,0 +1,36 @@
+@{
+    Layout = null;
+    ViewBag.Title = "Check your email";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jobz Factory — Check your email</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="@Url.Content("~/css/signup-modern.css")" rel="stylesheet" />
+</head>
+<body>
+    <section class="jf-status">
+        <div class="jf-status__card">
+            <div class="jf-status__icon jf-status__icon--mail" aria-hidden="true">&#9993;</div>
+            <h1 class="jf-status__title">Thanks for signing up!</h1>
+            <p class="jf-status__text">
+                Your profile has been created. Please confirm your email address so we can send you the latest job offers matched to your profile.
+            </p>
+            <p class="jf-status__text" style="font-size:0.85rem;">
+                Check your inbox (and spam folder) for the verification link.
+            </p>
+            @if (TempData["EmailWarning"] != null)
+            {
+                <p class="jf-status__text" style="color:#dc2626;font-size:0.85rem;">@TempData["EmailWarning"]</p>
+            }
+            <div class="jf-status__actions">
+                <a href="~/" class="jf-btn jf-btn--primary">Back to home</a>
+                <a href="~/#jobs" class="jf-btn jf-btn--ghost">Browse jobs</a>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

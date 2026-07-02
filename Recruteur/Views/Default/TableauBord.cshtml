@@ -1,0 +1,136 @@
+﻿@using System.Linq
+@model Recruteur.Models.DashboardViewModel
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<div class="jf-rc-header">
+    <div>
+        <h1>Welcome back, @Model.RecruiterName.Split(' ')[0]</h1>
+        <p>Here's what's happening with your recruitment today.</p>
+    </div>
+    <a href="~/Annonce/Create" class="jf-rc-btn jf-rc-btn--primary"><i class="fa-solid fa-plus"></i> New offer</a>
+</div>
+
+<div class="jf-rc-stat-grid">
+    <div class="jf-rc-stat jf-rc-stat--indigo">
+        <i class="fa-solid fa-briefcase jf-rc-stat__icon"></i>
+        <strong>@Model.TotalOffers</strong>
+        <span>Total offers</span>
+    </div>
+    <div class="jf-rc-stat jf-rc-stat--green">
+        <i class="fa-solid fa-circle-check jf-rc-stat__icon"></i>
+        <strong>@Model.PublishedOffers</strong>
+        <span>Published</span>
+    </div>
+    <div class="jf-rc-stat jf-rc-stat--amber">
+        <i class="fa-solid fa-file-pen jf-rc-stat__icon"></i>
+        <strong>@Model.DraftOffers</strong>
+        <span>Drafts</span>
+    </div>
+    <div class="jf-rc-stat jf-rc-stat--teal">
+        <i class="fa-solid fa-users jf-rc-stat__icon"></i>
+        <strong>@Model.TotalApplications</strong>
+        <span>Applications</span>
+    </div>
+</div>
+
+<div class="jf-rc-dashboard-grid">
+    <div class="jf-rc-card">
+        <div class="jf-rc-card__header">
+            <h2>Recent offers</h2>
+            <a href="~/Annonce/Index" class="jf-rc-card__link">View all</a>
+        </div>
+
+        @if (!Model.RecentOffers.Any())
+        {
+            <div class="jf-rc-empty jf-rc-empty--compact">
+                <p>No offers yet. Create your first job listing to get started.</p>
+                <a href="~/Annonce/Create" class="jf-rc-btn jf-rc-btn--primary"><i class="fa-solid fa-plus"></i> Create offer</a>
+            </div>
+        }
+        else
+        {
+            <div class="jf-rc-table-wrap">
+                <table class="jf-rc-table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>City</th>
+                            <th>Status</th>
+                            <th>Apps</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var offer in Model.RecentOffers)
+                        {
+                            <tr>
+                                <td><a href="@Url.Action("Board", "Annonce", new { id = offer.Id })">@offer.Title</a></td>
+                                <td>@offer.City</td>
+                                <td>
+                                    @if (offer.IsPublished)
+                                    {
+                                        <span class="jf-rc-badge jf-rc-badge--live">Live</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="jf-rc-badge jf-rc-badge--draft">Draft</span>
+                                    }
+                                </td>
+                                <td>@offer.ApplicationCount</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+
+    <div class="jf-rc-card">
+        <div class="jf-rc-card__header">
+            <h2>Recent applications</h2>
+        </div>
+
+        @if (!Model.RecentApplications.Any())
+        {
+            <div class="jf-rc-empty jf-rc-empty--compact">
+                <p>No applications received yet. Publish an offer to start attracting candidates.</p>
+            </div>
+        }
+        else
+        {
+            <ul class="jf-rc-feed">
+                @foreach (var app in Model.RecentApplications)
+                {
+                    <li class="jf-rc-feed__item">
+                        <div class="jf-rc-feed__avatar">@(string.IsNullOrWhiteSpace(app.CandidateName) ? "?" : app.CandidateName.Trim().Substring(0, 1))</div>
+                        <div class="jf-rc-feed__content">
+                            <strong>@app.CandidateName</strong>
+                            <p>Applied to <a href="@Url.Action("Board", "Annonce", new { id = app.OfferId })">@app.OfferTitle</a></p>
+                            <span class="jf-rc-feed__time">@app.AppliedAt.ToString("g")</span>
+                        </div>
+                        <a href="@(System.Configuration.ConfigurationManager.AppSettings["UrlMain"])job/cv/@app.Id" class="jf-rc-btn jf-rc-btn--ghost" target="_blank" rel="noopener noreferrer" style="font-size:0.8rem;padding:0.45rem 0.75rem;">CV</a>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+</div>
+
+<div class="jf-rc-card jf-rc-quick-actions">
+    <h2>Quick actions</h2>
+    <div class="jf-rc-quick-actions__grid">
+        <a href="~/Annonce/Create" class="jf-rc-quick-action">
+            <i class="fa-solid fa-plus"></i>
+            <span>Create offer</span>
+        </a>
+        <a href="~/Annonce/Index" class="jf-rc-quick-action">
+            <i class="fa-solid fa-list"></i>
+            <span>Manage offers</span>
+        </a>
+        <a href="@System.Configuration.ConfigurationManager.AppSettings["UrlMain"]" class="jf-rc-quick-action" target="_blank" rel="noopener noreferrer">
+            <i class="fa-solid fa-globe"></i>
+            <span>View job site</span>
+        </a>
+    </div>
+</div>

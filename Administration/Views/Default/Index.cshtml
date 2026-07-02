@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    ViewBag.Section = "Dashboard";
+}
+
+<div class="jf-ad-header">
+    <div>
+        <h1>Administration</h1>
+        <p>Manage job offers and recruiter accounts across the platform.</p>
+    </div>
+</div>
+
+<div class="jf-ad-stat-grid">
+    <div class="jf-ad-stat">
+        <strong>@ViewBag.OfferCount</strong>
+        <span>Total offers</span>
+    </div>
+    <div class="jf-ad-stat">
+        <strong>@ViewBag.PublishedCount</strong>
+        <span>Published</span>
+    </div>
+    <div class="jf-ad-stat">
+        <strong>@ViewBag.RecruiterCount</strong>
+        <span>Recruiters</span>
+    </div>
+</div>
+
+<div class="jf-ad-card">
+    <h2 style="margin:0 0 1rem;font-size:1.05rem;font-weight:700;">Quick actions</h2>
+    <div class="jf-ad-actions">
+        <a href="~/Offre/Index" class="jf-ad-action">
+            <i class="fa-solid fa-list"></i>
+            <span>Manage offers</span>
+        </a>
+        <a href="~/Offre/Create" class="jf-ad-action">
+            <i class="fa-solid fa-plus"></i>
+            <span>Create offer</span>
+        </a>
+        <a href="~/Recruteur/Index" class="jf-ad-action">
+            <i class="fa-solid fa-building"></i>
+            <span>Manage recruiters</span>
+        </a>
+        <a href="~/Recruteur/Create" class="jf-ad-action">
+            <i class="fa-solid fa-user-plus"></i>
+            <span>Add recruiter</span>
+        </a>
+    </div>
+</div>

@@ -1,0 +1,106 @@
+﻿@model JF.DAL.Context.Profil
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Profil</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.prenom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.prenom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dateNaissance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dateNaissance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.adresseMail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.adresseMail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.gsm)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.gsm)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dateCreation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dateCreation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.titre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.titre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.adresse)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.adresse)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SecteurActivite.SecteurActivite1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SecteurActivite.SecteurActivite1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ville.ville1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ville.ville1)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,43 @@
+﻿@model JF.DAL.Context.Recruteur
+@{
+    ViewBag.Title = "Delete recruiter";
+    ViewBag.Section = "Recruiters";
+}
+
+<div class="jf-ad-header">
+    <div>
+        <h1>Delete recruiter</h1>
+        <p>This action cannot be undone.</p>
+    </div>
+</div>
+
+<div class="jf-ad-card">
+    <div class="jf-ad-alert jf-ad-alert--danger">
+        <strong>Are you sure you want to delete this recruiter?</strong>
+        <p style="margin:0.5rem 0 0;">"@Model.nomRecruteur" and associated offers may be affected.</p>
+    </div>
+
+    <dl class="jf-ad-details">
+        <div class="jf-ad-detail">
+            <dt>Company name</dt>
+            <dd>@Model.nomRecruteur</dd>
+        </div>
+        <div class="jf-ad-detail">
+            <dt>Email</dt>
+            <dd>@(string.IsNullOrWhiteSpace(Model.adresseMail) ? "—" : Model.adresseMail)</dd>
+        </div>
+        <div class="jf-ad-detail">
+            <dt>Website</dt>
+            <dd>@(string.IsNullOrWhiteSpace(Model.siteweb) ? "—" : Model.siteweb)</dd>
+        </div>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="jf-ad-form-actions">
+            <button type="submit" class="jf-ad-btn jf-ad-btn--danger"><i class="fa-solid fa-trash"></i> Delete permanently</button>
+            <a href="~/Recruteur/Index" class="jf-ad-btn jf-ad-btn--ghost">Cancel</a>
+        </div>
+    }
+</div>

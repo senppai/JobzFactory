@@ -1,0 +1,27 @@
+@{
+    Layout = null;
+    ViewBag.Title = "Check your email";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jobz Factory — Check your email</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="@Url.Content("~/css/signup-modern.css")" rel="stylesheet" />
+</head>
+<body>
+    <section class="jf-status">
+        <div class="jf-status__card">
+            <div class="jf-status__icon jf-status__icon--mail" aria-hidden="true">&#9993;</div>
+            <h1 class="jf-status__title">Check your email</h1>
+            <p class="jf-status__text">If an account exists for that email address, we've sent a password reset link. Check your inbox (and spam folder).</p>
+            <div class="jf-status__actions" style="margin-top:1.5rem;">
+                <a href="@Url.Action("Login","Account")" class="jf-btn jf-btn--primary">Back to sign in</a>
+                <a href="~/" class="jf-btn jf-btn--ghost">Back to home</a>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

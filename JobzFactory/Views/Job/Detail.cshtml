@@ -1,0 +1,104 @@
+@using JF.DAL.Security
+@model JF.DAL.Context.Offre
+@{
+    ViewBag.Title = Model.titreOffre;
+    var isConfidential = Model.isConfidentiel.GetValueOrDefault();
+    var sectorName = Model.SecteurActivite != null ? Model.SecteurActivite.SecteurActivite1 : "General";
+    var cityName = Model.Ville != null ? Model.Ville.ville1 : "Morocco";
+    var countryName = Model.Ville != null && Model.Ville.Pays != null ? Model.Ville.Pays.pays1 : "Morocco";
+    var companyName = isConfidential || Model.Recruteur == null ? "Confidential employer" : Model.Recruteur.nomRecruteur;
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="~/css/job-modern.css" rel="stylesheet" />
+
+<div class="jf-job-page">
+
+    <section class="jf-job-hero">
+        <div class="container">
+            <nav class="jf-job-hero__breadcrumb" aria-label="Breadcrumb">
+                <a href="~/">Home</a>
+                <span class="icon-ios-arrow-forward"></span>
+                <a href="~/#jobs">Jobs</a>
+                <span class="icon-ios-arrow-forward"></span>
+                <span>@Model.titreOffre</span>
+            </nav>
+            <h1 class="jf-job-hero__title">@Model.titreOffre</h1>
+            <div class="jf-job-hero__meta">
+                <span class="jf-job-hero__badge">@sectorName</span>
+                <span><span class="icon-layers"></span> @companyName</span>
+                <span><span class="icon-my_location"></span> @cityName, @countryName</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="jf-job-body">
+        <div class="container">
+            <div class="jf-job-layout">
+
+                <div class="jf-job-card-panel">
+                    <h2>Job description</h2>
+                    <div class="jf-job-description">
+                        @Html.Sanitize(Model.message)
+                    </div>
+                </div>
+
+                <aside class="jf-job-sidebar">
+                    <div class="jf-job-card-panel">
+                        <h3>Job overview</h3>
+
+                        <div class="jf-job-sidebar__item">
+                            <span class="jf-job-sidebar__icon"><span class="icon-briefcase"></span></span>
+                            <div>
+                                <div class="jf-job-sidebar__label">Position</div>
+                                <div class="jf-job-sidebar__value">@Model.titreOffre</div>
+                            </div>
+                        </div>
+
+                        <div class="jf-job-sidebar__item">
+                            <span class="jf-job-sidebar__icon"><span class="icon-layers"></span></span>
+                            <div>
+                                <div class="jf-job-sidebar__label">Company</div>
+                                <div class="jf-job-sidebar__value">
+                                    @if (isConfidential || Model.Recruteur == null)
+                                    {
+                                        <span>Confidential</span>
+                                    }
+                                    else
+                                    {
+                                        <a href="~/Recruteur/@Model.Recruteur.url">@Model.Recruteur.nomRecruteur</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="jf-job-sidebar__item">
+                            <span class="jf-job-sidebar__icon"><span class="icon-my_location"></span></span>
+                            <div>
+                                <div class="jf-job-sidebar__label">Location</div>
+                                <div class="jf-job-sidebar__value">@cityName, @countryName</div>
+                            </div>
+                        </div>
+
+                        @if (!isConfidential && Model.Recruteur != null)
+                        {
+                            <div class="jf-job-sidebar__item">
+                                <span class="jf-job-sidebar__icon"><span class="icon-envelope"></span></span>
+                                <div>
+                                    <div class="jf-job-sidebar__label">Contact</div>
+                                    <div class="jf-job-sidebar__value">
+                                        <a href="mailto:@Model.Recruteur.adresseMail">@Model.Recruteur.adresseMail</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <a href="~/Apply/@Model.url" class="jf-btn jf-btn--primary">Apply for this job</a>
+                    </div>
+                </aside>
+
+            </div>
+        </div>
+    </section>
+
+</div>

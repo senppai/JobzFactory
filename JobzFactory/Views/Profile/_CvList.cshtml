@@ -1,0 +1,34 @@
+@model IEnumerable<JF.DAL.Context.Profil_CV>
+@{
+    var profilId = (int)ViewBag.ProfilId;
+}
+@if (!Model.Any())
+{
+    <p class="jf-empty">You haven't uploaded any CV yet. Add one to apply faster.</p>
+}
+else
+{
+    foreach (var cv in Model.OrderByDescending(c => c.DateCreation))
+    {
+        <div class="jf-cv-item">
+            <div class="jf-cv-item__icon"><span class="icon-file-text"></span></div>
+            <div class="jf-cv-item__info">
+                <div class="jf-cv-item__name">@cv.nomCV</div>
+                <div class="jf-cv-item__meta">Added @cv.DateCreation.ToString("dd MMM yyyy")</div>
+            </div>
+            <div class="jf-cv-item__actions">
+                <a href="@Url.Action("DownloadCv","Profile",new{id=cv.id})" class="jf-icon-btn" title="Download" aria-label="Download">
+                    <span class="icon-download"></span>
+                </a>
+                @using (Html.BeginForm("DeleteCv", "Profile", FormMethod.Post, new { @style = "display:inline;" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@cv.id" />
+                    <button type="submit" class="jf-icon-btn jf-icon-btn--danger" title="Delete" aria-label="Delete" onclick="return confirm('Delete this CV?');">
+                        <span class="icon-trash"></span>
+                    </button>
+                }
+            </div>
+        </div>
+    }
+}

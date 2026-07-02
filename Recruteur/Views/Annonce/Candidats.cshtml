@@ -1,0 +1,48 @@
+@using Recruteur.Models
+@model JF.DAL.Context.Offre
+@{
+    ViewBag.Title = "Candidates — " + Model.titreOffre;
+}
+
+<div class="jf-rc-header">
+    <div>
+        <h1>Candidates</h1>
+        <p>@Model.titreOffre · @Model.Offre_Postuler.Count application@(Model.Offre_Postuler.Count == 1 ? "" : "s")</p>
+    </div>
+    <a href="@Url.Action("Board", new { id = Model.id })" class="jf-rc-btn jf-rc-btn--ghost">← Back to offer</a>
+</div>
+
+<div class="jf-rc-card" style="padding:0;overflow:hidden;">
+    @if (!Model.Offre_Postuler.Any())
+    {
+        <div class="jf-rc-empty"><p>No applications received yet.</p></div>
+    }
+    else
+    {
+        <div class="jf-rc-table-wrap">
+            <table class="jf-rc-table">
+                <thead>
+                    <tr>
+                        <th>Last name</th>
+                        <th>First name</th>
+                        <th>Date</th>
+                        <th>CV</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Offre_Postuler)
+                    {
+                        <tr>
+                            <td>@item.Profil.nom</td>
+                            <td>@item.Profil.prenom</td>
+                            <td>@item.DatePostuler</td>
+                            <td>
+                                <a href="@CvLinkHelper.Build(item.id)" target="_blank" rel="noopener noreferrer">View CV</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

@@ -1,0 +1,50 @@
+@{
+    Layout = null;
+    ViewBag.Title = "Email verified";
+    string email = ViewBag.adresseMail as string;
+    string firstname = ViewBag.firstname as string;
+    string lastname = ViewBag.lastname as string;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jobz Factory — Email verified</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="@Url.Content("~/css/signup-modern.css")" rel="stylesheet" />
+</head>
+<body>
+    <section class="jf-status">
+        <div class="jf-status__card">
+            @if (ViewBag.Expired != null && (bool)ViewBag.Expired)
+            {
+                <div class="jf-status__icon" aria-hidden="true" style="color:#dc2626;">!</div>
+                <h1 class="jf-status__title">Link expired</h1>
+                <p class="jf-status__text">This activation link has expired. Please register again to receive a new one.</p>
+                <div class="jf-status__actions">
+                    <a href="@Url.Action("Register", "SignUp")" class="jf-btn jf-btn--primary">Register again</a>
+                    <a href="~/" class="jf-btn jf-btn--ghost">Back to home</a>
+                </div>
+            }
+            else
+            {
+                <div class="jf-status__icon" aria-hidden="true">&#10003;</div>
+                <h1 class="jf-status__title">Thank you, @(firstname) @(lastname)!</h1>
+                <p class="jf-status__text">Your email address has been successfully verified.</p>
+                if (!string.IsNullOrEmpty(email))
+                {
+                    <span class="jf-status__email">@email</span>
+                }
+                <p class="jf-status__text">
+                    You're all set. We'll notify you when new opportunities match your profile.
+                </p>
+                <div class="jf-status__actions">
+                    <a href="@Url.Action("Login","Account")" class="jf-btn jf-btn--primary">Go to login</a>
+                    <a href="~/" class="jf-btn jf-btn--ghost">Back to home</a>
+                </div>
+            }
+        </div>
+    </section>
+</body>
+</html>

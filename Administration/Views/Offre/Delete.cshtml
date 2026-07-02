@@ -1,0 +1,47 @@
+﻿@model JF.DAL.Context.Offre
+@{
+    ViewBag.Title = "Delete offer";
+    ViewBag.Section = "Offers";
+}
+
+<div class="jf-ad-header">
+    <div>
+        <h1>Delete offer</h1>
+        <p>This action cannot be undone.</p>
+    </div>
+</div>
+
+<div class="jf-ad-card">
+    <div class="jf-ad-alert jf-ad-alert--danger">
+        <strong>Are you sure you want to delete this offer?</strong>
+        <p style="margin:0.5rem 0 0;">"@Model.titreOffre" and its related data will be permanently removed.</p>
+    </div>
+
+    <dl class="jf-ad-details">
+        <div class="jf-ad-detail">
+            <dt>Title</dt>
+            <dd>@Model.titreOffre</dd>
+        </div>
+        <div class="jf-ad-detail">
+            <dt>Recruiter</dt>
+            <dd>@(Model.Recruteur != null ? Model.Recruteur.nomRecruteur : "—")</dd>
+        </div>
+        <div class="jf-ad-detail">
+            <dt>City</dt>
+            <dd>@(Model.Ville != null ? Model.Ville.ville1 : "—")</dd>
+        </div>
+        <div class="jf-ad-detail">
+            <dt>Sector</dt>
+            <dd>@(Model.SecteurActivite != null ? Model.SecteurActivite.SecteurActivite1 : "—")</dd>
+        </div>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="jf-ad-form-actions">
+            <button type="submit" class="jf-ad-btn jf-ad-btn--danger"><i class="fa-solid fa-trash"></i> Delete permanently</button>
+            <a href="~/Offre/Index" class="jf-ad-btn jf-ad-btn--ghost">Cancel</a>
+        </div>
+    }
+</div>

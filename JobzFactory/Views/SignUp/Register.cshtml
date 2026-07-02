@@ -1,0 +1,85 @@
+@model JobzFactory.Models.SignUpModel
+@{
+    Layout = null;
+    ViewBag.Title = "Create your profile";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jobz Factory — Create your profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="@Url.Content("~/css/signup-modern.css")" rel="stylesheet" />
+</head>
+<body>
+    <section class="jf-auth">
+        <div class="jf-auth__brand">
+            <div class="jf-auth__brand-content">
+                <a href="~/" class="jf-auth__logo">
+                    <span>JF</span> Jobz Factory
+                </a>
+                <h2>Your dream job <span>is waiting</span></h2>
+                <p>
+                    Create your free profile to receive tailored job offers, apply faster, and get noticed by top employers across Morocco.
+                </p>
+                <ul class="jf-auth__features">
+                    <li><span>&#10003;</span> Free profile — no credit card required</li>
+                    <li><span>&#10003;</span> Get matched with relevant openings</li>
+                    <li><span>&#10003;</span> Apply to jobs in just a few clicks</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="jf-auth__form-side">
+            <div class="jf-auth__form-wrap">
+                <div class="jf-auth__form-header">
+                    <h1>Join Jobz Factory</h1>
+                    <p>Fill in your details below — it only takes a minute.</p>
+                </div>
+
+                @using (Html.BeginForm("Register", "SignUp", FormMethod.Post, new { @class = "jf-auth__form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "jf-auth__error" })
+
+                    <div class="form-group">
+                        <label for="prenom">First name</label>
+                        @Html.EditorFor(model => model.prenom, new { htmlAttributes = new { @class = "form-control", @id = "prenom", @placeholder = "First name", @required = "required" } })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nom">Last name</label>
+                        @Html.EditorFor(model => model.nom, new { htmlAttributes = new { @class = "form-control", @id = "nom", @placeholder = "Last name", @required = "required" } })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="adresseMail">Email address</label>
+                        @Html.EditorFor(model => model.adresseMail, new { htmlAttributes = new { @class = "form-control", @id = "adresseMail", @type = "email", @placeholder = "you@email.com", @required = "required", @autocomplete = "email" } })
+                        @Html.ValidationMessageFor(model => model.adresseMail, "", new { @class = "jf-auth__error" })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="motPasse">Password</label>
+                        @Html.EditorFor(model => model.motPasse, new { htmlAttributes = new { @class = "form-control", @id = "motPasse", @placeholder = "At least 8 characters", @required = "required", @autocomplete = "new-password" } })
+                        @Html.ValidationMessageFor(model => model.motPasse, "", new { @class = "jf-auth__error" })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmMotPasse">Confirm password</label>
+                        @Html.EditorFor(model => model.confirmMotPasse, new { htmlAttributes = new { @class = "form-control", @id = "confirmMotPasse", @placeholder = "Re-enter your password", @required = "required", @autocomplete = "new-password" } })
+                        @Html.ValidationMessageFor(model => model.confirmMotPasse, "", new { @class = "jf-auth__error" })
+                    </div>
+
+                    <button class="jf-btn jf-btn--primary" type="submit">Create my profile</button>
+                }
+
+                <div class="jf-auth__footer">
+                    <p>Already have a profile? <a href="@Url.Action("Login","Account")">Sign in</a></p>
+                    <p style="margin-top:1rem;">&copy; @DateTime.Now.Year Jobz Factory. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

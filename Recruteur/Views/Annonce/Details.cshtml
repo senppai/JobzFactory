@@ -1,0 +1,47 @@
+@using JF.DAL.Security
+@model JF.DAL.Context.Offre
+@{
+    ViewBag.Title = Model.titreOffre;
+}
+
+<div class="jf-rc-header">
+    <div>
+        <h1>@Model.titreOffre</h1>
+        <p>@(Model.Ville != null ? Model.Ville.ville1 : "—") · @(Model.SecteurActivite != null ? Model.SecteurActivite.SecteurActivite1 : "—")</p>
+    </div>
+    <a href="@Url.Action("Board", new { id = Model.id })" class="jf-rc-btn jf-rc-btn--ghost">← Back to board</a>
+</div>
+
+<div class="jf-rc-board-grid">
+    <div class="jf-rc-card">
+        @if (!string.IsNullOrEmpty(Model.nomImage))
+        {
+            <div class="jf-rc-board-img">
+                <img alt="" src="~/assets/img/blog/@Model.nomImage">
+            </div>
+        }
+        <div class="jf-rc-description">
+            @Html.Sanitize(Model.message)
+        </div>
+    </div>
+
+    <aside>
+        <div class="jf-rc-sidebar-card">
+            <h3>Publication</h3>
+            @if (Model.isPublie)
+            {
+                <span class="jf-rc-badge jf-rc-badge--live">Live</span>
+            }
+            else
+            {
+                <span class="jf-rc-badge jf-rc-badge--draft">Draft</span>
+                using (Html.BeginForm("validate", "Annonce", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("id", Model.id)
+                    <button type="submit" class="jf-rc-btn jf-rc-btn--primary" style="width:100%;margin-top:1rem;">Approve</button>
+                }
+            }
+        </div>
+    </aside>
+</div>

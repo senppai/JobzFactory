@@ -1,0 +1,70 @@
+@model Recruteur.Models.RecruteurViewModel
+@{
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+    ViewBag.Title = "Employer Sign Up";
+}
+
+<div class="jf-rc-auth">
+    <div class="jf-rc-auth__brand">
+        <div class="jf-rc-auth__brand-inner">
+            <h2>Join as an employer</h2>
+            <p>Create your company account and start posting professional job offers to attract top talent.</p>
+        </div>
+    </div>
+
+    <div class="jf-rc-auth__form-side">
+        <div class="jf-rc-auth__form-wrap jf-rc-form">
+            <h1>Sign up</h1>
+            <p>Tell us about you and your company.</p>
+
+            @using (Html.BeginForm("SignUp", "Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                    <div class="form-group">
+                        <label>First name</label>
+                        @Html.EditorFor(model => model.prenom, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                    </div>
+                    <div class="form-group">
+                        <label>Last name</label>
+                        @Html.EditorFor(model => model.nom, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Work email</label>
+                    @Html.EditorFor(model => model.adresseMailContact, new { htmlAttributes = new { @class = "form-control", type = "email", required = "required" } })
+                </div>
+
+                <div class="form-group">
+                    <label>Company name</label>
+                    @Html.EditorFor(model => model.recruteur, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                </div>
+
+                <div class="form-group">
+                    <label>Company email</label>
+                    @Html.EditorFor(model => model.adresseMail, new { htmlAttributes = new { @class = "form-control", type = "email", required = "required" } })
+                </div>
+
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                    <div class="form-group">
+                        <label>Password</label>
+                        @Html.PasswordFor(model => model.motPasse, new { @class = "form-control", required = "required", minlength = "8" })
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm password</label>
+                        @Html.PasswordFor(model => model.confirmMotPasse, new { @class = "form-control", required = "required" })
+                    </div>
+                </div>
+                @Html.ValidationSummary(true, "", new { @class = "jf-rc-auth__error" })
+
+                <button class="jf-rc-btn jf-rc-btn--primary" type="submit" style="width:100%;">Submit</button>
+
+                <p style="margin-top:1.25rem;color:#64748b;font-size:0.9rem;">
+                    Already registered? <a href="~/Login" style="color:#4f46e5;font-weight:600;">Sign in</a>
+                </p>
+            }
+        </div>
+    </div>
+</div>

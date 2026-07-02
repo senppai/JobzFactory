@@ -1,0 +1,51 @@
+@using PagedList.Mvc
+@model PagedList.IPagedList<JF.DAL.Context.Offre_Historique>
+@{
+    ViewBag.Title = "History";
+}
+
+<div class="jf-rc-header">
+    <div>
+        <h1>Offer history</h1>
+        <p>Audit trail of actions on your job listings.</p>
+    </div>
+    <a href="~/Annonce/Index" class="jf-rc-btn jf-rc-btn--ghost">← Back to offers</a>
+</div>
+
+<div class="jf-rc-card" style="padding:0;overflow:hidden;">
+    @if (!Model.Any())
+    {
+        <div class="jf-rc-empty"><p>No history records found.</p></div>
+    }
+    else
+    {
+        <div class="jf-rc-table-wrap">
+            <table class="jf-rc-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Action</th>
+                        <th>Date</th>
+                        <th>Comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Offre.titreOffre</td>
+                            <td>@item.ActionOffre.action</td>
+                            <td>@item.dateAction</td>
+                            <td>@(string.IsNullOrEmpty(item.commentaire) ? "N/A" : item.commentaire)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="jf-rc-pager" style="padding:1rem;">
+            @Html.PagedListPager(Model, page => Url.Action("History", new { Page = page }))
+            <p style="margin:0.5rem 0 0;">Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</p>
+        </div>
+    }
+</div>

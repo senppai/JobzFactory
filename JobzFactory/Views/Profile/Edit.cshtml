@@ -1,0 +1,132 @@
+@model JobzFactory.Models.EditProfileViewModel
+@{
+    ViewBag.Title = "Edit profile";
+}
+
+<div class="jf-profile">
+    <header class="jf-profile__header">
+        <div class="container jf-profile__header-inner">
+            <div class="jf-profile__breadcrumb">
+                <a href="~/">Home</a> &rsaquo;
+                <a href="@Url.Action("Index","Profile")">My Profile</a> &rsaquo;
+                <span>Edit</span>
+            </div>
+            <h1 class="jf-profile__title">Edit your profile</h1>
+            <p class="jf-profile__subtitle">Keep your details up to date to get matched with the right jobs.</p>
+        </div>
+    </header>
+
+    <div class="container jf-profile__body">
+        <div class="jf-profile__layout">
+            <aside class="jf-profile__nav">
+                <ul class="jf-profile__nav-list">
+                    <li><a href="@Url.Action("Index","Profile")"><span class="icon icon-home"></span> Dashboard</a></li>
+                    <li><a href="@Url.Action("Applications","Profile")"><span class="icon icon-briefcase"></span> My applications</a></li>
+                    <li><a href="@Url.Action("Edit","Profile")" class="is-active"><span class="icon icon-user"></span> Edit profile</a></li>
+                    <li><a href="~/#jobs"><span class="icon icon-search"></span> Browse jobs</a></li>
+                    <li><a href="@Url.Action("LogOut","Account")"><span class="icon icon-log-out"></span> Logout</a></li>
+                </ul>
+            </aside>
+
+            <div class="jf-profile__main">
+
+                @if (TempData["ProfileSaved"] != null)
+                {
+                    <div class="jf-form__alert jf-form__alert--ok">Your profile has been updated.</div>
+                }
+
+                <div class="jf-profile__card">
+                    <h3 class="jf-profile__card-title">Personal information</h3>
+                    @using (Html.BeginForm("Edit", "Profile", FormMethod.Post, new { @class = "jf-form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "jf-form__error" })
+
+                        <div class="jf-form__row">
+                            <div class="form-group">
+                                <label for="prenom">First name</label>
+                                @Html.EditorFor(m => m.prenom, new { htmlAttributes = new { @class = "form-control", @id = "prenom" } })
+                                @Html.ValidationMessageFor(m => m.prenom, "", new { @class = "jf-form__error" })
+                            </div>
+                            <div class="form-group">
+                                <label for="nom">Last name</label>
+                                @Html.EditorFor(m => m.nom, new { htmlAttributes = new { @class = "form-control", @id = "nom" } })
+                                @Html.ValidationMessageFor(m => m.nom, "", new { @class = "jf-form__error" })
+                            </div>
+                        </div>
+
+                        <div class="jf-form__row">
+                            <div class="form-group">
+                                <label for="dateNaissance">Date of birth</label>
+                                @Html.EditorFor(m => m.dateNaissance, new { htmlAttributes = new { @class = "form-control", @id = "dateNaissance", @type = "date" } })
+                            </div>
+                            <div class="form-group">
+                                <label for="adresse">Address</label>
+                                @Html.EditorFor(m => m.adresse, new { htmlAttributes = new { @class = "form-control", @id = "adresse" } })
+                            </div>
+                        </div>
+
+                        <div class="jf-form__row">
+                            <div class="form-group">
+                                <label for="gsm">Mobile</label>
+                                @Html.EditorFor(m => m.gsm, new { htmlAttributes = new { @class = "form-control", @id = "gsm", @placeholder = "0612345678" } })
+                            </div>
+                            <div class="form-group">
+                                <label for="Tel">Phone</label>
+                                @Html.EditorFor(m => m.Tel, new { htmlAttributes = new { @class = "form-control", @id = "Tel" } })
+                            </div>
+                        </div>
+
+                        <div class="jf-form__row">
+                            <div class="form-group">
+                                <label for="C_idVille">City</label>
+                                @Html.DropDownListFor(m => m.C_idVille, (SelectList)ViewBag.Villes, "Select your city", new { @class = "form-control", @id = "C_idVille" })
+                            </div>
+                            <div class="form-group">
+                                <label for="C_idSecteur">Sector</label>
+                                @Html.DropDownListFor(m => m.C_idSecteur, (SelectList)ViewBag.Secteurs, "Select your sector", new { @class = "form-control", @id = "C_idSecteur" })
+                            </div>
+                        </div>
+
+                        <div style="display:flex;gap:.75rem;">
+                            <button type="submit" class="jf-btn jf-btn--primary">Save changes</button>
+                            <a href="@Url.Action("Index","Profile")" class="jf-btn jf-btn--ghost">Cancel</a>
+                        </div>
+                    }
+                </div>
+
+                <div class="jf-profile__card">
+                    <h3 class="jf-profile__card-title">Change password</h3>
+                    @if (TempData["PasswordSaved"] != null)
+                    {
+                        <div class="jf-form__alert jf-form__alert--ok">Your password has been changed.</div>
+                    }
+                    @if (TempData["PasswordError"] != null)
+                    {
+                        <div class="jf-form__alert jf-form__alert--err">@TempData["PasswordError"]</div>
+                    }
+                    @using (Html.BeginForm("ChangePassword", "Profile", FormMethod.Post, new { @class = "jf-form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <label for="ancienMotPasse">Current password</label>
+                            <input type="password" id="ancienMotPasse" name="ancienMotPasse" class="form-control" />
+                        </div>
+                        <div class="jf-form__row">
+                            <div class="form-group">
+                                <label for="nouveauMotPasse">New password</label>
+                                <input type="password" id="nouveauMotPasse" name="nouveauMotPasse" class="form-control" placeholder="At least 8 characters" />
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmMotPasse">Confirm new password</label>
+                                <input type="password" id="confirmMotPasse" name="confirmMotPasse" class="form-control" />
+                            </div>
+                        </div>
+                        <button type="submit" class="jf-btn jf-btn--primary">Update password</button>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

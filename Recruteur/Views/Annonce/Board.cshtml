@@ -1,0 +1,228 @@
+@using System.Linq
+@using JF.DAL.Security
+@using Recruteur.Models
+@model JF.DAL.Context.Offre
+@{
+    ViewBag.Title = Model.titreOffre;
+}
+
+<div class="jf-rc-header">
+    <div>
+        <h1>@Model.titreOffre</h1>
+        <p>
+            @(Model.Ville != null ? Model.Ville.ville1 : "—")
+            · @(Model.SecteurActivite != null ? Model.SecteurActivite.SecteurActivite1 : "—")
+            · @(Model.isPublie ? "Published" : "Draft")
+            · @Model.Offre_Postuler.Count applicant@(Model.Offre_Postuler.Count == 1 ? "" : "s")
+        </p>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+        <a href="@Url.Action("Edit", new { id = Model.id })" class="jf-rc-btn jf-rc-btn--primary"><i class="fa-solid fa-pen-to-square"></i> Edit offer</a>
+        <a href="@Url.Action("Delete", new { id = Model.id })"
+           class="jf-rc-btn jf-rc-btn--danger"
+           data-confirm-title="Delete this offer?"
+           data-confirm-message="You will be taken to the delete page to confirm removal of this offer."
+           data-confirm-btn="Continue"
+           data-confirm-variant="danger"><i class="fa-solid fa-trash"></i> Delete</a>
+        <a href="~/Annonce/Index" class="jf-rc-btn jf-rc-btn--ghost"><i class="fa-solid fa-arrow-left"></i> All offers</a>
+    </div>
+</div>
+
+<div class="jf-rc-card">
+    <div class="jf-rc-tabs" role="tablist">
+        <button type="button" class="jf-rc-tab is-active" data-tab="tab-info" role="tab" aria-selected="true">Information</button>
+        <button type="button" class="jf-rc-tab" data-tab="tab-history" role="tab" aria-selected="false">History</button>
+        <button type="button" class="jf-rc-tab" data-tab="tab-candidates" role="tab" aria-selected="false">Candidates (@Model.Offre_Postuler.Count)</button>
+    </div>
+
+    <div class="jf-rc-tab-panels">
+        <div class="jf-rc-tab-pane is-active" id="tab-info" role="tabpanel">
+            <div class="jf-rc-board-grid">
+                <div>
+                    @if (!string.IsNullOrEmpty(Model.nomImage))
+                    {
+                        <div class="jf-rc-board-img">
+                            <img alt="" src="~/assets/img/blog/@Model.nomImage">
+                        </div>
+                    }
+                    <div class="jf-rc-description">
+                        @Html.Sanitize(Model.message)
+                    </div>
+                </div>
+                <aside>
+                    <div class="jf-rc-sidebar-card">
+                        <h3>Status</h3>
+                        @if (Model.isPublie)
+                        {
+                            <span class="jf-rc-badge jf-rc-badge--live">Live</span>
+                            <p style="margin:0.75rem 0 0;color:#64748b;font-size:0.9rem;">Visible on the public job site.</p>
+                            using (Html.BeginForm("disable", "Annonce", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("id", Model.id)
+                                @Html.Hidden("returnTo", "board")
+                                <button type="submit" class="jf-rc-btn jf-rc-btn--ghost"
+                                        style="width:100%;margin-top:1rem;"
+                                        data-confirm-title="Unpublish this offer?"
+                                        data-confirm-message="The job will be hidden from the public site. You can publish it again later."
+                                        data-confirm-btn="Unpublish"
+                                        data-confirm-variant="warning">Unpublish</button>
+                            }
+                        }
+                        else
+                        {
+                            <span class="jf-rc-badge jf-rc-badge--draft">Draft</span>
+                            <p style="margin:0.75rem 0 0;color:#64748b;font-size:0.9rem;">Not visible on the job site yet.</p>
+                            using (Html.BeginForm("validate", "Annonce", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("id", Model.id)
+                                <button type="submit" class="jf-rc-btn jf-rc-btn--primary"
+                                        style="width:100%;margin-top:1rem;"
+                                        data-confirm-title="Publish this offer?"
+                                        data-confirm-message="The job will become visible on the public job site immediately."
+                                        data-confirm-btn="Publish"
+                                        data-confirm-variant="primary">Approve &amp; publish</button>
+                            }
+                        }
+                    </div>
+
+                    <div class="jf-rc-sidebar-card" style="margin-top:1rem;">
+                        <h3>Details</h3>
+                        <dl class="jf-rc-meta-list">
+                            <dt>City</dt>
+                            <dd>@(Model.Ville != null ? Model.Ville.ville1 : "—")</dd>
+                            <dt>Sector</dt>
+                            <dd>@(Model.SecteurActivite != null ? Model.SecteurActivite.SecteurActivite1 : "—")</dd>
+                            <dt>Application email</dt>
+                            <dd>@(string.IsNullOrWhiteSpace(Model.adresseMailAPostuler) ? "—" : Model.adresseMailAPostuler)</dd>
+                            <dt>Public URL</dt>
+                            <dd>
+                                @if (!string.IsNullOrWhiteSpace(Model.url))
+                                {
+                                    <a href="@System.Configuration.ConfigurationManager.AppSettings["UrlMain"]@($"job/{Model.url}")" target="_blank" rel="noopener noreferrer">View on job site</a>
+                                }
+                                else
+                                {
+                                    <span>—</span>
+                                }
+                            </dd>
+                        </dl>
+                    </div>
+                </aside>
+            </div>
+        </div>
+
+        <div class="jf-rc-tab-pane" id="tab-history" role="tabpanel">
+            @{
+                var history = Model.Offre_Historique.OrderByDescending(h => h.dateAction).ToList();
+            }
+            @if (!history.Any())
+            {
+                <div class="jf-rc-empty"><p>No history recorded for this offer yet.</p></div>
+            }
+            else
+            {
+                <div class="jf-rc-table-wrap">
+                    <table class="jf-rc-table">
+                        <thead>
+                            <tr>
+                                <th>Action</th>
+                                <th>Date</th>
+                                <th>Comment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in history)
+                            {
+                                <tr>
+                                    <td>@(item.ActionOffre != null ? item.ActionOffre.action : "—")</td>
+                                    <td>@item.dateAction.ToString("g")</td>
+                                    <td>@(string.IsNullOrWhiteSpace(item.commentaire) ? "—" : item.commentaire)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+
+        <div class="jf-rc-tab-pane" id="tab-candidates" role="tabpanel">
+            @if (!Model.Offre_Postuler.Any())
+            {
+                <div class="jf-rc-empty"><p>No applications received yet.</p></div>
+            }
+            else
+            {
+                <div class="jf-rc-candidate-list">
+                    @foreach (var item in Model.Offre_Postuler.OrderByDescending(a => a.DatePostuler))
+                    {
+                        <article class="jf-rc-candidate-card">
+                            <div class="jf-rc-candidate-card__header">
+                                <div>
+                                    <h3>@item.Profil.prenom @item.Profil.nom</h3>
+                                    <p class="jf-rc-candidate-card__meta">
+                                        Applied @item.DatePostuler.ToString("g")
+                                        @if (!string.IsNullOrWhiteSpace(item.Profil.adresseMail))
+                                        {
+                                            <span>· @item.Profil.adresseMail</span>
+                                        }
+                                        @if (!string.IsNullOrWhiteSpace(item.Profil.gsm))
+                                        {
+                                            <span>· @item.Profil.gsm</span>
+                                        }
+                                    </p>
+                                </div>
+                                <a href="@CvLinkHelper.Build(item.id)" class="jf-rc-btn jf-rc-btn--primary" target="_blank" rel="noopener noreferrer">View CV</a>
+                            </div>
+
+                            <div class="jf-rc-candidate-card__body">
+                                <h4>Cover message</h4>
+                                @if (string.IsNullOrWhiteSpace(item.message))
+                                {
+                                    <p class="jf-rc-candidate-card__empty">No cover message submitted.</p>
+                                }
+                                else
+                                {
+                                    <div class="jf-rc-candidate-card__message">@item.message</div>
+                                }
+                            </div>
+
+                            <div class="jf-rc-candidate-card__footer">
+                                <span>CV file: @(string.IsNullOrWhiteSpace(item.nomCV) ? "—" : item.nomCV)</span>
+                            </div>
+                        </article>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        (function () {
+            var tabs = document.querySelectorAll('.jf-rc-tab');
+            var panes = document.querySelectorAll('.jf-rc-tab-pane');
+
+            tabs.forEach(function (tab) {
+                tab.addEventListener('click', function () {
+                    var targetId = tab.getAttribute('data-tab');
+
+                    tabs.forEach(function (t) {
+                        t.classList.remove('is-active');
+                        t.setAttribute('aria-selected', 'false');
+                    });
+
+                    panes.forEach(function (pane) {
+                        pane.classList.remove('is-active');
+                    });
+
+                    tab.classList.add('is-active');
+                    tab.setAttribute('aria-selected', 'true');
+                    document.getElementById(targetId).classList.add('is-active');
+                });
+            });
+        })();
+    </script>
+}

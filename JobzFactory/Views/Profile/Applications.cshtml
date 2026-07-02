@@ -1,0 +1,67 @@
+@model IEnumerable<JF.DAL.Context.Offre_Postuler>
+@{
+    ViewBag.Title = "My applications";
+}
+
+<div class="jf-profile">
+    <header class="jf-profile__header">
+        <div class="container jf-profile__header-inner">
+            <div class="jf-profile__breadcrumb">
+                <a href="~/">Home</a> &rsaquo;
+                <a href="@Url.Action("Index","Profile")">My Profile</a> &rsaquo;
+                <span>My applications</span>
+            </div>
+            <h1 class="jf-profile__title">My applications</h1>
+            <p class="jf-profile__subtitle">Track every job you've applied to in one place.</p>
+        </div>
+    </header>
+
+    <div class="container jf-profile__body">
+        <div class="jf-profile__layout">
+            <aside class="jf-profile__nav">
+                <ul class="jf-profile__nav-list">
+                    <li><a href="@Url.Action("Index","Profile")"><span class="icon icon-home"></span> Dashboard</a></li>
+                    <li><a href="@Url.Action("Applications","Profile")" class="is-active"><span class="icon icon-briefcase"></span> My applications</a></li>
+                    <li><a href="@Url.Action("Edit","Profile")"><span class="icon icon-user"></span> Edit profile</a></li>
+                    <li><a href="~/#jobs"><span class="icon icon-search"></span> Browse jobs</a></li>
+                    <li><a href="@Url.Action("LogOut","Account")"><span class="icon icon-log-out"></span> Logout</a></li>
+                </ul>
+            </aside>
+
+            <div class="jf-profile__main">
+                <div class="jf-profile__card">
+                    @if (!Model.Any())
+                    {
+                        <p class="jf-empty">You haven't applied to any jobs yet. <a href="~/#jobs" style="color:var(--jf-indigo);font-weight:600;">Browse jobs</a> to get started.</p>
+                    }
+                    else
+                    {
+                        <table class="jf-app-table">
+                            <thead>
+                                <tr>
+                                    <th>Position</th>
+                                    <th>Employer</th>
+                                    <th>Location</th>
+                                    <th>Date</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var app in Model)
+                                {
+                                    <tr>
+                                        <td><a href="~/job/@app.Offre.url">@app.Offre.titreOffre</a></td>
+                                        <td>@(app.Offre.Recruteur != null ? app.Offre.Recruteur.nomRecruteur : "—")</td>
+                                        <td>@(app.Offre.Ville != null ? app.Offre.Ville.ville1 : "—")</td>
+                                        <td>@app.DatePostuler.ToString("dd MMM yyyy")</td>
+                                        <td><a href="~/job/@app.Offre.url" class="jf-btn jf-btn--ghost jf-btn--sm">View</a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

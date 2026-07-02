@@ -1,0 +1,177 @@
+@model JobzFactory.Models.PostulerModel
+@{
+    ViewBag.Title = "Apply — " + Model.titreOffre;
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="~/css/job-modern.css" rel="stylesheet" />
+
+<div class="jf-job-page">
+
+    <section class="jf-job-hero">
+        <div class="container">
+            <nav class="jf-job-hero__breadcrumb" aria-label="Breadcrumb">
+                <a href="~/">Home</a>
+                <span class="icon-ios-arrow-forward"></span>
+                <a href="~/job/@Model.url">@Model.titreOffre</a>
+                <span class="icon-ios-arrow-forward"></span>
+                <span>Apply</span>
+            </nav>
+            <h1 class="jf-job-hero__title">Apply for this position</h1>
+            <p class="jf-job-hero__meta" style="margin:0;">
+                <span><span class="icon-briefcase"></span> @Model.titreOffre</span>
+            </p>
+        </div>
+    </section>
+
+    <section class="jf-job-body">
+        <div class="container">
+            <div class="jf-job-layout">
+
+                <div class="jf-job-card-panel">
+                    <div class="jf-apply-summary">
+                        <h4>You're applying for</h4>
+                        <p><strong>@Model.titreOffre</strong> — fill in your details below and upload your CV to complete your application.</p>
+                    </div>
+
+                    <form action="~/Apply/@Model.url" method="post" enctype="multipart/form-data" class="jf-apply-form">
+                        @Html.HiddenFor(m => m.idOffre)
+                        @Html.AntiForgeryToken()
+
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                            <div class="jf-apply-error" role="alert">
+                                @Html.ValidationSummary(false)
+                            </div>
+                        }
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="nom">Last name</label>
+                                    <input name="nom" id="nom" type="text" required class="form-control" placeholder="Last name" value="@Model.nom">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="prenom">First name</label>
+                                    <input name="prenom" id="prenom" type="text" required class="form-control" placeholder="First name" value="@Model.prenom">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="gsm">Mobile number</label>
+                            <input type="text" class="form-control" required name="gsm" id="gsm" placeholder="0612345678" maxlength="20" value="@Model.gsm">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="adresseMail">Email address</label>
+                            <input type="email" class="form-control" required name="adresseMail" id="adresseMail" placeholder="you@email.com" value="@Model.adresseMail" readonly style="background:#f1f5f9;">
+                            <small style="color:#94a3b8;">Signed in as @(Model.adresseMail). Log out to use a different email.</small>
+                        </div>
+
+                        @{
+                            var savedCvs = ViewBag.SavedCvs as IEnumerable<JF.DAL.Context.Profil_CV>;
+                        }
+                        @if (savedCvs != null && savedCvs.Any())
+                        {
+                            <div class="form-group">
+                                <label>CV / Resume</label>
+                                <div style="display:flex;flex-direction:column;gap:.5rem;margin-bottom:.75rem;">
+                                    <label style="display:flex;align-items:center;gap:.5rem;font-weight:500;color:#475569;cursor:pointer;">
+                                        <input type="radio" name="cvChoice" value="upload" checked onchange="jfToggleCvChoice()" /> Upload a new CV
+                                    </label>
+                                    <label style="display:flex;align-items:center;gap:.5rem;font-weight:500;color:#475569;cursor:pointer;">
+                                        <input type="radio" name="cvChoice" value="saved" onchange="jfToggleCvChoice()" /> Use a saved CV
+                                    </label>
+                                    <select name="savedCvId" id="savedCvId" class="form-control" disabled style="margin-left:1.5rem;max-width:380px;">
+                                        @foreach (var cv in savedCvs)
+                                        {
+                                            <option value="@cv.id">@cv.nomCV</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="form-group" id="cv-upload-group">
+                            <label>CV / Resume</label>
+                            <div class="jf-upload" id="cv-upload">
+                                <input type="file" name="fichieCV" id="fichieCV" class="jf-upload__input" accept=".pdf,.doc,.docx" />
+                                <div class="jf-upload__zone" id="cv-upload-zone" tabindex="0" role="button" aria-label="Upload your CV">
+                                    <div class="jf-upload__icon"><span class="icon-cloud-upload"></span></div>
+                                    <p class="jf-upload__title">Drag &amp; drop your CV here</p>
+                                    <p class="jf-upload__hint">or <span class="jf-upload__browse">browse files</span></p>
+                                    <p class="jf-upload__formats">PDF, DOC, DOCX — max 10 MB</p>
+                                </div>
+                                <div class="jf-upload__file" id="cv-upload-file" hidden>
+                                    <div class="jf-upload__file-icon"><span class="icon-file-text"></span></div>
+                                    <div class="jf-upload__file-info">
+                                        <span class="jf-upload__file-name" id="cv-file-name"></span>
+                                        <span class="jf-upload__file-size" id="cv-file-size"></span>
+                                    </div>
+                                    <button type="button" class="jf-upload__remove" id="cv-upload-remove" aria-label="Remove file">
+                                        <span class="icon-close"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Cover message <span style="font-weight:400;color:#94a3b8;">(optional)</span></label>
+                            <textarea name="message" id="message" class="form-control" placeholder="Tell the employer why you're a great fit for this role..."></textarea>
+                        </div>
+
+                        <button type="submit" class="jf-btn jf-btn--primary">
+                            <span class="icon-paper-plane"></span> Submit application
+                        </button>
+                    </form>
+                </div>
+
+                <aside class="jf-job-sidebar">
+                    <div class="jf-job-card-panel">
+                        <h3>Before you apply</h3>
+                        <div class="jf-job-sidebar__item">
+                            <span class="jf-job-sidebar__icon"><span class="icon-check"></span></span>
+                            <div>
+                                <div class="jf-job-sidebar__value" style="font-weight:500;color:#475569;line-height:1.6;">
+                                    Make sure your CV is up to date and relevant to this role.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="jf-job-sidebar__item">
+                            <span class="jf-job-sidebar__icon"><span class="icon-lock"></span></span>
+                            <div>
+                                <div class="jf-job-sidebar__value" style="font-weight:500;color:#475569;line-height:1.6;">
+                                    Your information is only shared with the employer for this application.
+                                </div>
+                            </div>
+                        </div>
+                        <a href="~/job/@Model.url" class="jf-btn jf-btn--ghost">Back to job details</a>
+                    </div>
+                </aside>
+
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script src="~/js/job-upload.js"></script>
+<script>
+    // Toggle between uploading a new CV and reusing one from the candidate's library.
+    function jfToggleCvChoice() {
+        var choice = document.querySelector('input[name="cvChoice"]:checked');
+        if (!choice) return;
+        var savedSelect = document.getElementById('savedCvId');
+        var uploadGroup = document.getElementById('cv-upload-group');
+        if (choice.value === 'saved') {
+            if (savedSelect) savedSelect.disabled = false;
+            if (uploadGroup) uploadGroup.style.display = 'none';
+        } else {
+            if (savedSelect) { savedSelect.disabled = true; savedSelect.value = ''; }
+            if (uploadGroup) uploadGroup.style.display = '';
+        }
+    }
+</script>

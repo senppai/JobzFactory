@@ -1,0 +1,1053 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="jobzFactoryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ActionOffre">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="action" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Codification">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="annee" Type="varchar" MaxLength="4" />
+          <Property Name="offre_number" Type="int" />
+        </EntityType>
+        <EntityType Name="Offre">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="message" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="_idRecruteur" Type="int" Nullable="false" />
+          <Property Name="_idVille" Type="int" />
+          <Property Name="isPublie" Type="bit" Nullable="false" />
+          <Property Name="titreOffre" Type="nvarchar" MaxLength="400" />
+          <Property Name="_idSecteurActivite" Type="int" />
+          <Property Name="url" Type="nvarchar" MaxLength="400" />
+          <Property Name="isConfidentiel" Type="bit" />
+          <Property Name="adresseMailAPostuler" Type="nvarchar" MaxLength="100" />
+          <Property Name="nomImage" Type="nvarchar" MaxLength="50" />
+          <Property Name="numberOffre" Type="int" />
+        </EntityType>
+        <EntityType Name="Offre_Historique">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="_idOffre" Type="int" Nullable="false" />
+          <Property Name="dateAction" Type="datetime" Nullable="false" />
+          <Property Name="_idTypeAction" Type="int" Nullable="false" />
+          <Property Name="_idUtilisateur" Type="int" Nullable="false" />
+          <Property Name="commentaire" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="Offre_Postuler">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="_idOffre" Type="int" Nullable="false" />
+          <Property Name="_idProfil" Type="int" Nullable="false" />
+          <Property Name="DatePostuler" Type="datetime" Nullable="false" />
+          <Property Name="nomCV" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="message" Type="nvarchar(max)" />
+          <Property Name="extantion" Type="nvarchar" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pays">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pays" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Profil">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="prenom" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="dateNaissance" Type="date" />
+          <Property Name="adresseMail" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="gsm" Type="nvarchar" MaxLength="12" />
+          <Property Name="Tel" Type="nvarchar" MaxLength="12" />
+          <Property Name="motPasse" Type="nvarchar" MaxLength="256" />
+          <Property Name="dateCreation" Type="datetime" Nullable="false" />
+          <Property Name="titre" Type="nvarchar" MaxLength="200" />
+          <Property Name="_idVille" Type="int" />
+          <Property Name="adresse" Type="nvarchar" MaxLength="200" />
+          <Property Name="_idSecteur" Type="int" />
+        </EntityType>
+        <EntityType Name="Profil_CV">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="_idProfil" Type="int" Nullable="false" />
+          <Property Name="DateCreation" Type="datetime" Nullable="false" />
+          <Property Name="nomCV" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="extantion" Type="nvarchar" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Profil_Link">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="_idProfil" Type="int" Nullable="false" />
+          <Property Name="dateGeneration" Type="datetime" Nullable="false" />
+          <Property Name="token" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="dateExpiration" Type="datetime" Nullable="false" />
+          <Property Name="dateActivation" Type="datetime" />
+          <Property Name="etat" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Recruteur">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomRecruteur" Type="nvarchar" MaxLength="50" />
+          <Property Name="siteweb" Type="nvarchar" MaxLength="50" />
+          <Property Name="adresseMail" Type="nvarchar" MaxLength="50" />
+          <Property Name="dateCreation" Type="datetime" Nullable="false" />
+          <Property Name="url" Type="nvarchar" MaxLength="50" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="adresseSocial" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Recruteur_Contact">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="prenom" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="adresseMail" Type="nvarchar" MaxLength="200" />
+          <Property Name="compte" Type="nvarchar" MaxLength="200" />
+          <Property Name="motPasse" Type="nvarchar" MaxLength="256" />
+          <Property Name="dateCreation" Type="datetime" Nullable="false" />
+          <Property Name="profil" Type="int" />
+          <Property Name="_idRecruteur" Type="int" />
+        </EntityType>
+        <EntityType Name="SecteurActivite">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SecteurActivite" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Ville">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ville" Type="nvarchar" MaxLength="50" />
+          <Property Name="_idPays" Type="int" />
+        </EntityType>
+        <Association Name="FK__Offre__numberOff__5224328E">
+          <End Role="Codification" Type="Self.Codification" Multiplicity="0..1" />
+          <End Role="Offre" Type="Self.Offre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Codification">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Offre">
+              <PropertyRef Name="numberOffre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Offre_Historique_ActionOffre">
+          <End Role="ActionOffre" Type="Self.ActionOffre" Multiplicity="1" />
+          <End Role="Offre_Historique" Type="Self.Offre_Historique" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActionOffre">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Offre_Historique">
+              <PropertyRef Name="_idTypeAction" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Offre_Historique_Offre">
+          <End Role="Offre" Type="Self.Offre" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Offre_Historique" Type="Self.Offre_Historique" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Offre">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Offre_Historique">
+              <PropertyRef Name="_idOffre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Offre_Postuler_Offre">
+          <End Role="Offre" Type="Self.Offre" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Offre_Postuler" Type="Self.Offre_Postuler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Offre">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Offre_Postuler">
+              <PropertyRef Name="_idOffre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Offre_Postuler_Profil">
+          <End Role="Profil" Type="Self.Profil" Multiplicity="1" />
+          <End Role="Offre_Postuler" Type="Self.Offre_Postuler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profil">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Offre_Postuler">
+              <PropertyRef Name="_idProfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Offre_Recruteur">
+          <End Role="Recruteur" Type="Self.Recruteur" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Offre" Type="Self.Offre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recruteur">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Offre">
+              <PropertyRef Name="_idRecruteur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Offre_SecteurActivite">
+          <End Role="SecteurActivite" Type="Self.SecteurActivite" Multiplicity="0..1" />
+          <End Role="Offre" Type="Self.Offre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SecteurActivite">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Offre">
+              <PropertyRef Name="_idSecteurActivite" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Offre_Ville">
+          <End Role="Ville" Type="Self.Ville" Multiplicity="0..1" />
+          <End Role="Offre" Type="Self.Offre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ville">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Offre">
+              <PropertyRef Name="_idVille" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profil_CV_Profil">
+          <End Role="Profil" Type="Self.Profil" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Profil_CV" Type="Self.Profil_CV" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profil">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Profil_CV">
+              <PropertyRef Name="_idProfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profil_Link_Profil">
+          <End Role="Profil" Type="Self.Profil" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Profil_Link" Type="Self.Profil_Link" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profil">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Profil_Link">
+              <PropertyRef Name="_idProfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profil_SecteurActivite">
+          <End Role="SecteurActivite" Type="Self.SecteurActivite" Multiplicity="0..1" />
+          <End Role="Profil" Type="Self.Profil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SecteurActivite">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Profil">
+              <PropertyRef Name="_idSecteur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profil_Ville">
+          <End Role="Ville" Type="Self.Ville" Multiplicity="0..1" />
+          <End Role="Profil" Type="Self.Profil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ville">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Profil">
+              <PropertyRef Name="_idVille" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recruteur_Contact_Recruteur">
+          <End Role="Recruteur" Type="Self.Recruteur" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Recruteur_Contact" Type="Self.Recruteur_Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recruteur">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Recruteur_Contact">
+              <PropertyRef Name="_idRecruteur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ville_Pays">
+          <End Role="Pays" Type="Self.Pays" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Ville" Type="Self.Ville" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pays">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ville">
+              <PropertyRef Name="_idPays" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="jobzFactoryModelStoreContainer">
+          <EntitySet Name="ActionOffre" EntityType="Self.ActionOffre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Codification" EntityType="Self.Codification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Offre" EntityType="Self.Offre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Offre_Historique" EntityType="Self.Offre_Historique" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Offre_Postuler" EntityType="Self.Offre_Postuler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pays" EntityType="Self.Pays" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profil" EntityType="Self.Profil" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profil_CV" EntityType="Self.Profil_CV" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profil_Link" EntityType="Self.Profil_Link" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Recruteur" EntityType="Self.Recruteur" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Recruteur_Contact" EntityType="Self.Recruteur_Contact" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SecteurActivite" EntityType="Self.SecteurActivite" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ville" EntityType="Self.Ville" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Offre__numberOff__5224328E" Association="Self.FK__Offre__numberOff__5224328E">
+            <End Role="Codification" EntitySet="Codification" />
+            <End Role="Offre" EntitySet="Offre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Offre_Historique_ActionOffre" Association="Self.FK_Offre_Historique_ActionOffre">
+            <End Role="ActionOffre" EntitySet="ActionOffre" />
+            <End Role="Offre_Historique" EntitySet="Offre_Historique" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Offre_Historique_Offre" Association="Self.FK_Offre_Historique_Offre">
+            <End Role="Offre" EntitySet="Offre" />
+            <End Role="Offre_Historique" EntitySet="Offre_Historique" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Offre_Postuler_Offre" Association="Self.FK_Offre_Postuler_Offre">
+            <End Role="Offre" EntitySet="Offre" />
+            <End Role="Offre_Postuler" EntitySet="Offre_Postuler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Offre_Postuler_Profil" Association="Self.FK_Offre_Postuler_Profil">
+            <End Role="Profil" EntitySet="Profil" />
+            <End Role="Offre_Postuler" EntitySet="Offre_Postuler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Offre_Recruteur" Association="Self.FK_Offre_Recruteur">
+            <End Role="Recruteur" EntitySet="Recruteur" />
+            <End Role="Offre" EntitySet="Offre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Offre_SecteurActivite" Association="Self.FK_Offre_SecteurActivite">
+            <End Role="SecteurActivite" EntitySet="SecteurActivite" />
+            <End Role="Offre" EntitySet="Offre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Offre_Ville" Association="Self.FK_Offre_Ville">
+            <End Role="Ville" EntitySet="Ville" />
+            <End Role="Offre" EntitySet="Offre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profil_CV_Profil" Association="Self.FK_Profil_CV_Profil">
+            <End Role="Profil" EntitySet="Profil" />
+            <End Role="Profil_CV" EntitySet="Profil_CV" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profil_Link_Profil" Association="Self.FK_Profil_Link_Profil">
+            <End Role="Profil" EntitySet="Profil" />
+            <End Role="Profil_Link" EntitySet="Profil_Link" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profil_SecteurActivite" Association="Self.FK_Profil_SecteurActivite">
+            <End Role="SecteurActivite" EntitySet="SecteurActivite" />
+            <End Role="Profil" EntitySet="Profil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profil_Ville" Association="Self.FK_Profil_Ville">
+            <End Role="Ville" EntitySet="Ville" />
+            <End Role="Profil" EntitySet="Profil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recruteur_Contact_Recruteur" Association="Self.FK_Recruteur_Contact_Recruteur">
+            <End Role="Recruteur" EntitySet="Recruteur" />
+            <End Role="Recruteur_Contact" EntitySet="Recruteur_Contact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ville_Pays" Association="Self.FK_Ville_Pays">
+            <End Role="Pays" EntitySet="Pays" />
+            <End Role="Ville" EntitySet="Ville" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="jobzFactoryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="jobzFactoryEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="jobzFactoryModel.sysdiagrams" />
+          <EntitySet Name="ActionOffre" EntityType="jobzFactoryModel.ActionOffre" />
+          <EntitySet Name="Codification" EntityType="jobzFactoryModel.Codification" />
+          <EntitySet Name="Offre" EntityType="jobzFactoryModel.Offre" />
+          <EntitySet Name="Offre_Historique" EntityType="jobzFactoryModel.Offre_Historique" />
+          <EntitySet Name="Offre_Postuler" EntityType="jobzFactoryModel.Offre_Postuler" />
+          <EntitySet Name="Pays" EntityType="jobzFactoryModel.Pays" />
+          <EntitySet Name="Profil" EntityType="jobzFactoryModel.Profil" />
+          <EntitySet Name="Profil_CV" EntityType="jobzFactoryModel.Profil_CV" />
+          <EntitySet Name="Profil_Link" EntityType="jobzFactoryModel.Profil_Link" />
+          <EntitySet Name="Recruteur" EntityType="jobzFactoryModel.Recruteur" />
+          <EntitySet Name="Recruteur_Contact" EntityType="jobzFactoryModel.Recruteur_Contact" />
+          <EntitySet Name="SecteurActivite" EntityType="jobzFactoryModel.SecteurActivite" />
+          <EntitySet Name="Ville" EntityType="jobzFactoryModel.Ville" />
+          <AssociationSet Name="FK_Offre_Historique_ActionOffre" Association="jobzFactoryModel.FK_Offre_Historique_ActionOffre">
+            <End Role="ActionOffre" EntitySet="ActionOffre" />
+            <End Role="Offre_Historique" EntitySet="Offre_Historique" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Offre__numberOff__5224328E" Association="jobzFactoryModel.FK__Offre__numberOff__5224328E">
+            <End Role="Codification" EntitySet="Codification" />
+            <End Role="Offre" EntitySet="Offre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Offre_Historique_Offre" Association="jobzFactoryModel.FK_Offre_Historique_Offre">
+            <End Role="Offre" EntitySet="Offre" />
+            <End Role="Offre_Historique" EntitySet="Offre_Historique" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Offre_Postuler_Offre" Association="jobzFactoryModel.FK_Offre_Postuler_Offre">
+            <End Role="Offre" EntitySet="Offre" />
+            <End Role="Offre_Postuler" EntitySet="Offre_Postuler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Offre_Recruteur" Association="jobzFactoryModel.FK_Offre_Recruteur">
+            <End Role="Recruteur" EntitySet="Recruteur" />
+            <End Role="Offre" EntitySet="Offre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Offre_SecteurActivite" Association="jobzFactoryModel.FK_Offre_SecteurActivite">
+            <End Role="SecteurActivite" EntitySet="SecteurActivite" />
+            <End Role="Offre" EntitySet="Offre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Offre_Ville" Association="jobzFactoryModel.FK_Offre_Ville">
+            <End Role="Ville" EntitySet="Ville" />
+            <End Role="Offre" EntitySet="Offre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Offre_Postuler_Profil" Association="jobzFactoryModel.FK_Offre_Postuler_Profil">
+            <End Role="Profil" EntitySet="Profil" />
+            <End Role="Offre_Postuler" EntitySet="Offre_Postuler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ville_Pays" Association="jobzFactoryModel.FK_Ville_Pays">
+            <End Role="Pays" EntitySet="Pays" />
+            <End Role="Ville" EntitySet="Ville" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profil_CV_Profil" Association="jobzFactoryModel.FK_Profil_CV_Profil">
+            <End Role="Profil" EntitySet="Profil" />
+            <End Role="Profil_CV" EntitySet="Profil_CV" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profil_Link_Profil" Association="jobzFactoryModel.FK_Profil_Link_Profil">
+            <End Role="Profil" EntitySet="Profil" />
+            <End Role="Profil_Link" EntitySet="Profil_Link" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profil_SecteurActivite" Association="jobzFactoryModel.FK_Profil_SecteurActivite">
+            <End Role="SecteurActivite" EntitySet="SecteurActivite" />
+            <End Role="Profil" EntitySet="Profil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profil_Ville" Association="jobzFactoryModel.FK_Profil_Ville">
+            <End Role="Ville" EntitySet="Ville" />
+            <End Role="Profil" EntitySet="Profil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recruteur_Contact_Recruteur" Association="jobzFactoryModel.FK_Recruteur_Contact_Recruteur">
+            <End Role="Recruteur" EntitySet="Recruteur" />
+            <End Role="Recruteur_Contact" EntitySet="Recruteur_Contact" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="ActionOffre">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="action" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Offre_Historique" Relationship="jobzFactoryModel.FK_Offre_Historique_ActionOffre" FromRole="ActionOffre" ToRole="Offre_Historique" />
+        </EntityType>
+        <EntityType Name="Codification">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="annee" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="offre_number" Type="Int32" />
+          <NavigationProperty Name="Offre" Relationship="jobzFactoryModel.FK__Offre__numberOff__5224328E" FromRole="Codification" ToRole="Offre" />
+        </EntityType>
+        <EntityType Name="Offre">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="C_idRecruteur" Type="Int32" Nullable="false" />
+          <Property Name="C_idVille" Type="Int32" />
+          <Property Name="isPublie" Type="Boolean" Nullable="false" />
+          <Property Name="titreOffre" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="C_idSecteurActivite" Type="Int32" />
+          <Property Name="url" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="isConfidentiel" Type="Boolean" />
+          <Property Name="adresseMailAPostuler" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="nomImage" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="numberOffre" Type="Int32" />
+          <NavigationProperty Name="Codification" Relationship="jobzFactoryModel.FK__Offre__numberOff__5224328E" FromRole="Offre" ToRole="Codification" />
+          <NavigationProperty Name="Offre_Historique" Relationship="jobzFactoryModel.FK_Offre_Historique_Offre" FromRole="Offre" ToRole="Offre_Historique" />
+          <NavigationProperty Name="Offre_Postuler" Relationship="jobzFactoryModel.FK_Offre_Postuler_Offre" FromRole="Offre" ToRole="Offre_Postuler" />
+          <NavigationProperty Name="Recruteur" Relationship="jobzFactoryModel.FK_Offre_Recruteur" FromRole="Offre" ToRole="Recruteur" />
+          <NavigationProperty Name="SecteurActivite" Relationship="jobzFactoryModel.FK_Offre_SecteurActivite" FromRole="Offre" ToRole="SecteurActivite" />
+          <NavigationProperty Name="Ville" Relationship="jobzFactoryModel.FK_Offre_Ville" FromRole="Offre" ToRole="Ville" />
+        </EntityType>
+        <EntityType Name="Offre_Historique">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="C_idOffre" Type="Int32" Nullable="false" />
+          <Property Name="dateAction" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="C_idTypeAction" Type="Int32" Nullable="false" />
+          <Property Name="C_idUtilisateur" Type="Int32" Nullable="false" />
+          <Property Name="commentaire" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ActionOffre" Relationship="jobzFactoryModel.FK_Offre_Historique_ActionOffre" FromRole="Offre_Historique" ToRole="ActionOffre" />
+          <NavigationProperty Name="Offre" Relationship="jobzFactoryModel.FK_Offre_Historique_Offre" FromRole="Offre_Historique" ToRole="Offre" />
+        </EntityType>
+        <EntityType Name="Offre_Postuler">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="C_idOffre" Type="Int32" Nullable="false" />
+          <Property Name="C_idProfil" Type="Int32" Nullable="false" />
+          <Property Name="DatePostuler" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="nomCV" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="extantion" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Offre" Relationship="jobzFactoryModel.FK_Offre_Postuler_Offre" FromRole="Offre_Postuler" ToRole="Offre" />
+          <NavigationProperty Name="Profil" Relationship="jobzFactoryModel.FK_Offre_Postuler_Profil" FromRole="Offre_Postuler" ToRole="Profil" />
+        </EntityType>
+        <EntityType Name="Pays">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pays1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ville" Relationship="jobzFactoryModel.FK_Ville_Pays" FromRole="Pays" ToRole="Ville" />
+        </EntityType>
+        <EntityType Name="Profil">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="prenom" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="dateNaissance" Type="DateTime" Precision="0" />
+          <Property Name="adresseMail" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="gsm" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Tel" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="motPasse" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="dateCreation" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="titre" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="C_idVille" Type="Int32" />
+          <Property Name="adresse" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="C_idSecteur" Type="Int32" />
+          <NavigationProperty Name="Offre_Postuler" Relationship="jobzFactoryModel.FK_Offre_Postuler_Profil" FromRole="Profil" ToRole="Offre_Postuler" />
+          <NavigationProperty Name="Profil_CV" Relationship="jobzFactoryModel.FK_Profil_CV_Profil" FromRole="Profil" ToRole="Profil_CV" />
+          <NavigationProperty Name="Profil_Link" Relationship="jobzFactoryModel.FK_Profil_Link_Profil" FromRole="Profil" ToRole="Profil_Link" />
+          <NavigationProperty Name="SecteurActivite" Relationship="jobzFactoryModel.FK_Profil_SecteurActivite" FromRole="Profil" ToRole="SecteurActivite" />
+          <NavigationProperty Name="Ville" Relationship="jobzFactoryModel.FK_Profil_Ville" FromRole="Profil" ToRole="Ville" />
+        </EntityType>
+        <EntityType Name="Profil_CV">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="C_idProfil" Type="Int32" Nullable="false" />
+          <Property Name="DateCreation" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="nomCV" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="extantion" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Profil" Relationship="jobzFactoryModel.FK_Profil_CV_Profil" FromRole="Profil_CV" ToRole="Profil" />
+        </EntityType>
+        <EntityType Name="Profil_Link">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="C_idProfil" Type="Int32" Nullable="false" />
+          <Property Name="dateGeneration" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="token" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="dateExpiration" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="dateActivation" Type="DateTime" Precision="3" />
+          <Property Name="etat" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Profil" Relationship="jobzFactoryModel.FK_Profil_Link_Profil" FromRole="Profil_Link" ToRole="Profil" />
+        </EntityType>
+        <EntityType Name="Recruteur">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomRecruteur" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="siteweb" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="adresseMail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="dateCreation" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="url" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="adresseSocial" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Offre" Relationship="jobzFactoryModel.FK_Offre_Recruteur" FromRole="Recruteur" ToRole="Offre" />
+          <NavigationProperty Name="Recruteur_Contact" Relationship="jobzFactoryModel.FK_Recruteur_Contact_Recruteur" FromRole="Recruteur" ToRole="Recruteur_Contact" />
+        </EntityType>
+        <EntityType Name="Recruteur_Contact">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="prenom" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="adresseMail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="compte" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="motPasse" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="dateCreation" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="profil" Type="Int32" />
+          <Property Name="C_idRecruteur" Type="Int32" />
+          <NavigationProperty Name="Recruteur" Relationship="jobzFactoryModel.FK_Recruteur_Contact_Recruteur" FromRole="Recruteur_Contact" ToRole="Recruteur" />
+        </EntityType>
+        <EntityType Name="SecteurActivite">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SecteurActivite1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Offre" Relationship="jobzFactoryModel.FK_Offre_SecteurActivite" FromRole="SecteurActivite" ToRole="Offre" />
+          <NavigationProperty Name="Profil" Relationship="jobzFactoryModel.FK_Profil_SecteurActivite" FromRole="SecteurActivite" ToRole="Profil" />
+        </EntityType>
+        <EntityType Name="Ville">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ville1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="C_idPays" Type="Int32" />
+          <NavigationProperty Name="Offre" Relationship="jobzFactoryModel.FK_Offre_Ville" FromRole="Ville" ToRole="Offre" />
+          <NavigationProperty Name="Pays" Relationship="jobzFactoryModel.FK_Ville_Pays" FromRole="Ville" ToRole="Pays" />
+          <NavigationProperty Name="Profil" Relationship="jobzFactoryModel.FK_Profil_Ville" FromRole="Ville" ToRole="Profil" />
+        </EntityType>
+        <Association Name="FK_Offre_Historique_ActionOffre">
+          <End Type="jobzFactoryModel.ActionOffre" Role="ActionOffre" Multiplicity="1" />
+          <End Type="jobzFactoryModel.Offre_Historique" Role="Offre_Historique" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActionOffre">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Offre_Historique">
+              <PropertyRef Name="C_idTypeAction" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Offre__numberOff__5224328E">
+          <End Type="jobzFactoryModel.Codification" Role="Codification" Multiplicity="0..1" />
+          <End Type="jobzFactoryModel.Offre" Role="Offre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Codification">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Offre">
+              <PropertyRef Name="numberOffre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Offre_Historique_Offre">
+          <End Type="jobzFactoryModel.Offre" Role="Offre" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="jobzFactoryModel.Offre_Historique" Role="Offre_Historique" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Offre">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Offre_Historique">
+              <PropertyRef Name="C_idOffre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Offre_Postuler_Offre">
+          <End Type="jobzFactoryModel.Offre" Role="Offre" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="jobzFactoryModel.Offre_Postuler" Role="Offre_Postuler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Offre">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Offre_Postuler">
+              <PropertyRef Name="C_idOffre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Offre_Recruteur">
+          <End Type="jobzFactoryModel.Recruteur" Role="Recruteur" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="jobzFactoryModel.Offre" Role="Offre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recruteur">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Offre">
+              <PropertyRef Name="C_idRecruteur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Offre_SecteurActivite">
+          <End Type="jobzFactoryModel.SecteurActivite" Role="SecteurActivite" Multiplicity="0..1" />
+          <End Type="jobzFactoryModel.Offre" Role="Offre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SecteurActivite">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Offre">
+              <PropertyRef Name="C_idSecteurActivite" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Offre_Ville">
+          <End Type="jobzFactoryModel.Ville" Role="Ville" Multiplicity="0..1" />
+          <End Type="jobzFactoryModel.Offre" Role="Offre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ville">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Offre">
+              <PropertyRef Name="C_idVille" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Offre_Postuler_Profil">
+          <End Type="jobzFactoryModel.Profil" Role="Profil" Multiplicity="1" />
+          <End Type="jobzFactoryModel.Offre_Postuler" Role="Offre_Postuler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profil">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Offre_Postuler">
+              <PropertyRef Name="C_idProfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ville_Pays">
+          <End Type="jobzFactoryModel.Pays" Role="Pays" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="jobzFactoryModel.Ville" Role="Ville" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pays">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ville">
+              <PropertyRef Name="C_idPays" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profil_CV_Profil">
+          <End Type="jobzFactoryModel.Profil" Role="Profil" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="jobzFactoryModel.Profil_CV" Role="Profil_CV" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profil">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Profil_CV">
+              <PropertyRef Name="C_idProfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profil_Link_Profil">
+          <End Type="jobzFactoryModel.Profil" Role="Profil" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="jobzFactoryModel.Profil_Link" Role="Profil_Link" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profil">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Profil_Link">
+              <PropertyRef Name="C_idProfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profil_SecteurActivite">
+          <End Type="jobzFactoryModel.SecteurActivite" Role="SecteurActivite" Multiplicity="0..1" />
+          <End Type="jobzFactoryModel.Profil" Role="Profil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SecteurActivite">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Profil">
+              <PropertyRef Name="C_idSecteur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profil_Ville">
+          <End Type="jobzFactoryModel.Ville" Role="Ville" Multiplicity="0..1" />
+          <End Type="jobzFactoryModel.Profil" Role="Profil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ville">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Profil">
+              <PropertyRef Name="C_idVille" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recruteur_Contact_Recruteur">
+          <End Type="jobzFactoryModel.Recruteur" Role="Recruteur" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="jobzFactoryModel.Recruteur_Contact" Role="Recruteur_Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recruteur">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Recruteur_Contact">
+              <PropertyRef Name="C_idRecruteur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="jobzFactoryModelStoreContainer" CdmEntityContainer="jobzFactoryEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="jobzFactoryModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ActionOffre">
+            <EntityTypeMapping TypeName="jobzFactoryModel.ActionOffre">
+              <MappingFragment StoreEntitySet="ActionOffre">
+                <ScalarProperty Name="action" ColumnName="action" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Codification">
+            <EntityTypeMapping TypeName="jobzFactoryModel.Codification">
+              <MappingFragment StoreEntitySet="Codification">
+                <ScalarProperty Name="offre_number" ColumnName="offre_number" />
+                <ScalarProperty Name="annee" ColumnName="annee" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Offre">
+            <EntityTypeMapping TypeName="jobzFactoryModel.Offre">
+              <MappingFragment StoreEntitySet="Offre">
+                <ScalarProperty Name="numberOffre" ColumnName="numberOffre" />
+                <ScalarProperty Name="nomImage" ColumnName="nomImage" />
+                <ScalarProperty Name="adresseMailAPostuler" ColumnName="adresseMailAPostuler" />
+                <ScalarProperty Name="isConfidentiel" ColumnName="isConfidentiel" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="C_idSecteurActivite" ColumnName="_idSecteurActivite" />
+                <ScalarProperty Name="titreOffre" ColumnName="titreOffre" />
+                <ScalarProperty Name="isPublie" ColumnName="isPublie" />
+                <ScalarProperty Name="C_idVille" ColumnName="_idVille" />
+                <ScalarProperty Name="C_idRecruteur" ColumnName="_idRecruteur" />
+                <ScalarProperty Name="message" ColumnName="message" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Offre_Historique">
+            <EntityTypeMapping TypeName="jobzFactoryModel.Offre_Historique">
+              <MappingFragment StoreEntitySet="Offre_Historique">
+                <ScalarProperty Name="commentaire" ColumnName="commentaire" />
+                <ScalarProperty Name="C_idUtilisateur" ColumnName="_idUtilisateur" />
+                <ScalarProperty Name="C_idTypeAction" ColumnName="_idTypeAction" />
+                <ScalarProperty Name="dateAction" ColumnName="dateAction" />
+                <ScalarProperty Name="C_idOffre" ColumnName="_idOffre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Offre_Postuler">
+            <EntityTypeMapping TypeName="jobzFactoryModel.Offre_Postuler">
+              <MappingFragment StoreEntitySet="Offre_Postuler">
+                <ScalarProperty Name="extantion" ColumnName="extantion" />
+                <ScalarProperty Name="message" ColumnName="message" />
+                <ScalarProperty Name="nomCV" ColumnName="nomCV" />
+                <ScalarProperty Name="DatePostuler" ColumnName="DatePostuler" />
+                <ScalarProperty Name="C_idProfil" ColumnName="_idProfil" />
+                <ScalarProperty Name="C_idOffre" ColumnName="_idOffre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pays">
+            <EntityTypeMapping TypeName="jobzFactoryModel.Pays">
+              <MappingFragment StoreEntitySet="Pays">
+                <ScalarProperty Name="pays1" ColumnName="pays" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profil">
+            <EntityTypeMapping TypeName="jobzFactoryModel.Profil">
+              <MappingFragment StoreEntitySet="Profil">
+                <ScalarProperty Name="C_idSecteur" ColumnName="_idSecteur" />
+                <ScalarProperty Name="adresse" ColumnName="adresse" />
+                <ScalarProperty Name="C_idVille" ColumnName="_idVille" />
+                <ScalarProperty Name="titre" ColumnName="titre" />
+                <ScalarProperty Name="dateCreation" ColumnName="dateCreation" />
+                <ScalarProperty Name="motPasse" ColumnName="motPasse" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+                <ScalarProperty Name="gsm" ColumnName="gsm" />
+                <ScalarProperty Name="adresseMail" ColumnName="adresseMail" />
+                <ScalarProperty Name="dateNaissance" ColumnName="dateNaissance" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profil_CV">
+            <EntityTypeMapping TypeName="jobzFactoryModel.Profil_CV">
+              <MappingFragment StoreEntitySet="Profil_CV">
+                <ScalarProperty Name="extantion" ColumnName="extantion" />
+                <ScalarProperty Name="nomCV" ColumnName="nomCV" />
+                <ScalarProperty Name="DateCreation" ColumnName="DateCreation" />
+                <ScalarProperty Name="C_idProfil" ColumnName="_idProfil" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profil_Link">
+            <EntityTypeMapping TypeName="jobzFactoryModel.Profil_Link">
+              <MappingFragment StoreEntitySet="Profil_Link">
+                <ScalarProperty Name="etat" ColumnName="etat" />
+                <ScalarProperty Name="dateActivation" ColumnName="dateActivation" />
+                <ScalarProperty Name="dateExpiration" ColumnName="dateExpiration" />
+                <ScalarProperty Name="token" ColumnName="token" />
+                <ScalarProperty Name="dateGeneration" ColumnName="dateGeneration" />
+                <ScalarProperty Name="C_idProfil" ColumnName="_idProfil" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recruteur">
+            <EntityTypeMapping TypeName="jobzFactoryModel.Recruteur">
+              <MappingFragment StoreEntitySet="Recruteur">
+                <ScalarProperty Name="adresseSocial" ColumnName="adresseSocial" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="dateCreation" ColumnName="dateCreation" />
+                <ScalarProperty Name="adresseMail" ColumnName="adresseMail" />
+                <ScalarProperty Name="siteweb" ColumnName="siteweb" />
+                <ScalarProperty Name="nomRecruteur" ColumnName="nomRecruteur" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recruteur_Contact">
+            <EntityTypeMapping TypeName="jobzFactoryModel.Recruteur_Contact">
+              <MappingFragment StoreEntitySet="Recruteur_Contact">
+                <ScalarProperty Name="C_idRecruteur" ColumnName="_idRecruteur" />
+                <ScalarProperty Name="profil" ColumnName="profil" />
+                <ScalarProperty Name="dateCreation" ColumnName="dateCreation" />
+                <ScalarProperty Name="motPasse" ColumnName="motPasse" />
+                <ScalarProperty Name="compte" ColumnName="compte" />
+                <ScalarProperty Name="adresseMail" ColumnName="adresseMail" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SecteurActivite">
+            <EntityTypeMapping TypeName="jobzFactoryModel.SecteurActivite">
+              <MappingFragment StoreEntitySet="SecteurActivite">
+                <ScalarProperty Name="SecteurActivite1" ColumnName="SecteurActivite" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ville">
+            <EntityTypeMapping TypeName="jobzFactoryModel.Ville">
+              <MappingFragment StoreEntitySet="Ville">
+                <ScalarProperty Name="C_idPays" ColumnName="_idPays" />
+                <ScalarProperty Name="ville1" ColumnName="ville" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title — Employer Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/assets/css/vendors.css" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <link href="~/assets/css/recruteur-modern.css" rel="stylesheet" />
+</head>
+<body class="jf-rc @(ViewBag.PageLayoutClass)">
+    <div class="jf-rc-app">
+        <aside class="jf-rc-sidebar">
+            <a href="~/Default/TableauBord" class="jf-rc-brand">
+                <span>JF</span> Jobz Factory
+            </a>
+
+            @if (Recruteur.Models.VarSessionRecruteur.compteRecruteur != null)
+            {
+                <div class="jf-rc-user">
+                    <span>Signed in as</span>
+                    <strong>@Recruteur.Models.VarSessionRecruteur.compteRecruteur.prenom @Recruteur.Models.VarSessionRecruteur.compteRecruteur.nom</strong>
+                </div>
+            }
+
+            <ul class="jf-rc-nav">
+                <li>
+                    <a href="~/Default/TableauBord" class="@(ViewBag.Title == "Dashboard" ? "active" : "")">
+                        <i class="fa-solid fa-chart-line"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="~/Annonce/Index" class="@(ViewBag.Title == "Offers" ? "active" : "")">
+                        <i class="fa-solid fa-bullhorn"></i> Job Offers
+                    </a>
+                </li>
+                <li>
+                    <a href="~/Annonce/Create">
+                        <i class="fa-solid fa-plus"></i> New Offer
+                    </a>
+                </li>
+            </ul>
+
+            <div class="jf-rc-sidebar__footer">
+                <a href="@System.Configuration.ConfigurationManager.AppSettings["UrlMain"]" class="jf-rc-btn jf-rc-btn--ghost" style="width:100%;margin-bottom:0.5rem;" target="_blank" rel="noopener noreferrer">View job site</a>
+                <a href="~/Login/LogOut" class="jf-rc-btn jf-rc-btn--danger" style="width:100%;">Sign out</a>
+            </div>
+        </aside>
+
+        <div class="jf-rc-main">
+            <main class="jf-rc-content">
+                @RenderBody()
+            </main>
+            <footer class="jf-rc-footer">
+                &copy; @DateTime.Now.Year Jobz Factory — Employer portal
+            </footer>
+        </div>
+    </div>
+
+    <div id="jf-rc-confirm-modal" class="jf-rc-confirm-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="jf-rc-confirm-title">
+        <div class="jf-rc-confirm__backdrop"></div>
+        <div class="jf-rc-confirm__dialog">
+            <div class="jf-rc-confirm__icon jf-rc-confirm__icon--primary">!</div>
+            <h2 id="jf-rc-confirm-title" class="jf-rc-confirm__title">Are you sure?</h2>
+            <p class="jf-rc-confirm__message">Please confirm this action.</p>
+            <div class="jf-rc-confirm__actions">
+                <button type="button" class="jf-rc-btn jf-rc-confirm__cancel">Cancel</button>
+                <button type="button" class="jf-rc-btn jf-rc-confirm__confirm jf-rc-confirm__confirm--primary">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/assets/js/vendors.js"></script>
+    <script src="https://kit.fontawesome.com/b9b5a2cd02.js" crossorigin="anonymous"></script>
+    <script src="~/assets/js/recruteur-select.js"></script>
+    <script src="~/assets/js/recruteur-confirm.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

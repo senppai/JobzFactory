@@ -1,0 +1,32 @@
+[
+  {
+    "Name": "All Web Sites",
+    "Projects": [
+      {
+        "Path": "JobzFactory\\JobzFactory.csproj",
+        "Action": "Start",
+        "DebugTarget": "IIS Express"
+      },
+      {
+        "Path": "Recruteur\\Recruteur.csproj",
+        "Action": "Start",
+        "DebugTarget": "IIS Express"
+      },
+      {
+        "Path": "Administration\\Administration.csproj",
+        "Action": "Start",
+        "DebugTarget": "IIS Express"
+      }
+    ]
+  },
+  {
+    "Name": "JobzFactory only",
+    "Projects": [
+      {
+        "Path": "JobzFactory\\JobzFactory.csproj",
+        "Action": "Start",
+        "DebugTarget": "IIS Express"
+      }
+    ]
+  }
+]

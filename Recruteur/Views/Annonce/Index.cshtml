@@ -1,0 +1,70 @@
+﻿@using PagedList
+@model PagedList.IPagedList<JF.DAL.Context.Offre>
+@{
+    ViewBag.Title = "Offers";
+    ViewBag.PageLayoutClass = "jf-rc-layout-fixed";
+    var search = ViewBag.Search as string ?? string.Empty;
+    var status = ViewBag.Status as string ?? "all";
+}
+
+<div class="jf-rc-offers-page">
+    <div class="jf-rc-header jf-rc-header--compact">
+        <div>
+            <h1>Job offers</h1>
+            <p id="offer-list-summary">Manage your listings and publication status.</p>
+        </div>
+        <a href="~/Annonce/Create" class="jf-rc-btn jf-rc-btn--primary"><i class="fa-solid fa-plus"></i> New offer</a>
+    </div>
+
+    <div class="jf-rc-card jf-rc-offers-toolbar">
+        <div class="jf-rc-offers-filters jf-rc-offers-filters--primary">
+            <div class="jf-rc-search-field">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="search"
+                       id="offer-search"
+                       class="form-control"
+                       placeholder="Search by title…"
+                       value="@search"
+                       autocomplete="off" />
+            </div>
+            <div class="jf-rc-filter-select">
+                <label for="offer-sector" class="jf-rc-sr-only">Sector</label>
+                @Html.DropDownList("offer-sector", (SelectList)ViewBag.SectorFilter, "All sectors", new {
+                    @class = "form-control jf-rc-select",
+                    id = "offer-sector",
+                    data_placeholder = "All sectors",
+                    data_search_placeholder = "Type to search sectors…",
+                    aria_label = "Filter by sector"
+                })
+            </div>
+            <div class="jf-rc-filter-select">
+                <label for="offer-city" class="jf-rc-sr-only">City</label>
+                @Html.DropDownList("offer-city", (SelectList)ViewBag.CityFilter, "All cities", new {
+                    @class = "form-control jf-rc-select",
+                    id = "offer-city",
+                    data_placeholder = "All cities",
+                    data_search_placeholder = "Type to search cities…",
+                    aria_label = "Filter by city"
+                })
+            </div>
+        </div>
+        <div class="jf-rc-offers-filters jf-rc-offers-filters--status">
+            <div class="jf-rc-filter-tabs" role="tablist" aria-label="Filter by status">
+                <button type="button" class="jf-rc-filter-tab @(status == "all" ? "is-active" : "")" data-status="all">All</button>
+                <button type="button" class="jf-rc-filter-tab @(status == "live" ? "is-active" : "")" data-status="live">Live</button>
+                <button type="button" class="jf-rc-filter-tab @(status == "draft" ? "is-active" : "")" data-status="draft">Draft</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="jf-rc-card jf-rc-offers-list-card">
+        <div id="offer-list-container"
+             data-base-url="@Url.Action("Index")">
+            @Html.Partial("_OfferList", Model)
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/assets/js/annonce-index.js"></script>
+}

@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>JobzFactory — Project Report</title>
+<style>
+@page {
+  size: A4;
+  margin: 2.5cm;
+}
+@media print {
+  .page-break { page-break-before: always; }
+  .cover-page { page-break-after: always; }
+  body { margin: 0; }
+}
+body {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 12pt;
+  line-height: 1.5;
+  text-align: justify;
+  color: #000;
+  max-width: 21cm;
+  margin: 0 auto;
+  padding: 2.5cm;
+}
+h1, h2, h3, h4, .chapter-title {
+  color: #1a4480;
+  font-family: "Times New Roman", Times, serif;
+}
+h1, .chapter-title {
+  font-size: 16pt;
+  font-weight: bold;
+  text-align: left;
+}
+h2 {
+  font-size: 14pt;
+  font-weight: bold;
+}
+h3 {
+  font-size: 12pt;
+  font-weight: bold;
+}
+.cover-page {
+  text-align: center;
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 2cm;
+}
+.cover-logos {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3cm;
+}
+.logo-box {
+  width: 120px;
+  height: 80px;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10pt;
+  color: #666;
+}
+.cover-title {
+  font-size: 16pt;
+  font-weight: bold;
+  color: #1a4480;
+  margin: 1.5cm 0;
+  line-height: 1.4;
+}
+.cover-sub {
+  font-size: 12pt;
+  margin: 0.4cm 0;
+}
+.toc-entry {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.15cm 0;
+  font-size: 12pt;
+}
+.toc-entry.level2 { padding-left: 1cm; }
+.toc-entry.level3 { padding-left: 2cm; }
+.box-summary, .box-conclusion {
+  border-left: 3px solid #1a4480;
+  padding: 0.3cm 0.6cm;
+  margin: 0.5cm 0;
+  background: #f8f9fb;
+  font-size: 12pt;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12pt;
+  font-family: "Times New Roman", Times, serif;
+  margin: 0.4cm 0;
+}
+table caption {
+  caption-side: bottom;
+  font-size: 11pt;
+  font-style: italic;
+  text-align: left;
+  padding-top: 0.2cm;
+  color: #333;
+}
+th, td {
+  border: 1px solid #333;
+  padding: 6px 8px;
+  text-align: left;
+}
+th {
+  background: #e8edf4;
+  font-weight: bold;
+}
+.figure-block {
+  margin: 0.6cm 0;
+  text-align: center;
+}
+.figure-block img, .figure-placeholder {
+  max-width: 100%;
+  border: 1px solid #ccc;
+}
+.figure-caption {
+  font-size: 11pt;
+  font-style: italic;
+  text-align: left;
+  margin-top: 0.2cm;
+}
+.page-num {
+  text-align: right;
+  font-size: 11pt;
+  margin-top: 1cm;
+}
+p { margin: 0.35cm 0; }
+ul, ol { margin: 0.3cm 0; padding-left: 1.2cm; }
+.no-indent { text-indent: 0; }
+</style>
+</head>
+<body>
+
+<!-- ==================== COVER PAGE ==================== -->
+<div class="cover-page">
+  <div class="cover-logos">
+    <div class="logo-box">[Institution Logo]</div>
+    <div class="logo-box">[School / Faculty Logo]</div>
+  </div>
+
+  <p class="cover-sub">Academic Year 2025–2026</p>
+
+  <p class="cover-title">
+    Design and Development of JobzFactory:<br>
+    A Multi-Portal Job Board Platform<br>
+    Based on ASP.NET MVC and SQL Server
+  </p>
+
+  <p class="cover-sub" style="margin-top: 2cm;">
+    <strong>Prepared by:</strong><br>
+    [First Name] [Last Name]
+  </p>
+  <p class="cover-sub">
+    <strong>Class:</strong> [Class / Group]<br>
+    <strong>Supervisor:</strong> [Supervisor Name]
+  </p>
+  <p class="cover-sub" style="margin-top: 1.5cm;">
+    <strong>Institution:</strong> [Institution Name]<br>
+    <strong>Date:</strong> June 2026
+  </p>
+
+  <div class="logo-box" style="margin: 1.5cm auto 0; width: 100px;">[Project Logo]</div>
+</div>
+
+<!-- ==================== TABLE OF CONTENTS ==================== -->
+<div class="page-break">
+<h1>List of Contents</h1>
+<div class="toc-entry"><span>List of Abbreviations</span><span>iii</span></div>
+<div class="toc-entry"><span>Glossary</span><span>iv</span></div>
+<div class="toc-entry"><span>General Introduction</span><span>1</span></div>
+<div class="toc-entry"><span>Chapter 1 — Project Context and Objectives</span><span>3</span></div>
+<div class="toc-entry level2"><span>1.1 Background and Problem Statement</span><span>3</span></div>
+<div class="toc-entry level2"><span>1.2 Project Goals</span><span>4</span></div>
+<div class="toc-entry level2"><span>1.3 Scope and Limitations</span><span>5</span></div>
+<div class="toc-entry"><span>Chapter 2 — System Architecture</span><span>7</span></div>
+<div class="toc-entry level2"><span>2.1 Solution Structure</span><span>7</span></div>
+<div class="toc-entry level2"><span>2.2 Technology Stack</span><span>8</span></div>
+<div class="toc-entry level2"><span>2.3 Data Flow Between Portals</span><span>10</span></div>
+<div class="toc-entry"><span>Chapter 3 — Database Design</span><span>12</span></div>
+<div class="toc-entry level2"><span>3.1 Entity Model</span><span>12</span></div>
+<div class="toc-entry level2"><span>3.2 Deployment and Seed Data</span><span>14</span></div>
+<div class="toc-entry"><span>Chapter 4 — Application Modules</span><span>16</span></div>
+<div class="toc-entry level2"><span>4.1 Public Website (JobzFactory)</span><span>16</span></div>
+<div class="toc-entry level2"><span>4.2 Recruiter Portal (Recruteur)</span><span>18</span></div>
+<div class="toc-entry level2"><span>4.3 Candidate Portal (Profil)</span><span>20</span></div>
+<div class="toc-entry level2"><span>4.4 Administration Module</span><span>21</span></div>
+<div class="toc-entry"><span>Chapter 5 — Implementation Work and Challenges</span><span>23</span></div>
+<div class="toc-entry level2"><span>5.1 Work Completed During the Project</span><span>23</span></div>
+<div class="toc-entry level2"><span>5.2 Difficulties Encountered</span><span>25</span></div>
+<div class="toc-entry level2"><span>5.3 Security and Improvement Points</span><span>26</span></div>
+<div class="toc-entry"><span>General Conclusion</span><span>28</span></div>
+<div class="toc-entry"><span>Bibliography and Webography</span><span>30</span></div>
+<div class="toc-entry"><span>Annexes</span><span>32</span></div>
+</div>
+
+<!-- ==================== ABBREVIATIONS ==================== -->
+<div class="page-break">
+<h1>List of Abbreviations</h1>
+<table>
+<caption>Table 1 — Abbreviations used in this report</caption>
+<tr><th>Abbreviation</th><th>Meaning</th></tr>
+<tr><td>API</td><td>Application Programming Interface</td></tr>
+<tr><td>ASP.NET</td><td>Active Server Pages .NET (Microsoft web framework)</td></tr>
+<tr><td>CI/CD</td><td>Continuous Integration / Continuous Deployment</td></tr>
+<tr><td>CRUD</td><td>Create, Read, Update, Delete</td></tr>
+<tr><td>CV</td><td>Curriculum Vitae (résumé)</td></tr>
+<tr><td>DACPAC</td><td>Data-tier Application Package (SQL Server deployment format)</td></tr>
+<tr><td>EF / EF6</td><td>Entity Framework version 6</td></tr>
+<tr><td>FK</td><td>Foreign Key</td></tr>
+<tr><td>IIS</td><td>Internet Information Services</td></tr>
+<tr><td>MVC</td><td>Model–View–Controller</td></tr>
+<tr><td>ORM</td><td>Object–Relational Mapping</td></tr>
+<tr><td>SQL</td><td>Structured Query Language</td></tr>
+<tr><td>SSDT</td><td>SQL Server Data Tools</td></tr>
+<tr><td>SSMS</td><td>SQL Server Management Studio</td></tr>
+</table>
+<p>The abbreviations above are used consistently throughout the document. Full terms are given on first use in each chapter where needed.</p>
+</div>
+
+<!-- ==================== GLOSSARY ==================== -->
+<div class="page-break">
+<h1>Glossary</h1>
+<table>
+<caption>Table 2 — Key terms related to the JobzFactory project</caption>
+<tr><th>Term</th><th>Definition</th></tr>
+<tr><td>Job offer (Offre)</td><td>A published or draft vacancy created by a recruiter, including title, description, location, and application settings.</td></tr>
+<tr><td>Recruiter (Recruteur)</td><td>A company or organisation registered on the platform to publish job offers and manage applications.</td></tr>
+<tr><td>Recruiter contact</td><td>An individual user account linked to a recruiter entity, used for login and day-to-day management.</td></tr>
+<tr><td>Candidate profile (Profil)</td><td>A person registered on the platform who can apply to job offers and upload a CV.</td></tr>
+<tr><td>Application (Offre_Postuler)</td><td>The act of submitting a CV and message for a specific job offer.</td></tr>
+<tr><td>Codification</td><td>An internal numbering system that assigns a unique reference to each job offer per year.</td></tr>
+<tr><td>Portal</td><td>One of the separate web applications in the solution (public site, recruiter area, candidate signup, or admin).</td></tr>
+<tr><td>Shared data layer (JF.DAL)</td><td>The class library containing Entity Framework entities and the database context used by all portals.</td></tr>
+</table>
+</div>
+
+<!-- ==================== GENERAL INTRODUCTION ==================== -->
+<div class="page-break">
+<h1>General Introduction</h1>
+
+<div class="box-summary">
+<strong>Summary.</strong> This report presents the work carried out on JobzFactory, a job board platform developed as a multi-project ASP.NET MVC solution. The introduction outlines the motivation behind the project, the main actors involved, and the structure of the document.
+</div>
+
+<p>Online recruitment has become a standard channel for both companies and job seekers. Small and medium businesses often need a straightforward tool to publish vacancies, receive applications, and track candidates without relying on expensive third-party platforms. JobzFactory was built to address this need: it connects recruiters, candidates, and administrators through several linked web applications that share a single SQL Server database.</p>
+
+<p>The solution is not a single website but a Visual Studio solution containing five .NET projects plus a database project. The public-facing site allows anyone to browse published offers and apply with a CV. The recruiter portal gives authenticated users the ability to create offers, publish them, and review applicants. A separate candidate registration module handles profile creation. An administration module provides full CRUD operations on recruiters and offers for back-office use.</p>
+
+<p>During this project, most of my effort went into understanding the existing codebase, setting up the local database, tracing data flows between controllers and entities, and documenting how the different portals interact. Some features—such as email verification for candidates—exist in the code but are partially disabled or commented out, which is discussed later in the report.</p>
+
+<p>This document is organised into five chapters. Chapter 1 defines the context and objectives. Chapter 2 describes the architecture. Chapter 3 covers the database. Chapter 4 walks through each application module. Chapter 5 focuses on the implementation work, challenges, and points for improvement. A general conclusion closes the report, followed by the bibliography and annexes.</p>
+
+<div class="box-conclusion">
+<strong>Conclusion.</strong> JobzFactory is a practical recruitment platform whose value lies in its modular structure and shared data layer. The following chapters explain how the system was designed and what was achieved during the project period.
+</div>
+</div>
+
+<!-- ==================== CHAPTER 1 ==================== -->
+<div class="page-break">
+<h1 class="chapter-title">Chapter 1 — Project Context and Objectives</h1>
+
+<div class="box-summary">
+<strong>Chapter summary.</strong> This chapter explains why JobzFactory was developed, what problems it is meant to solve, and what was included or excluded from the project scope.
+</div>
+
+<h2>1.1 Background and Problem Statement</h2>
+
+<p>Traditional recruitment often involves scattered communication: offers posted on social media, CVs received by email, and no central history of changes to a vacancy. For a development project in a web technologies course (or internship setting), the goal was to build something closer to real industry practice—a system with distinct user roles, persistent storage, and a maintainable structure.</p>
+
+<p>JobzFactory targets three types of users. Recruiters need to manage job postings and see who applied. Candidates need a simple way to submit an application with an attached CV. Administrators need oversight of all recruiters and offers. The public website ties everything together by displaying only published vacancies and routing applications into the database.</p>
+
+<p>The existing codebase already contained a working foundation when the project was taken over. My role was to analyse it thoroughly, ensure the database could be recreated locally, and clarify how each module contributed to the overall platform.</p>
+
+<h2>1.2 Project Goals</h2>
+
+<p>The main objectives assigned to this project can be summarised as follows:</p>
+
+<ol>
+<li>Understand and document the full solution architecture (web projects, data layer, database).</li>
+<li>Ensure the SQL Server schema matches the Entity Framework model and can be deployed via scripts or DACPAC.</li>
+<li>Describe the functional behaviour of each portal (public site, recruiter, candidate, admin).</li>
+<li>Identify security weaknesses and incomplete features for future correction.</li>
+<li>Prepare the solution for build and deployment using Azure DevOps pipeline configuration already present in the repository.</li>
+</ol>
+
+<p>Secondary goals included verifying that sample data and test accounts work for demonstration purposes, and mapping uploaded CV files to their corresponding application records in the database.</p>
+
+<h2>1.3 Scope and Limitations</h2>
+
+<p>The project scope covers the backend logic, database design, and MVC views contained in the repository. It does not include mobile applications, payment processing, or advanced matching algorithms between candidates and offers.</p>
+
+<p>Several limitations should be noted honestly. Password storage uses plain text comparison in the login controller, which is not acceptable for production. Email sending for account activation is implemented in helper classes but largely commented out in the registration flow. The administration portal does not implement visible authentication in the controller layer, meaning it should not be exposed publicly without additional security work.</p>
+
+<p>These limitations do not invalidate the project as a learning exercise, but they define clear boundaries for what the current version can safely be used for—mainly local development, demonstration, and further hardening.</p>
+
+<div class="box-conclusion">
+<strong>Chapter conclusion.</strong> JobzFactory addresses a real recruitment workflow with a multi-portal architecture. The project goals focused on understanding, documenting, and validating the system rather than rewriting it from scratch. Scope was deliberately kept aligned with what the existing solution already supports.
+</div>
+</div>
+
+<!-- ==================== CHAPTER 2 ==================== -->
+<div class="page-break">
+<h1 class="chapter-title">Chapter 2 — System Architecture</h1>
+
+<div class="box-summary">
+<strong>Chapter summary.</strong> This chapter presents the structure of the Visual Studio solution, the technologies used, and how data moves between the four web applications and the shared database.
+</div>
+
+<h2>2.1 Solution Structure</h2>
+
+<p>The solution file <em>JobzFactory.sln</em> groups six projects. Five are .NET Framework class library or web application projects; one is a SQL Server Database Project for schema management. The diagram below gives an overview of how these components relate to each other.</p>
+
+<div class="figure-block">
+<pre class="figure-placeholder" style="text-align:left; padding:15px; font-size:11pt; background:#fafafa;">
+┌─────────────────────────────────────────────────────────────────┐
+│                     JobzFactory.sln                              │
+├─────────────┬─────────────┬─────────────┬──────────────────────┤
+│ JobzFactory │  Recruteur  │   Profil    │   Administration     │
+│ (public)    │ (recruiter) │ (candidate) │   (admin CRUD)       │
+└──────┬──────┴──────┬──────┴──────┬──────┴──────────┬───────────┘
+       │             │             │                  │
+       └─────────────┴──────┬──────┴──────────────────┘
+                            ▼
+                    ┌───────────────┐
+                    │    JF.DAL     │  ← Entity Framework 6
+                    │  (shared DLL) │
+                    └───────┬───────┘
+                            ▼
+                    ┌───────────────┐
+                    │  SQL Server   │  ← database: jobzFactory
+                    │  + SSDT proj  │
+                    └───────────────┘
+</pre>
+<p class="figure-caption">Figure 1 — High-level architecture of the JobzFactory solution (source: project analysis, 2026)</p>
+</div>
+
+<p>Each web project is designed to be hosted as a separate IIS application. They all reference the same <em>JF.DAL</em> assembly and therefore use identical entity classes and connection string configuration pointing to the <em>jobzFactory</em> catalog on SQL Server.</p>
+
+<h2>2.2 Technology Stack</h2>
+
+<p>Before presenting the stack in table form, it is worth noting that the project follows a classic Microsoft web stack from the late 2010s—stable, well documented, and still common in enterprise environments.</p>
+
+<table>
+<caption>Table 3 — Main technologies used in JobzFactory</caption>
+<tr><th>Layer</th><th>Technology</th><th>Version / Notes</th></tr>
+<tr><td>Framework</td><td>.NET Framework</td><td>4.7.2</td></tr>
+<tr><td>Web pattern</td><td>ASP.NET MVC</td><td>5.2.7</td></tr>
+<tr><td>ORM</td><td>Entity Framework</td><td>6.x (Database First via EDMX)</td></tr>
+<tr><td>Database</td><td>Microsoft SQL Server</td><td>Local instance, Windows auth</td></tr>
+<tr><td>Frontend</td><td>Razor views, Bootstrap, jQuery</td><td>Bootstrap 3/4 theme assets</td></tr>
+<tr><td>Auth (recruiter)</td><td>Forms Authentication</td><td>Custom principal + JSON user data in ticket</td></tr>
+<tr><td>CI</td><td>Azure Pipelines</td><td>NuGet restore, VSBuild, VSTest</td></tr>
+<tr><td>DB deployment</td><td>SSDT / DACPAC</td><td>PowerShell build and publish scripts</td></tr>
+</table>
+
+<p>NuGet packages are managed per project through individual <em>packages.config</em> files. Pagination on list views uses the PagedList library. Newtonsoft.Json serialises recruiter session data into the authentication cookie.</p>
+
+<h2>2.3 Data Flow Between Portals</h2>
+
+<p>The following table describes a typical end-to-end scenario: a candidate applies to a job that was published by a recruiter. This helps clarify why all portals must share the same database rather than maintaining separate stores.</p>
+
+<table>
+<caption>Table 4 — Application flow from job publication to CV submission</caption>
+<tr><th>Step</th><th>Portal</th><th>Action</th></tr>
+<tr><td>1</td><td>Recruteur</td><td>Recruiter logs in, creates an offer, sets <em>isPublie</em> when ready</td></tr>
+<tr><td>2</td><td>JobzFactory</td><td>Public homepage lists offers where <em>isPublie = true</em></td></tr>
+<tr><td>3</td><td>JobzFactory</td><td>Candidate opens job detail via URL slug, fills apply form</td></tr>
+<tr><td>4</td><td>JobzFactory</td><td>System creates <em>Profil</em> and <em>Offre_Postuler</em>, saves CV to disk</td></tr>
+<tr><td>5</td><td>Recruteur</td><td>Recruiter views applicants list for that offer</td></tr>
+<tr><td>6</td><td>Administration</td><td>Admin can view or edit the same offer record if needed</td></tr>
+</table>
+
+<p>CV files are stored under <em>Ressource/CV/OffrePostule/{applicationId}/</em> on the public site’s file system. The database stores the file name and extension in the application record, not the binary content itself.</p>
+
+<div class="box-conclusion">
+<strong>Chapter conclusion.</strong> JobzFactory uses a layered, multi-project architecture centred on a shared EF6 data access library. The technology choices are conventional for ASP.NET MVC applications, and the data flow between portals is straightforward once the shared database is understood.
+</div>
+</div>
+
+<!-- ==================== CHAPTER 3 ==================== -->
+<div class="page-break">
+<h1 class="chapter-title">Chapter 3 — Database Design</h1>
+
+<div class="box-summary">
+<strong>Chapter summary.</strong> This chapter details the relational schema, the main entities, and how the database is created and populated for local development.
+</div>
+
+<h2>3.1 Entity Model</h2>
+
+<p>The Entity Framework model is defined in <em>JF.DAL/Context/Model.edmx</em> and was reverse-engineered from the SQL Server schema (or kept in sync with it). Fourteen entity sets map to tables in the <em>dbo</em> schema. The entity-relationship structure is summarised below.</p>
+
+<div class="figure-block">
+<pre class="figure-placeholder" style="text-align:left; padding:12px; font-size:10pt; background:#fafafa;">
+Pays ──► Ville ──► Profil / Offre
+SecteurActivite ──► Profil / Offre
+Recruteur ──► Recruteur_Contact
+Recruteur ──► Offre ──► Offre_Historique (via ActionOffre)
+Offre ──► Offre_Postuler ◄── Profil
+Profil ──► Profil_CV, Profil_Link
+Codification ──► Offre (offer numbering)
+</pre>
+<p class="figure-caption">Figure 2 — Simplified entity relationships in the jobzFactory database (source: Database/README.md and Model.edmx, 2026)</p>
+</div>
+
+<p>The most heavily used tables during normal operation are <em>Offre</em>, <em>Recruteur</em>, <em>Recruteur_Contact</em>, <em>Profil</em>, and <em>Offre_Postuler</em>. Reference data lives in <em>Pays</em>, <em>Ville</em>, and <em>SecteurActivite</em>. The <em>Offre_Historique</em> table records actions performed on offers (useful for the recruiter history view).</p>
+
+<p>Table 5 lists the primary tables and their role. Foreign key definitions are centralised in <em>ForeignKeys.sql</em> within the database project.</p>
+
+<table>
+<caption>Table 5 — Main database tables and their purpose</caption>
+<tr><th>Table</th><th>Purpose</th></tr>
+<tr><td>Recruteur</td><td>Company profile: name, email, URL slug, creation date</td></tr>
+<tr><td>Recruteur_Contact</td><td>Login account: username, password, link to recruiter</td></tr>
+<tr><td>Offre</td><td>Job posting: title, HTML message, city, sector, publish flag</td></tr>
+<tr><td>Profil</td><td>Candidate: name, email, phone, password field</td></tr>
+<tr><td>Offre_Postuler</td><td>Application: message, CV filename, dates, FK to offer and profile</td></tr>
+<tr><td>Codification</td><td>Year-based counter used to build unique offer URLs</td></tr>
+<tr><td>Profil_Link</td><td>Email verification token with expiration timestamp</td></tr>
+<tr><td>ActionOffre / Offre_Historique</td><td>Lookup and log of recruiter actions on offers</td></tr>
+</table>
+
+<h2>3.2 Deployment and Seed Data</h2>
+
+<p>Two approaches exist to create the database, which is helpful when working on different machines or preparing a demo environment.</p>
+
+<p><strong>SQL scripts.</strong> Running <em>jobzFactory_CreateDatabase.sql</em>, then <em>jobzFactory_SeedData.sql</em>, then <em>jobzFactory_SampleData.sql</em> in order will build the schema and insert reference and demo data. This method is easy to follow in SSMS.</p>
+
+<p><strong>DACPAC (recommended in project docs).</strong> The SSDT project under <em>Database/jobzFactory.Database</em> compiles to a DACPAC file. The PowerShell scripts <em>Build-Dacpac.ps1</em> and <em>Publish-LocalDatabase.ps1</em> automate build and publish to a local SQL instance. Post-deployment script <em>Script.PostDeployment.sql</em> loads seed and sample data automatically.</p>
+
+<p>Sample accounts documented in the database README include recruiter logins <em>recruteur.demo</em> and <em>tech.hr</em> (password <em>123</em>), and candidate email <em>candidat.demo@test.local</em>. These accounts were used during testing to verify login and listing behaviour without creating new data each time.</p>
+
+<p>All web projects share the same connection string pattern: Entity Framework metadata paths pointing to embedded CSDL/SSDL/MSL resources, with a SQL provider connection to <em>data source=.;initial catalog=jobzFactory;integrated security=True</em>.</p>
+
+<div class="box-conclusion">
+<strong>Chapter conclusion.</strong> The database is relational, normalised around recruiters, offers, and applications, with supporting lookup and audit tables. Deployment is well supported through both manual scripts and SSDT automation, which made local setup repeatable during the project.
+</div>
+</div>
+
+<!-- ==================== CHAPTER 4 ==================== -->
+<div class="page-break">
+<h1 class="chapter-title">Chapter 4 — Application Modules</h1>
+
+<div class="box-summary">
+<strong>Chapter summary.</strong> This chapter describes the four web applications: what each one does, which controllers and views matter most, and how they fit into the overall platform.
+</div>
+
+<h2>4.1 Public Website (JobzFactory)</h2>
+
+<p>The main site is the public entry point. Its homepage (<em>DefaultController.Index</em>) loads published offers with pagination (six per page), including related city and recruiter data. Offers are ordered by ID descending as a stand-in for creation date ordering.</p>
+
+<p><em>JobController</em> handles the core candidate journey. The <em>Detail</em> action resolves an offer by URL slug. The <em>Apply</em> action shows a form; on POST it creates a new <em>Profil</em> record, an <em>Offre_Postuler</em> record, and saves the uploaded CV to a folder named after the application ID. A confirmation view (<em>SendApply</em>) is shown only when redirected with the correct TempData flag, which avoids accidental resubmission on refresh.</p>
+
+<p>Additional controllers (<em>ProfilController</em>, <em>RecruteurController</em>) expose public profile and recruiter detail pages. Static assets include a full Bootstrap-based theme, carousel scripts, and a large collection of uploaded CVs under <em>Ressource/CV/OffrePostule/</em> from real test submissions.</p>
+
+<h2>4.2 Recruiter Portal (Recruteur)</h2>
+
+<p>Recruiters authenticate through <em>LoginController</em> using Forms Authentication. On successful login, user details are serialised into the auth ticket and a static session helper (<em>VarSessionRecruteur</em>) holds the current contact for the request pipeline.</p>
+
+<p>The <em>AnnonceController</em> is the heart of this portal. It lists offers belonging to the logged-in recruiter, supports create/edit/delete, manages publication status, shows a kanban-style board view, lists candidates per offer, and displays paginated action history. Access is restricted by <em>[CustomAuthorize(Roles = "RecruteurAdmin")]</em>.</p>
+
+<p>New recruiters can self-register via <em>LoginController.SignUp</em>, which creates both a <em>Recruteur</em> entity and a linked <em>Recruteur_Contact</em> with a randomly generated password. The UI uses a dashboard theme (CSS/JS under <em>assets/</em>) distinct from the public site’s look and feel.</p>
+
+<h2>4.3 Candidate Portal (Profil)</h2>
+
+<p>The Profil project is smaller in scope. <em>SignUpController.Register</em> accepts candidate details, checks for duplicate email, inserts a <em>Profil</em> row, and creates a <em>Profil_Link</em> verification token valid for ten minutes. The email sending and account activation actions exist but are commented out in the controller, so registration currently ends at the <em>EndSignUp</em> view without actual email confirmation.</p>
+
+<p>Default password <em>123</em> is hardcoded at registration—the same pattern appears in the public apply flow. This was likely chosen for prototyping speed but should be changed before any real deployment.</p>
+
+<h2>4.4 Administration Module</h2>
+
+<p>Administration provides scaffold-style CRUD for <em>Offre</em> and <em>Recruteur</em> through <em>OffreController</em> and <em>RecruteurController</em>. Views follow standard MVC patterns: Index lists, Create/Edit forms with dropdowns for foreign keys, Details and Delete confirmation pages.</p>
+
+<p>Unlike the recruiter portal, no authorisation attribute appears on these controllers in the current codebase. For a production system, this module would need at least role-based access control and ideally integration with the same authentication mechanism used elsewhere—or a separate admin identity store.</p>
+
+<p>Table 6 compares the four portals by audience and main functionality.</p>
+
+<table>
+<caption>Table 6 — Comparison of the four web modules</caption>
+<tr><th>Module</th><th>Primary users</th><th>Authentication</th><th>Main features</th></tr>
+<tr><td>JobzFactory</td><td>Public, candidates</td><td>None for browsing/apply</td><td>Job listing, detail, apply, CV upload</td></tr>
+<tr><td>Recruteur</td><td>Recruiter staff</td><td>Forms Auth + custom roles</td><td>Offer CRUD, publish, candidates, history</td></tr>
+<tr><td>Profil</td><td>Candidates</td><td>Partial (logout only)</td><td>Registration, verification tokens (email disabled)</td></tr>
+<tr><td>Administration</td><td>System admin</td><td>Not implemented in code</td><td>Full CRUD on offers and recruiters</td></tr>
+</table>
+
+<div class="box-conclusion">
+<strong>Chapter conclusion.</strong> Each portal serves a distinct user group but relies on the same entities and database. The recruiter and public modules are the most complete; the candidate portal and admin module need additional security and feature work before production use.
+</div>
+</div>
+
+<!-- ==================== CHAPTER 5 ==================== -->
+<div class="page-break">
+<h1 class="chapter-title">Chapter 5 — Implementation Work and Challenges</h1>
+
+<div class="box-summary">
+<strong>Chapter summary.</strong> This chapter focuses on what was actually done during the project, the problems encountered while working with the codebase, and recommendations for security and future development.
+</div>
+
+<h2>5.1 Work Completed During the Project</h2>
+
+<p>The following items represent the main deliverables and tasks completed:</p>
+
+<ul>
+<li>Full inventory and analysis of the solution: six projects, roughly 650 source files excluding build output.</li>
+<li>Review of all C# controllers and their interaction with <em>jobzFactoryEntities</em>.</li>
+<li>Documentation of database tables, relationships, and deployment options (scripts vs DACPAC).</li>
+<li>Verification of connection strings across <em>Web.config</em> and <em>App.Config</em> files for local SQL Server.</li>
+<li>Mapping of the job application flow from public apply form to file storage and recruiter candidate view.</li>
+<li>Review of Azure Pipelines YAML for automated build configuration.</li>
+<li>Preparation of this report structured according to academic formatting requirements.</li>
+</ul>
+
+<p>Where the repository already contained working features, the priority was understanding and documenting rather than rewriting. That approach saved time and respected the existing architecture, which is a reasonable strategy when taking over a inherited project.</p>
+
+<h2>5.2 Difficulties Encountered</h2>
+
+<p>Several issues came up during analysis and local setup:</p>
+
+<p><strong>Database-first and EDMX.</strong> Entity Framework Database First with <em>Model.edmx</em> is less common in newer projects than Code First. Any schema change requires updating SQL, refreshing the model, and rebuilding JF.DAL—a process that is easy to get wrong if steps are skipped.</p>
+
+<p><strong>Hardcoded values.</strong> The offer numbering logic in <em>AnnonceController.Create</em> references year <em>2022</em> in one LINQ filter regardless of the current year, which can produce incorrect codification counts over time. Password defaults and plaintext storage were surprising to find and required explicit documentation.</p>
+
+<p><strong>Disabled email features.</strong> Tracing why registration did not send verification emails led to commented-out code in <em>SignUpController</em> and unused email helper classes. This is not a bug in the strict sense, but it can confuse anyone expecting the feature to work out of the box.</p>
+
+<p><strong>Multiple web roots.</strong> Hosting four separate MVC apps locally means configuring four IIS sites or using multiple startup projects in Visual Studio, each with its own port. This is standard for the architecture but adds setup overhead compared to a single monolithic app.</p>
+
+<h2>5.3 Security and Improvement Points</h2>
+
+<p>Table 7 summarises the most important security and quality improvements identified. These were not all implemented during the reporting phase but form a practical roadmap.</p>
+
+<table>
+<caption>Table 7 — Recommended improvements (priority order)</caption>
+<tr><th>Priority</th><th>Issue</th><th>Suggested action</th></tr>
+<tr><td>High</td><td>Plaintext passwords</td><td>Hash with bcrypt/ASP.NET Identity; never store or compare raw passwords</td></tr>
+<tr><td>High</td><td>Admin portal unprotected</td><td>Add authentication and authorisation middleware or attributes</td></tr>
+<tr><td>High</td><td>Credentials in Web.config</td><td>Move email secrets to environment variables or Azure Key Vault</td></tr>
+<tr><td>Medium</td><td>CV upload validation</td><td>Restrict file types and size; scan uploads; store outside web root</td></tr>
+<tr><td>Medium</td><td>Email verification disabled</td><td>Re-enable SendGrid/SMTP helpers and test activation flow</td></tr>
+<tr><td>Low</td><td>Codification year filter</td><td>Use DateTime.Now.Year dynamically in offer numbering</td></tr>
+</table>
+
+<p>From a learning perspective, working through these issues was useful: they illustrate the gap between a functional prototype and a system ready for real users.</p>
+
+<div class="box-conclusion">
+<strong>Chapter conclusion.</strong> The project phase delivered solid understanding and documentation of JobzFactory. The main technical debt lies in security and incomplete features rather than in the overall architecture, which remains coherent for continued development.
+</div>
+</div>
+
+<!-- ==================== GENERAL CONCLUSION ==================== -->
+<div class="page-break">
+<h1>General Conclusion</h1>
+
+<p>JobzFactory demonstrates how a recruitment platform can be split into specialised web applications while sharing a single data layer and database. The public site, recruiter portal, candidate registration module, and administration back-office each address a clear part of the hiring workflow.</p>
+
+<p>Through this project, I gained practical experience reading a multi-project ASP.NET MVC solution, tracing Entity Framework queries from controllers to tables, and deploying a SQL Server schema using both scripts and SSDT. The platform is functional for demonstration: recruiters can manage offers, candidates can apply with CV uploads, and administrators can inspect records through CRUD screens.</p>
+
+<p>At the same time, the analysis highlighted areas that must be addressed before any production release—password handling, admin access control, and secrets management being the most urgent. Email verification and offer numbering also need attention to match the intended design.</p>
+
+<p>Overall, JobzFactory is a workable foundation. The architecture is understandable, the database is well structured, and the separation of portals maps cleanly to real user roles. Future work should focus on security hardening, completing partially implemented features, and optionally modernising the stack (for example, migrating toward ASP.NET Core and Code First over time).</p>
+
+<p>This report aimed to document the system honestly, with emphasis on what was built, how it fits together, and what remains to be done—so that anyone reading it can continue the project without starting from zero.</p>
+</div>
+
+<!-- ==================== BIBLIOGRAPHY ==================== -->
+<div class="page-break">
+<h1>Bibliography and Webography</h1>
+
+<p>Sources consulted during the writing of this report and the development analysis:</p>
+
+<ol>
+<li>Microsoft Corporation, <em>ASP.NET MVC Documentation</em>, https://learn.microsoft.com/en-us/aspnet/mvc/ — accessed June 2026.</li>
+<li>Microsoft Corporation, <em>Entity Framework 6 Documentation</em>, https://learn.microsoft.com/en-us/ef/ef6/ — accessed June 2026.</li>
+<li>Microsoft Corporation, <em>SQL Server Data Tools (SSDT)</em>, https://learn.microsoft.com/en-us/sql/ssdt/ — accessed June 2026.</li>
+<li>Microsoft Corporation, <em>Azure Pipelines documentation</em>, https://learn.microsoft.com/en-us/azure/devops/pipelines/ — accessed June 2026.</li>
+<li>JobzFactory project repository, <em>Database/README.md</em> — internal project documentation, 2026.</li>
+<li>JobzFactory solution source code, Visual Studio solution <em>JobzFactory.sln</em>, projects JobzFactory, JF.DAL, Recruteur, Profil, Administration — analysed June 2026.</li>
+<li>Freeman, A., Sanderson, E., <em>Pro ASP.NET MVC 5</em>, Apress, 2013 — general reference for MVC patterns cited in course materials.</li>
+<li>Bootstrap Team, <em>Bootstrap Documentation</em>, https://getbootstrap.com/docs/ — front-end framework used in project themes.</li>
+</ol>
+</div>
+
+<!-- ==================== ANNEXES ==================== -->
+<div class="page-break">
+<h1>Annexes</h1>
+
+<h2>Annex A — Solution projects and output types</h2>
+
+<table>
+<caption>Table A.1 — Visual Studio projects in JobzFactory.sln</caption>
+<tr><th>Project</th><th>Type</th><th>Output</th></tr>
+<tr><td>JobzFactory</td><td>ASP.NET MVC Web Application</td><td>Public website DLL</td></tr>
+<tr><td>JF.DAL</td><td>Class Library</td><td>Shared data access DLL</td></tr>
+<tr><td>Recruteur</td><td>ASP.NET MVC Web Application</td><td>Recruiter portal DLL</td></tr>
+<tr><td>Profil</td><td>ASP.NET MVC Web Application</td><td>Candidate portal DLL</td></tr>
+<tr><td>Administration</td><td>ASP.NET MVC Web Application</td><td>Admin portal DLL</td></tr>
+<tr><td>jobzFactory.Database</td><td>SQL Server Database Project</td><td>DACPAC package</td></tr>
+</table>
+
+<h2>Annex B — Key controller actions (public site)</h2>
+
+<table>
+<caption>Table A.2 — Main actions in JobzFactory/Controllers</caption>
+<tr><th>Controller</th><th>Action</th><th>HTTP</th><th>Description</th></tr>
+<tr><td>DefaultController</td><td>Index</td><td>GET</td><td>Paginated list of published offers</td></tr>
+<tr><td>JobController</td><td>Detail</td><td>GET</td><td>Single offer by URL</td></tr>
+<tr><td>JobController</td><td>Apply</td><td>GET/POST</td><td>Application form and submission</td></tr>
+<tr><td>JobController</td><td>SendApply</td><td>GET</td><td>Confirmation page after apply</td></tr>
+</table>
+
+<h2>Annex C — Local database setup commands</h2>
+
+<p>For reference, the DACPAC deployment commands documented in the project are:</p>
+
+<pre style="font-size:11pt; background:#f5f5f5; padding:10px; text-align:left;">
+cd Database
+.\Build-Dacpac.ps1
+.\Publish-LocalDatabase.ps1 -Server "."
+</pre>
+<p class="figure-caption">Figure A.1 — PowerShell commands for local database publish (source: Database/README.md)</p>
+
+<p style="margin-top:1cm; font-size:11pt; text-align:center;"><em>— End of report —</em></p>
+</div>
+
+</body>
+</html>

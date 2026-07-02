@@ -1,0 +1,441 @@
+/* Jobz Factory — Administration portal */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+.jf-ad {
+  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #0f172a;
+  background: #f1f5f9;
+  min-height: 100vh;
+}
+
+.jf-ad a { text-decoration: none; }
+
+.jf-ad-app {
+  display: flex;
+  min-height: 100vh;
+}
+
+.jf-ad-sidebar {
+  width: 250px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, #1e1b4b 0%, #312e81 100%);
+  color: #c7d2fe;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem;
+}
+
+.jf-ad-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.05rem;
+  margin-bottom: 2rem;
+  padding: 0 0.5rem;
+}
+
+.jf-ad-brand span {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #7c3aed, #a78bfa);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+}
+
+.jf-ad-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+}
+
+.jf-ad-nav li { margin-bottom: 0.35rem; }
+
+.jf-ad-nav a {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 1rem;
+  border-radius: 12px;
+  color: #a5b4fc;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.jf-ad-nav a:hover,
+.jf-ad-nav a.active {
+  background: rgba(167, 139, 250, 0.2);
+  color: #fff;
+}
+
+.jf-ad-nav a i { width: 18px; text-align: center; }
+
+.jf-ad-sidebar__footer {
+  padding: 1rem 0.5rem 0;
+  border-top: 1px solid rgba(165, 180, 252, 0.15);
+  margin-top: 1rem;
+}
+
+.jf-ad-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.jf-ad-content {
+  flex: 1;
+  padding: 2rem;
+}
+
+.jf-ad-footer {
+  padding: 1rem 2rem;
+  font-size: 0.8rem;
+  color: #64748b;
+  border-top: 1px solid #e2e8f0;
+  background: #fff;
+}
+
+.jf-ad-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.jf-ad-header h1 {
+  margin: 0 0 0.25rem;
+  font-size: 1.65rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.jf-ad-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+.jf-ad-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.jf-ad-card--flush {
+  padding: 0;
+  overflow: hidden;
+}
+
+.jf-ad-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.jf-ad-stat {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1.25rem 1.35rem;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.jf-ad-stat strong {
+  display: block;
+  font-size: 1.85rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 0.35rem;
+  color: #6d28d9;
+}
+
+.jf-ad-stat span {
+  color: #64748b;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.jf-ad-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.85rem;
+}
+
+.jf-ad-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.25rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  color: #334155;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.15s ease;
+}
+
+.jf-ad-action:hover {
+  border-color: #c4b5fd;
+  background: #faf5ff;
+  color: #6d28d9;
+  transform: translateY(-2px);
+}
+
+.jf-ad-action i {
+  font-size: 1.35rem;
+  color: #7c3aed;
+}
+
+.jf-ad-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.6rem 1.15rem;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.jf-ad-btn--primary {
+  background: linear-gradient(135deg, #6d28d9, #7c3aed);
+  color: #fff !important;
+  box-shadow: 0 6px 20px rgba(109, 40, 217, 0.28);
+}
+
+.jf-ad-btn--ghost {
+  background: #fff;
+  color: #6d28d9 !important;
+  border: 1px solid #ddd6fe;
+}
+
+.jf-ad-btn--danger {
+  background: linear-gradient(135deg, #dc2626, #ef4444);
+  color: #fff !important;
+  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.25);
+}
+
+.jf-ad-table-wrap {
+  overflow-x: auto;
+}
+
+.jf-ad-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.jf-ad-table th {
+  text-align: left;
+  padding: 0.85rem 1.15rem;
+  background: #f8fafc;
+  color: #475569;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.jf-ad-table td {
+  padding: 1rem 1.15rem;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+.jf-ad-table tr:last-child td { border-bottom: none; }
+.jf-ad-table tr:hover td { background: #faf5ff; }
+.jf-ad-table a { color: #6d28d9; font-weight: 600; }
+
+.jf-ad-badge {
+  display: inline-block;
+  padding: 0.28rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.jf-ad-badge--yes { background: #dcfce7; color: #15803d; }
+.jf-ad-badge--no { background: #f1f5f9; color: #64748b; }
+.jf-ad-badge--live { background: #dcfce7; color: #15803d; }
+.jf-ad-badge--draft { background: #fef2f2; color: #b91c1c; }
+
+.jf-ad-row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.jf-ad-row-actions a {
+  font-size: 0.82rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.jf-ad-row-actions a:hover { background: #ede9fe; border-color: #c4b5fd; }
+.jf-ad-row-actions__danger { color: #dc2626 !important; }
+.jf-ad-row-actions__danger:hover { background: #fef2f2 !important; border-color: #fecaca !important; }
+
+.jf-ad-form .form-group { margin-bottom: 1.1rem; }
+
+.jf-ad-form label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.jf-ad-form .form-control {
+  width: 100%;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.95rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.jf-ad-form .form-control:focus {
+  outline: none;
+  border-color: #a78bfa;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+}
+
+.jf-ad-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem 1.25rem;
+}
+
+.jf-ad-form-grid--full { grid-column: 1 / -1; }
+
+.jf-ad-form-section {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.jf-ad-form-section:last-of-type {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.jf-ad-form-section h3 {
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #334155;
+}
+
+.jf-ad-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 0.35rem;
+}
+
+.jf-ad-check input { width: 1.1rem; height: 1.1rem; accent-color: #7c3aed; }
+
+.jf-ad-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.jf-ad-detail {
+  padding: 0.85rem 1rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.jf-ad-detail dt {
+  margin: 0 0 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #64748b;
+}
+
+.jf-ad-detail dd {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #0f172a;
+  word-break: break-word;
+}
+
+.jf-ad-empty {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  color: #64748b;
+}
+
+.jf-ad-empty h2 {
+  margin: 0 0 0.5rem;
+  color: #0f172a;
+  font-size: 1.2rem;
+}
+
+.jf-ad-validation {
+  color: #dc2626;
+  font-size: 0.82rem;
+  margin-top: 0.35rem;
+}
+
+.jf-ad-alert {
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.jf-ad-alert--danger {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+}
+
+.text-danger { color: #dc2626; }
+
+.jf-ad-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+@media (max-width: 991px) {
+  .jf-ad-app { flex-direction: column; }
+  .jf-ad-sidebar { width: 100%; }
+  .jf-ad-content { padding: 1.25rem; }
+  .jf-ad-form-grid { grid-template-columns: 1fr; }
+}

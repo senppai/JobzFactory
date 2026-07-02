@@ -1,0 +1,80 @@
+﻿@model IEnumerable<JF.DAL.Context.Offre>
+@{
+    ViewBag.Title = "Offers";
+    ViewBag.Section = "Offers";
+}
+
+<div class="jf-ad-header">
+    <div>
+        <h1>Job offers</h1>
+        <p>View and manage all listings in the database.</p>
+    </div>
+    <a href="~/Offre/Create" class="jf-ad-btn jf-ad-btn--primary"><i class="fa-solid fa-plus"></i> New offer</a>
+</div>
+
+<div class="jf-ad-card jf-ad-card--flush">
+    @if (!Model.Any())
+    {
+        <div class="jf-ad-empty">
+            <h2>No offers yet</h2>
+            <p>Create the first job listing to get started.</p>
+            <a href="~/Offre/Create" class="jf-ad-btn jf-ad-btn--primary">Create offer</a>
+        </div>
+    }
+    else
+    {
+        <div class="jf-ad-table-wrap">
+            <table class="jf-ad-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Recruiter</th>
+                        <th>City</th>
+                        <th>Status</th>
+                        <th>Confidential</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <a href="@Url.Action("Details", new { id = item.id })">@item.titreOffre</a>
+                            </td>
+                            <td>@(item.Recruteur != null ? item.Recruteur.nomRecruteur : "—")</td>
+                            <td>@(item.Ville != null ? item.Ville.ville1 : "—")</td>
+                            <td>
+                                @if (item.isPublie)
+                                {
+                                    <span class="jf-ad-badge jf-ad-badge--live">Published</span>
+                                }
+                                else
+                                {
+                                    <span class="jf-ad-badge jf-ad-badge--draft">Draft</span>
+                                }
+                            </td>
+                            <td>
+                                @if (item.isConfidentiel.GetValueOrDefault())
+                                {
+                                    <span class="jf-ad-badge jf-ad-badge--yes">Yes</span>
+                                }
+                                else
+                                {
+                                    <span class="jf-ad-badge jf-ad-badge--no">No</span>
+                                }
+                            </td>
+                            <td>
+                                <div class="jf-ad-row-actions">
+                                    <a href="@Url.Action("Edit", new { id = item.id })"><i class="fa-solid fa-pen"></i> Edit</a>
+                                    <a href="@Url.Action("Details", new { id = item.id })"><i class="fa-solid fa-eye"></i> Details</a>
+                                    <a href="@Url.Action("Delete", new { id = item.id })" class="jf-ad-row-actions__danger"><i class="fa-solid fa-trash"></i> Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

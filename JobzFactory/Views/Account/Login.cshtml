@@ -1,0 +1,79 @@
+@model JobzFactory.Models.LoginViewModel
+@{
+    Layout = null;
+    ViewBag.Title = "Sign in";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jobz Factory — Sign in</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="@Url.Content("~/css/signup-modern.css")" rel="stylesheet" />
+</head>
+<body>
+    <section class="jf-auth">
+        <div class="jf-auth__brand">
+            <div class="jf-auth__brand-content">
+                <a href="~/" class="jf-auth__logo">
+                    <span>JF</span> Jobz Factory
+                </a>
+                <h2>Welcome <span>back</span></h2>
+                <p>Sign in to manage your profile, track your applications, and get matched with new opportunities.</p>
+                <ul class="jf-auth__features">
+                    <li><span>&#10003;</span> Track every application in one place</li>
+                    <li><span>&#10003;</span> Reuse your saved CVs when applying</li>
+                    <li><span>&#10003;</span> Get matched with relevant openings</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="jf-auth__form-side">
+            <div class="jf-auth__form-wrap">
+                <div class="jf-auth__form-header">
+                    <h1>Sign in</h1>
+                    <p>Enter your email and password to access your profile.</p>
+                </div>
+
+                @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "jf-auth__form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "jf-auth__error" })
+
+                    if (TempData["PasswordReset"] as bool? ?? false)
+                    {
+                        <p class="jf-auth__error" style="color:#16a34a;background:#dcfce7;border:1px solid #bbf7d0;padding:0.7rem 1rem;border-radius:10px;margin-bottom:1rem;">Your password has been reset. You can now sign in.</p>
+                    }
+
+                    <div class="form-group">
+                        <label for="adresseMail">Email address</label>
+                        @Html.EditorFor(model => model.adresseMail, new { htmlAttributes = new { @class = "form-control", @id = "adresseMail", @type = "email", @placeholder = "you@email.com", @required = "required", @autocomplete = "email" } })
+                        @Html.ValidationMessageFor(model => model.adresseMail, "", new { @class = "jf-auth__error" })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="motPasse">Password</label>
+                        @Html.EditorFor(model => model.motPasse, new { htmlAttributes = new { @class = "form-control", @id = "motPasse", @placeholder = "Your password", @required = "required", @autocomplete = "current-password" } })
+                        @Html.ValidationMessageFor(model => model.motPasse, "", new { @class = "jf-auth__error" })
+                    </div>
+
+                    <div class="form-group" style="display:flex;align-items:center;justify-content:space-between;gap:1rem;">
+                        <label style="display:flex;align-items:center;gap:0.5rem;margin:0;font-weight:500;color:#475569;cursor:pointer;">
+                            @Html.CheckBoxFor(model => model.RememberMe) Remember me
+                        </label>
+                        <a href="@Url.Action("Forgot","Account")" style="color:#4f46e5;font-size:0.85rem;font-weight:600;">Forgot password?</a>
+                    </div>
+
+                    <button class="jf-btn jf-btn--primary" type="submit">Sign in</button>
+                }
+
+                <div class="jf-auth__footer">
+                    <p>Don't have a profile yet? <a href="@Url.Action("Register","SignUp")">Create one</a></p>
+                    <p style="margin-top:1rem;">&copy; @DateTime.Now.Year Jobz Factory. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

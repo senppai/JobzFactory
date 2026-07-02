@@ -1,0 +1,69 @@
+﻿@model JF.DAL.Context.Offre
+@{
+    ViewBag.Title = "Offer details";
+    ViewBag.Section = "Offers";
+}
+
+<div class="jf-ad-header">
+    <div>
+        <h1>@Model.titreOffre</h1>
+        <p>Offer #@Model.id</p>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+        <a href="@Url.Action("Edit", new { id = Model.id })" class="jf-ad-btn jf-ad-btn--primary"><i class="fa-solid fa-pen"></i> Edit</a>
+        <a href="~/Offre/Index" class="jf-ad-btn jf-ad-btn--ghost"><i class="fa-solid fa-arrow-left"></i> Back</a>
+    </div>
+</div>
+
+<div class="jf-ad-card">
+    <dl class="jf-ad-details">
+        <div class="jf-ad-detail">
+            <dt>Title</dt>
+            <dd>@Model.titreOffre</dd>
+        </div>
+        <div class="jf-ad-detail">
+            <dt>Recruiter</dt>
+            <dd>@(Model.Recruteur != null ? Model.Recruteur.nomRecruteur : "—")</dd>
+        </div>
+        <div class="jf-ad-detail">
+            <dt>City</dt>
+            <dd>@(Model.Ville != null ? Model.Ville.ville1 : "—")</dd>
+        </div>
+        <div class="jf-ad-detail">
+            <dt>Sector</dt>
+            <dd>@(Model.SecteurActivite != null ? Model.SecteurActivite.SecteurActivite1 : "—")</dd>
+        </div>
+        <div class="jf-ad-detail">
+            <dt>Published</dt>
+            <dd>@(Model.isPublie ? "Yes" : "No")</dd>
+        </div>
+        <div class="jf-ad-detail">
+            <dt>Confidential</dt>
+            <dd>@(Model.isConfidentiel.GetValueOrDefault() ? "Yes" : "No")</dd>
+        </div>
+        <div class="jf-ad-detail">
+            <dt>URL</dt>
+            <dd>@(string.IsNullOrWhiteSpace(Model.url) ? "—" : Model.url)</dd>
+        </div>
+        <div class="jf-ad-detail">
+            <dt>Application email</dt>
+            <dd>@(string.IsNullOrWhiteSpace(Model.adresseMailAPostuler) ? "—" : Model.adresseMailAPostuler)</dd>
+        </div>
+        <div class="jf-ad-detail">
+            <dt>Offer number</dt>
+            <dd>@(Model.numberOffre.HasValue ? Model.numberOffre.Value.ToString() : "—")</dd>
+        </div>
+        <div class="jf-ad-detail">
+            <dt>Image</dt>
+            <dd>@(string.IsNullOrWhiteSpace(Model.nomImage) ? "—" : Model.nomImage)</dd>
+        </div>
+    </dl>
+
+    @if (!string.IsNullOrWhiteSpace(Model.message))
+    {
+        <div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid #f1f5f9;">
+            <h3 style="margin:0 0 0.75rem;font-size:0.95rem;font-weight:700;">Description</h3>
+            <p style="margin:0;color:#475569;line-height:1.7;white-space:pre-wrap;">@Model.message</p>
+        </div>
+    }
+</div>

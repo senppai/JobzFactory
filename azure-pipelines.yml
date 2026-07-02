@@ -1,0 +1,68 @@
+# JobzFactory CI/CD — builds the 3 MVC portals + the SSDT database project and
+# publishes separate deployable artifacts (3 web packages + 1 DACPAC).
+# Deploy steps (Web Deploy for the sites, SqlPackage for the DACPAC) run on the
+# release stage/environment of your choosing — see README.md for the commands.
+
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: 'JobzFactory.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  artifactStaging: '$(Build.ArtifactStagingDirectory)'
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
+# Build the whole solution in Release. The SSDT project produces the DACPAC here,
+# and the web projects are compiled (transforms are applied per-project below).
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+    msbuildArgs: '/p:DeployOnBuild=false'
+
+# Publish each MVC portal as its own single-file web deploy package.
+# Web.Release.config transforms are applied automatically because Configuration=Release.
+- task: VSBuild@1
+  inputs:
+    solution: 'JobzFactory/JobzFactory.csproj'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(artifactStaging)\JobzFactory.zip" /p:DeployIisAppPath="JobzFactory"'
+
+- task: VSBuild@1
+  inputs:
+    solution: 'Recruteur/Recruteur.csproj'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(artifactStaging)\JobzFactory_Recruteur.zip" /p:DeployIisAppPath="Recruteur"'
+
+- task: VSBuild@1
+  inputs:
+    solution: 'Administration/Administration.csproj'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(artifactStaging)\JobzFactory_Administration.zip" /p:DeployIisAppPath="Administration"'
+
+# Stage the DACPAC produced by the SSDT build.
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: 'Database/jobzFactory.Database/bin/$(buildConfiguration)'
+    Contents: 'jobzFactory.Database.dacpac'
+    TargetFolder: '$(artifactStaging)'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(artifactStaging)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'

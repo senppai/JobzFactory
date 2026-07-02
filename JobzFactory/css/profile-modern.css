@@ -1,0 +1,418 @@
+/* JobzFactory — Candidate dashboard ("My Profile") */
+:root {
+  --jf-indigo: #4f46e5;
+  --jf-indigo-2: #6366f1;
+  --jf-slate-900: #0f172a;
+  --jf-slate-700: #334155;
+  --jf-slate-500: #64748b;
+  --jf-slate-400: #94a3b8;
+  --jf-bg: #f8fafc;
+  --jf-border: #e2e8f0;
+  --jf-card-shadow: 0 1px 3px rgba(15, 23, 42, .08);
+  --jf-green: #16a34a;
+  --jf-amber: #d97706;
+  --jf-red: #dc2626;
+}
+
+.jf-profile {
+  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--jf-slate-900);
+  background: var(--jf-bg);
+  padding-bottom: 4rem;
+}
+
+.jf-profile * { box-sizing: border-box; }
+
+/* Header band */
+.jf-profile__header {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #312e81 100%);
+  color: #fff;
+  padding: 2.5rem 0 6rem;
+  position: relative;
+  overflow: hidden;
+}
+.jf-profile__header::after {
+  content: "";
+  position: absolute;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  background: rgba(99, 102, 241, .18);
+  top: -160px;
+  right: -120px;
+}
+.jf-profile__header-inner {
+  position: relative;
+  z-index: 1;
+}
+.jf-profile__breadcrumb {
+  font-size: .8rem;
+  color: #cbd5e1;
+  margin-bottom: 1rem;
+}
+.jf-profile__breadcrumb a { color: #cbd5e1; }
+.jf-profile__breadcrumb a:hover { color: #fff; }
+.jf-profile__heading {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+.jf-profile__avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--jf-indigo), var(--jf-indigo-2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #fff;
+  flex-shrink: 0;
+}
+.jf-profile__title {
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.jf-profile__subtitle {
+  color: #94a3b8;
+  margin: .35rem 0 0;
+  font-size: .95rem;
+}
+
+/* Layout */
+.jf-profile__body {
+  margin-top: -4.5rem;
+  position: relative;
+  z-index: 2;
+}
+.jf-profile__layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 1.75rem;
+  align-items: start;
+}
+.jf-profile__nav { position: sticky; top: 1rem; }
+.jf-profile__card {
+  background: #fff;
+  border: 1px solid var(--jf-border);
+  border-radius: 16px;
+  box-shadow: var(--jf-card-shadow);
+  padding: 1.5rem;
+}
+.jf-profile__card + .jf-profile__card { margin-top: 1.25rem; }
+.jf-profile__card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+}
+.jf-profile__card-title a {
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--jf-indigo);
+}
+
+/* Sidebar nav */
+.jf-profile__nav-list {
+  list-style: none;
+  margin: 0;
+  padding: .5rem;
+  background: #fff;
+  border: 1px solid var(--jf-border);
+  border-radius: 16px;
+  box-shadow: var(--jf-card-shadow);
+}
+.jf-profile__nav-list a {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  padding: .8rem 1rem;
+  border-radius: 12px;
+  color: var(--jf-slate-700);
+  font-weight: 600;
+  font-size: .92rem;
+  transition: background .15s ease, color .15s ease;
+}
+.jf-profile__nav-list a span.icon { color: var(--jf-slate-400); }
+.jf-profile__nav-list a:hover {
+  background: #eef2ff;
+  color: var(--jf-indigo);
+}
+.jf-profile__nav-list a.is-active {
+  background: linear-gradient(135deg, var(--jf-indigo), var(--jf-indigo-2));
+  color: #fff;
+}
+.jf-profile__nav-list a.is-active span.icon { color: #fff; }
+
+/* Stat grid */
+.jf-profile__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.jf-profile__stat {
+  background: #fff;
+  border: 1px solid var(--jf-border);
+  border-radius: 14px;
+  padding: 1.1rem 1.25rem;
+  box-shadow: var(--jf-card-shadow);
+}
+.jf-profile__stat-value {
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--jf-slate-900);
+}
+.jf-profile__stat-label {
+  color: var(--jf-slate-500);
+  font-size: .82rem;
+  font-weight: 600;
+  margin-top: .15rem;
+}
+
+/* Verify banner */
+.jf-verify-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  color: #92400e;
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+.jf-verify-banner p { margin: 0; }
+
+/* Status pills */
+.jf-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .3rem .7rem;
+  border-radius: 999px;
+  font-size: .75rem;
+  font-weight: 700;
+}
+.jf-pill--verified { background: #dcfce7; color: var(--jf-green); }
+.jf-pill--pending { background: #fef3c7; color: var(--jf-amber); }
+
+/* List rows (applications / matched offers) */
+.jf-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .9rem 0;
+  border-bottom: 1px solid var(--jf-border);
+}
+.jf-row:last-child { border-bottom: none; }
+.jf-row__main { min-width: 0; }
+.jf-row__title {
+  font-weight: 700;
+  color: var(--jf-slate-900);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.jf-row__title a { color: var(--jf-slate-900); }
+.jf-row__meta {
+  color: var(--jf-slate-500);
+  font-size: .82rem;
+  margin: .15rem 0 0;
+}
+.jf-row__action { flex-shrink: 0; }
+.jf-empty {
+  color: var(--jf-slate-400);
+  text-align: center;
+  padding: 1.5rem .5rem;
+  font-size: .9rem;
+}
+
+/* CV list */
+.jf-cv-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: .9rem 1rem;
+  border: 1px solid var(--jf-border);
+  border-radius: 12px;
+  margin-bottom: .75rem;
+}
+.jf-cv-item__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #eef2ff;
+  color: var(--jf-indigo);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.jf-cv-item__info { flex: 1; min-width: 0; }
+.jf-cv-item__name {
+  font-weight: 600;
+  color: var(--jf-slate-900);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.jf-cv-item__meta { color: var(--jf-slate-400); font-size: .78rem; }
+.jf-cv-item__actions { display: flex; gap: .5rem; flex-shrink: 0; }
+.jf-icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid var(--jf-border);
+  background: #fff;
+  color: var(--jf-slate-700);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.jf-icon-btn:hover { background: #eef2ff; color: var(--jf-indigo); border-color: #c7d2fe; }
+.jf-icon-btn--danger:hover { background: #fef2f2; color: var(--jf-red); border-color: #fecaca; }
+
+/* Upload zone (reuse jf-upload look) */
+.jf-cv-upload {
+  border: 2px dashed #cbd5e1;
+  border-radius: 14px;
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--jf-slate-500);
+  margin-top: .75rem;
+  transition: border-color .15s ease, background .15s ease;
+  cursor: pointer;
+}
+.jf-cv-upload:hover { border-color: var(--jf-indigo); background: #f8fafc; }
+.jf-cv-upload input { display: none; }
+.jf-cv-upload__icon { font-size: 1.6rem; color: var(--jf-indigo); }
+.jf-cv-upload__text { font-weight: 600; color: var(--jf-slate-700); margin: .35rem 0 0; }
+.jf-cv-upload__hint { font-size: .8rem; color: var(--jf-slate-400); margin: .15rem 0 0; }
+
+/* Forms */
+.jf-form .form-group { margin-bottom: 1.25rem; }
+.jf-form label {
+  display: block;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--jf-slate-700);
+  margin-bottom: .4rem;
+}
+.jf-form .form-control {
+  width: 100%;
+  padding: .8rem 1rem;
+  border: 1px solid var(--jf-border);
+  border-radius: 12px;
+  font-size: .95rem;
+  color: var(--jf-slate-900);
+  background: #fff;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.jf-form .form-control:focus {
+  outline: none;
+  border-color: #818cf8;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, .15);
+}
+.jf-form select.form-control { appearance: none; }
+.jf-form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.jf-form__error {
+  margin-top: .4rem;
+  font-size: .85rem;
+  color: var(--jf-red);
+  font-weight: 500;
+}
+.jf-form__alert {
+  padding: .8rem 1rem;
+  border-radius: 12px;
+  margin-bottom: 1.25rem;
+  font-size: .9rem;
+  font-weight: 500;
+}
+.jf-form__alert--ok { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+.jf-form__alert--err { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+
+/* Buttons */
+.jf-profile .jf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .8rem 1.4rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: .92rem;
+  border: none;
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, background .15s ease;
+  width: auto;
+}
+.jf-profile .jf-btn--primary {
+  background: linear-gradient(135deg, var(--jf-indigo), var(--jf-indigo-2));
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(79, 70, 229, .35);
+}
+.jf-profile .jf-btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(79, 70, 229, .45);
+  color: #fff;
+}
+.jf-profile .jf-btn--ghost {
+  background: #fff;
+  color: #4338ca;
+  border: 1px solid #c7d2fe;
+}
+.jf-profile .jf-btn--ghost:hover { background: #eef2ff; color: #3730a3; }
+.jf-profile .jf-btn--sm { padding: .55rem 1rem; font-size: .85rem; }
+.jf-profile .jf-btn--block { width: 100%; }
+
+/* Applications table */
+.jf-app-table { width: 100%; border-collapse: collapse; }
+.jf-app-table th {
+  text-align: left;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--jf-slate-400);
+  font-weight: 700;
+  padding: .65rem .75rem;
+  border-bottom: 1px solid var(--jf-border);
+}
+.jf-app-table td {
+  padding: .9rem .75rem;
+  border-bottom: 1px solid var(--jf-border);
+  font-size: .92rem;
+  color: var(--jf-slate-700);
+}
+.jf-app-table tr:last-child td { border-bottom: none; }
+.jf-app-table td a { color: var(--jf-indigo); font-weight: 600; }
+
+/* Responsive */
+@media (max-width: 991px) {
+  .jf-profile__layout { grid-template-columns: 1fr; }
+  .jf-profile__nav { position: static; }
+  .jf-profile__nav-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .25rem;
+  }
+  .jf-profile__nav-list a { padding: .6rem .9rem; }
+  .jf-profile__stats { grid-template-columns: 1fr; }
+  .jf-form__row { grid-template-columns: 1fr; }
+}

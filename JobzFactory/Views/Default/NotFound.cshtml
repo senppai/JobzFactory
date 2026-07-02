@@ -1,0 +1,10 @@
+@{
+    ViewBag.Title = "Page introuvable";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5 text-center">
+    <h1 class="display-4">404</h1>
+    <p class="lead">La page que vous recherchez est introuvable.</p>
+    @Html.ActionLink("Retour à l'accueil", "Index", "Default", null, new { @class = "btn btn-primary mt-3" })
+</div>

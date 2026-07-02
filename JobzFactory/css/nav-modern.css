@@ -1,0 +1,120 @@
+/* Modern navbar action buttons */
+
+.ftco-navbar-light .navbar-nav > .nav-item.jf-nav-item {
+  display: flex;
+  align-items: center;
+}
+
+.ftco-navbar-light .navbar-nav > .nav-item.jf-nav-item + .nav-item.jf-nav-item {
+  margin-left: 0.5rem;
+}
+
+.ftco-navbar-light .jf-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1.2rem !important;
+  margin-top: 0 !important;
+  border-radius: 12px;
+  font-family: "Plus Jakarta Sans", "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  text-decoration: none !important;
+  white-space: nowrap;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.ftco-navbar-light .jf-nav-btn span[class^="icon-"] {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.ftco-navbar-light .jf-nav-btn:hover {
+  text-decoration: none !important;
+  transform: translateY(-1px);
+}
+
+/* Employer — glass outline on hero */
+.ftco-navbar-light .jf-nav-btn--employer {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.ftco-navbar-light .jf-nav-btn--employer:hover {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.55) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Profile — gradient primary */
+.ftco-navbar-light .jf-nav-btn--profile {
+  color: #fff !important;
+  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%) !important;
+  border: none !important;
+  box-shadow: 0 4px 18px rgba(79, 70, 229, 0.45);
+}
+
+.ftco-navbar-light .jf-nav-btn--profile:hover {
+  color: #fff !important;
+  background: linear-gradient(135deg, #4338ca 0%, #4f46e5 100%) !important;
+  box-shadow: 0 8px 28px rgba(79, 70, 229, 0.55);
+}
+
+/* Scrolled navbar — solid light background */
+.ftco-navbar-light.scrolled .jf-nav-btn--employer {
+  color: #4338ca !important;
+  background: #eef2ff !important;
+  border: 1px solid #c7d2fe !important;
+  backdrop-filter: none;
+}
+
+.ftco-navbar-light.scrolled .jf-nav-btn--employer:hover {
+  color: #3730a3 !important;
+  background: #e0e7ff !important;
+  border-color: #a5b4fc !important;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.15);
+}
+
+.ftco-navbar-light.scrolled .jf-nav-btn--profile {
+  color: #fff !important;
+  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%) !important;
+  box-shadow: 0 4px 16px rgba(79, 70, 229, 0.35);
+}
+
+/* Mobile collapsed menu */
+@media (max-width: 991.98px) {
+  .ftco-navbar-light .navbar-nav > .nav-item.jf-nav-item {
+    width: 100%;
+    margin-left: 0 !important;
+    margin-bottom: 0.5rem;
+  }
+
+  .ftco-navbar-light .navbar-nav > .nav-item.jf-nav-item + .nav-item.jf-nav-item {
+    margin-left: 0;
+  }
+
+  .ftco-navbar-light .jf-nav-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem 1.2rem !important;
+  }
+
+  .ftco-navbar-light .jf-nav-btn--employer {
+    color: #fff !important;
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.3) !important;
+  }
+
+  .ftco-navbar-light.scrolled .jf-nav-btn--employer {
+    color: #4338ca !important;
+    background: #eef2ff !important;
+    border-color: #c7d2fe !important;
+  }
+}

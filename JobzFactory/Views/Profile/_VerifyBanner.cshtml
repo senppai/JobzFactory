@@ -1,0 +1,15 @@
+@model JF.DAL.Context.Profil
+@{
+    bool isVerified = (bool)ViewBag.IsVerified;
+    bool needVerify = (bool)ViewBag.NeedVerify;
+}
+@if (!isVerified)
+{
+    <div class="jf-verify-banner" role="alert">
+        <p>
+            <span class="icon-envelope" style="margin-right:.4rem;"></span>
+            @(needVerify ? "You need to verify your email before applying to jobs." : "Your email is not verified yet.") Check your inbox for the activation link.
+        </p>
+        <a href="@Url.Action("Register","SignUp")" class="jf-btn jf-btn--ghost jf-btn--sm">Resend / register</a>
+    </div>
+}

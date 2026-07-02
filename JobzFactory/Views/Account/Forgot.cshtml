@@ -1,0 +1,42 @@
+@model JobzFactory.Models.ForgotViewModel
+@{
+    Layout = null;
+    ViewBag.Title = "Forgot password";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jobz Factory — Forgot password</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="@Url.Content("~/css/signup-modern.css")" rel="stylesheet" />
+</head>
+<body>
+    <section class="jf-status">
+        <div class="jf-status__card">
+            <div class="jf-status__icon jf-status__icon--mail" aria-hidden="true">&#9993;</div>
+            <h1 class="jf-status__title">Reset your password</h1>
+            <p class="jf-status__text">Enter your account email and we'll send you a link to choose a new password.</p>
+
+            @using (Html.BeginForm("Forgot", "Account", FormMethod.Post, new { @style = "text-align:left;margin:1.5rem 0;" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "jf-auth__error" })
+
+                <div class="form-group" style="margin-bottom:1.25rem;">
+                    <label for="adresseMail" style="display:block;font-size:0.85rem;font-weight:600;color:#475569;margin-bottom:0.4rem;">Email address</label>
+                    @Html.EditorFor(model => model.adresseMail, new { htmlAttributes = new { @class = "form-control", @id = "adresseMail", @type = "email", @placeholder = "you@email.com", @required = "required", @style = "width:100%;padding:0.8rem 1rem;border:1px solid #e2e8f0;border-radius:12px;font-size:0.95rem;" } })
+                    @Html.ValidationMessageFor(model => model.adresseMail, "", new { @class = "jf-auth__error" })
+                </div>
+
+                <button class="jf-btn jf-btn--primary" type="submit">Send reset link</button>
+            }
+
+            <div class="jf-status__actions" style="margin-top:1rem;">
+                <a href="@Url.Action("Login","Account")" class="jf-btn jf-btn--ghost">Back to sign in</a>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

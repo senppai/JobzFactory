@@ -1,0 +1,140 @@
+@model JF.DAL.Context.Offre
+@{
+    ViewBag.Title = "Edit offer";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+
+<div class="jf-rc-header">
+    <div>
+        <h1>Edit offer</h1>
+        <p>Update <strong>@Model.titreOffre</strong> and save your changes.</p>
+    </div>
+    <a href="@Url.Action("Board", new { id = Model.id })" class="jf-rc-btn jf-rc-btn--ghost"><i class="fa-solid fa-arrow-left"></i> Back to board</a>
+</div>
+
+<div class="jf-rc-create-layout">
+    <div class="jf-rc-card jf-rc-form jf-rc-create-form">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "jf-rc-form-error" })
+            @Html.HiddenFor(model => model.id)
+
+            <section class="jf-rc-form-section">
+                <div class="jf-rc-form-section__head">
+                    <span class="jf-rc-form-section__icon"><i class="fa-solid fa-briefcase"></i></span>
+                    <div>
+                        <h2>Basic information</h2>
+                        <p>Give your role a clear, searchable title.</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="titreOffre">Job title</label>
+                    @Html.EditorFor(model => model.titreOffre, new { htmlAttributes = new { @class = "form-control", id = "titreOffre", placeholder = "e.g. Senior Software Engineer" } })
+                    @Html.ValidationMessageFor(model => model.titreOffre, "", new { @class = "text-danger" })
+                </div>
+            </section>
+
+            <section class="jf-rc-form-section">
+                <div class="jf-rc-form-section__head">
+                    <span class="jf-rc-form-section__icon"><i class="fa-solid fa-align-left"></i></span>
+                    <div>
+                        <h2>Job description</h2>
+                        <p>Describe responsibilities, requirements, and benefits.</p>
+                    </div>
+                </div>
+                <div class="form-group jf-rc-editor-wrap">
+                    <label for="RichBox">Description</label>
+                    @Html.TextAreaFor(model => model.message, new { @class = "form-control", id = "RichBox" })
+                    @Html.ValidationMessageFor(model => model.message, "", new { @class = "text-danger" })
+                </div>
+            </section>
+
+            <section class="jf-rc-form-section">
+                <div class="jf-rc-form-section__head">
+                    <span class="jf-rc-form-section__icon"><i class="fa-solid fa-location-dot"></i></span>
+                    <div>
+                        <h2>Location &amp; contact</h2>
+                        <p>Where is the role based and how should candidates reach you?</p>
+                    </div>
+                </div>
+                <div class="jf-rc-form-grid jf-rc-form-grid--3">
+                    <div class="form-group">
+                        <label for="C_idSecteurActivite">Sector</label>
+                        @Html.DropDownList("C_idSecteurActivite", null, htmlAttributes: new { @class = "form-control jf-rc-select", data_placeholder = "Search or select sector…", data_search_placeholder = "Type to search sectors…" })
+                    </div>
+                    <div class="form-group">
+                        <label for="C_idVille">City</label>
+                        @Html.DropDownList("C_idVille", null, htmlAttributes: new { @class = "form-control jf-rc-select", data_placeholder = "Search or select city…", data_search_placeholder = "Type to search cities…" })
+                    </div>
+                    <div class="form-group">
+                        <label for="adresseMailAPostuler">Application email</label>
+                        @Html.EditorFor(model => model.adresseMailAPostuler, new { htmlAttributes = new { @class = "form-control", id = "adresseMailAPostuler", type = "email", placeholder = "careers@company.com" } })
+                    </div>
+                </div>
+            </section>
+
+            <div class="jf-rc-form-footer">
+                <p><i class="fa-solid fa-circle-info"></i> Changes are logged in the offer <strong>History</strong> tab.</p>
+                <div class="jf-rc-form-footer__actions">
+                    <a href="@Url.Action("Board", new { id = Model.id })" class="jf-rc-btn jf-rc-btn--ghost">Cancel</a>
+                    <button type="submit" class="jf-rc-btn jf-rc-btn--primary"><i class="fa-solid fa-floppy-disk"></i> Save changes</button>
+                </div>
+            </div>
+        }
+    </div>
+
+    <aside class="jf-rc-create-aside">
+        <div class="jf-rc-sidebar-card">
+            <h3><i class="fa-solid fa-circle-info"></i> Offer status</h3>
+            <p style="margin:0 0 0.75rem;font-size:0.9rem;color:#64748b;">
+                @if (Model.isPublie)
+                {
+                    <span class="jf-rc-badge jf-rc-badge--live">Live</span>
+                    <span style="display:block;margin-top:0.5rem;">This offer is visible on the job site.</span>
+                }
+                else
+                {
+                    <span class="jf-rc-badge jf-rc-badge--draft">Draft</span>
+                    <span style="display:block;margin-top:0.5rem;">Publish from the board when you're ready.</span>
+                }
+            </p>
+            <a href="@Url.Action("Board", new { id = Model.id })" class="jf-rc-btn jf-rc-btn--ghost" style="width:100%;">View board</a>
+        </div>
+
+        <div class="jf-rc-sidebar-card">
+            <h3><i class="fa-solid fa-lightbulb"></i> Editing tips</h3>
+            <ul class="jf-rc-tips-list">
+                <li>Keep the title accurate and keyword-friendly.</li>
+                <li>Update requirements if the role has evolved.</li>
+                <li>Check the application email is still monitored.</li>
+                <li>Review the live listing after saving changes.</li>
+            </ul>
+        </div>
+    </aside>
+</div>
+
+@section scripts {
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <script>
+        $('#RichBox').summernote({
+            placeholder: 'Describe the role, requirements, and benefits…',
+            tabsize: 2,
+            height: 240,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link']],
+                ['view', ['fullscreen', 'codeview']]
+            ]
+        });
+
+        if (window.jfRcInitSelects) {
+            window.jfRcInitSelects();
+        }
+    </script>
+}

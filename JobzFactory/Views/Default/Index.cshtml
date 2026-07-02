@@ -1,0 +1,113 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@using JF.DAL.Context;
+
+@model PagedList.IPagedList<Offre>
+@{
+    ViewBag.Title = "Find Your Job";
+    var totalJobs = Model.TotalItemCount;
+    var search = ViewBag.Search as string ?? string.Empty;
+}
+
+@section styles {
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="~/css/index-modern.css?v=2" rel="stylesheet" />
+}
+
+<div class="jf-home">
+
+    <section class="jf-hero">
+        <div class="jf-hero__bg" style="background-image: url('@Url.Content("~/images/bg_2.jpg")');"></div>
+        <div class="jf-hero__overlay"></div>
+        <div class="container jf-hero__content">
+            <span class="jf-hero__badge">Now hiring across Morocco</span>
+            <h1 class="jf-hero__title">Your next career move <span>starts here</span></h1>
+            <p class="jf-hero__subtitle">
+                Discover curated opportunities from top employers. Browse open roles, explore companies, and apply in just a few clicks.
+            </p>
+            <div class="jf-hero__actions">
+                <a href="#jobs" class="jf-btn jf-btn--primary">
+                    <span class="icon-briefcase"></span> Browse <span id="hero-total-count">@totalJobs</span> openings
+                </a>
+                <a href="@Url.Action("Register", "SignUp")" class="jf-btn jf-btn--ghost">
+                    <span class="icon-user"></span> My Profile
+                </a>
+            </div>
+            <div class="jf-hero__stats">
+                <div class="jf-stat">
+                    <strong id="hero-total-stat">@totalJobs</strong>
+                    <span>Open positions</span>
+                </div>
+                <div class="jf-stat">
+                    <strong id="hero-on-page-count">@Model.Count</strong>
+                    <span>On this page</span>
+                </div>
+                <div class="jf-stat">
+                    <strong id="hero-page-count">@Model.PageCount</strong>
+                    <span>Pages</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="jobs" class="jf-jobs">
+        <div class="container">
+            <header class="jf-jobs__header">
+                <div>
+                    <h2>Latest opportunities</h2>
+                    <p id="jobs-list-summary">Hand-picked roles updated regularly from trusted recruiters.</p>
+                </div>
+                <span class="jf-jobs__count">
+                    <span id="jobs-total-count">@totalJobs</span>
+                    <span class="jf-jobs__count-label">jobs available</span>
+                </span>
+            </header>
+
+            <div class="jf-jobs-toolbar">
+                <div class="jf-jobs-filters">
+                    <div class="jf-jobs-search">
+                        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                        <input type="search"
+                               id="job-search"
+                               class="jf-jobs-search__input"
+                               placeholder="Search by job title…"
+                               value="@search"
+                               autocomplete="off"
+                               aria-label="Search by job title" />
+                    </div>
+                    <div class="jf-jobs-filter jf-jobs-filter--select">
+                        <label for="job-sector" class="jf-sr-only">Sector</label>
+                        @Html.DropDownList("job-sector", (SelectList)ViewBag.SectorFilter, "All sectors", new {
+                            @class = "jf-jobs-filter__select jf-jobs-select",
+                            id = "job-sector",
+                            data_placeholder = "All sectors",
+                            data_search_placeholder = "Type to search sectors…",
+                            aria_label = "Filter by sector"
+                        })
+                    </div>
+                    <div class="jf-jobs-filter jf-jobs-filter--select">
+                        <label for="job-city" class="jf-sr-only">City</label>
+                        @Html.DropDownList("job-city", (SelectList)ViewBag.CityFilter, "All cities", new {
+                            @class = "jf-jobs-filter__select jf-jobs-select",
+                            id = "job-city",
+                            data_placeholder = "All cities",
+                            data_search_placeholder = "Type to search cities…",
+                            aria_label = "Filter by city"
+                        })
+                    </div>
+                </div>
+            </div>
+
+            <div id="job-list-container" data-base-url="@Url.Action("Index", "Default")">
+                @Html.Partial("_JobList", Model)
+            </div>
+        </div>
+    </section>
+
+</div>
+
+@section scripts {
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    <script src="~/js/index-pagination.js?v=2"></script>
+}

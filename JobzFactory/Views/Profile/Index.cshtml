@@ -1,0 +1,155 @@
+@model JF.DAL.Context.Profil
+@{
+    ViewBag.Title = "My Profile";
+    var recentApplications = ViewBag.RecentApplications as IEnumerable<JF.DAL.Context.Offre_Postuler>;
+    var matchedOffers = ViewBag.MatchedOffers as IEnumerable<JF.DAL.Context.Offre>;
+    var cvs = Model.Profil_CV.ToList();
+    var initials = (!string.IsNullOrEmpty(Model.prenom) ? Model.prenom.Substring(0, 1) : "") +
+                   (!string.IsNullOrEmpty(Model.nom) ? Model.nom.Substring(0, 1) : "");
+}
+
+<div class="jf-profile">
+
+    <header class="jf-profile__header">
+        <div class="container jf-profile__header-inner">
+            <div class="jf-profile__breadcrumb">
+                <a href="~/">Home</a> &rsaquo; <span>My Profile</span>
+            </div>
+            <div class="jf-profile__heading">
+                <div class="jf-profile__avatar">@(initials.ToUpper())</div>
+                <div>
+                    <h1 class="jf-profile__title">@(Model.prenom) @(Model.nom)</h1>
+                    <p class="jf-profile__subtitle">@Model.adresseMail</p>
+                </div>
+                <span class="jf-pill @((bool)ViewBag.IsVerified ? "jf-pill--verified" : "jf-pill--pending")" style="margin-left:auto;">
+                    @if ((bool)ViewBag.IsVerified) { <span>&#10003;</span> <span>Verified</span> }
+                    else { <span>&#9888;</span> <span>Unverified</span> }
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container jf-profile__body">
+        <div class="jf-profile__layout">
+
+            <aside class="jf-profile__nav">
+                <ul class="jf-profile__nav-list">
+                    <li><a href="@Url.Action("Index","Profile")" class="is-active"><span class="icon icon-home"></span> Dashboard</a></li>
+                    <li><a href="@Url.Action("Applications","Profile")"><span class="icon icon-briefcase"></span> My applications</a></li>
+                    <li><a href="@Url.Action("Edit","Profile")"><span class="icon icon-user"></span> Edit profile</a></li>
+                    <li><a href="~/#jobs"><span class="icon icon-search"></span> Browse jobs</a></li>
+                    <li><a href="@Url.Action("LogOut","Account")"><span class="icon icon-log-out"></span> Logout</a></li>
+                </ul>
+            </aside>
+
+            <div class="jf-profile__main">
+                @Html.Partial("_VerifyBanner", Model)
+
+                <div class="jf-profile__stats">
+                    <div class="jf-profile__stat">
+                        <div class="jf-profile__stat-value">@(ViewBag.AppliedCount)</div>
+                        <div class="jf-profile__stat-label">Applications</div>
+                    </div>
+                    <div class="jf-profile__stat">
+                        <div class="jf-profile__stat-value">@(ViewBag.CvCount)</div>
+                        <div class="jf-profile__stat-label">Saved CVs</div>
+                    </div>
+                    <div class="jf-profile__stat">
+                        <div class="jf-profile__stat-value">@((bool)ViewBag.IsVerified ? "Yes" : "No")</div>
+                        <div class="jf-profile__stat-label">Email verified</div>
+                    </div>
+                </div>
+
+                <div class="jf-profile__card">
+                    <h3 class="jf-profile__card-title">
+                        Saved CV library
+                        <a href="#cv-upload">Upload new</a>
+                    </h3>
+                    @if (TempData["CvSaved"] != null)
+                    {
+                        <div class="jf-form__alert jf-form__alert--ok">Your CV was uploaded.</div>
+                    }
+                    @if (TempData["CvDeleted"] != null)
+                    {
+                        <div class="jf-form__alert jf-form__alert--ok">The CV was deleted.</div>
+                    }
+                    @if (TempData["CvError"] != null)
+                    {
+                        <div class="jf-form__alert jf-form__alert--err">@TempData["CvError"]</div>
+                    }
+                    @{ ViewBag.ProfilId = Model.id; }
+                    @Html.Partial("_CvList", cvs)
+
+                    @using (Html.BeginForm("UploadCv", "Profile", FormMethod.Post, new { enctype = "multipart/form-data", id = "cv-upload" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <label class="jf-cv-upload" for="cvFile">
+                            <div class="jf-cv-upload__icon"><span class="icon-cloud-upload"></span></div>
+                            <div class="jf-cv-upload__text">Click to upload a CV</div>
+                            <div class="jf-cv-upload__hint">PDF, DOC, DOCX &mdash; max 10 MB</div>
+                            <input type="file" name="file" id="cvFile" accept=".pdf,.doc,.docx" onchange="this.form.submit()" />
+                        </label>
+                    }
+                </div>
+
+                <div class="jf-profile__card">
+                    <h3 class="jf-profile__card-title">
+                        Recent applications
+                        <a href="@Url.Action("Applications","Profile")">View all</a>
+                    </h3>
+                    @if (recentApplications == null || !recentApplications.Any())
+                    {
+                        <p class="jf-empty">You haven't applied to any jobs yet.</p>
+                    }
+                    else
+                    {
+                        foreach (var app in recentApplications)
+                        {
+                            <div class="jf-row">
+                                <div class="jf-row__main">
+                                    <p class="jf-row__title"><a href="~/job/@app.Offre.url">@app.Offre.titreOffre</a></p>
+                                    <p class="jf-row__meta">
+                                        @(app.Offre.Recruteur != null ? app.Offre.Recruteur.nomRecruteur : "")
+                                        @(app.Offre.Ville != null ? " · " + app.Offre.Ville.ville1 : "")
+                                        · Applied @app.DatePostuler.ToString("dd MMM yyyy")
+                                    </p>
+                                </div>
+                                <div class="jf-row__action">
+                                    <a href="~/job/@app.Offre.url" class="jf-btn jf-btn--ghost jf-btn--sm">View</a>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+
+                <div class="jf-profile__card">
+                    <h3 class="jf-profile__card-title">Matched offers</h3>
+                    @if (matchedOffers == null || !matchedOffers.Any())
+                    {
+                        <p class="jf-empty">No matching offers right now. Complete your profile (city &amp; sector) to get better matches.</p>
+                    }
+                    else
+                    {
+                        foreach (var offer in matchedOffers)
+                        {
+                            <div class="jf-row">
+                                <div class="jf-row__main">
+                                    <p class="jf-row__title"><a href="~/job/@offer.url">@offer.titreOffre</a></p>
+                                    <p class="jf-row__meta">
+                                        @(offer.Recruteur != null ? offer.Recruteur.nomRecruteur : "")
+                                        @(offer.Ville != null ? " · " + offer.Ville.ville1 : "")
+                                        @(offer.SecteurActivite != null ? " · " + offer.SecteurActivite.SecteurActivite1 : "")
+                                    </p>
+                                </div>
+                                <div class="jf-row__action">
+                                    <a href="~/Apply/@offer.url" class="jf-btn jf-btn--primary jf-btn--sm">Apply</a>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

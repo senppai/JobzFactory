@@ -1,0 +1,40 @@
+@model JF.DAL.Context.Offre
+@{
+    ViewBag.Title = "Delete offer";
+}
+
+<div class="jf-rc-header">
+    <div>
+        <h1>Delete offer</h1>
+        <p>This action cannot be undone.</p>
+    </div>
+</div>
+
+<div class="jf-rc-card">
+    <h2 style="margin:0 0 1rem;font-size:1.15rem;">@Model.titreOffre</h2>
+
+    <dl style="margin:0 0 1.5rem;color:#475569;font-size:0.95rem;">
+        <dt style="font-weight:600;margin-bottom:0.25rem;">City</dt>
+        <dd style="margin:0 0 1rem;">@(Model.Ville != null ? Model.Ville.ville1 : "—")</dd>
+
+        <dt style="font-weight:600;margin-bottom:0.25rem;">Sector</dt>
+        <dd style="margin:0 0 1rem;">@(Model.SecteurActivite != null ? Model.SecteurActivite.SecteurActivite1 : "—")</dd>
+
+        <dt style="font-weight:600;margin-bottom:0.25rem;">Applications</dt>
+        <dd style="margin:0;">@Model.Offre_Postuler.Count</dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+            <button type="submit"
+                    class="jf-rc-btn jf-rc-btn--danger"
+                    data-confirm-title="Delete this offer permanently?"
+                    data-confirm-message="This will remove the offer, its history, and all candidate applications. This action cannot be undone."
+                    data-confirm-btn="Delete permanently"
+                    data-confirm-variant="danger">Delete permanently</button>
+            @Html.ActionLink("Cancel", "Board", new { id = Model.id }, new { @class = "jf-rc-btn jf-rc-btn--ghost" })
+        </div>
+    }
+</div>
