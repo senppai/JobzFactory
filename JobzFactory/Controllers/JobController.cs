@@ -40,6 +40,19 @@ namespace JobzFactory.Controllers
                 return HttpNotFound();
             }
 
+            // If a candidate is logged in, flag whether they've already applied
+            // so the detail page can render an "Applied" state on the Apply button.
+            var profilId = (HttpContext.User as CustomPrincipal)?.Id ?? 0;
+            if (profilId > 0)
+            {
+                ViewBag.AlreadyApplied = db.Offre_Postuler
+                    .Any(a => a.C_idOffre == obj.id && a.C_idProfil == profilId);
+            }
+            else
+            {
+                ViewBag.AlreadyApplied = false;
+            }
+
             return View(obj);
         }
 
@@ -84,6 +97,16 @@ namespace JobzFactory.Controllers
                 model.tel = profil.Tel;
                 ViewBag.SavedCvs = profil.Profil_CV.OrderByDescending(c => c.DateCreation).ToList();
                 ViewBag.ProfilId = profil.id;
+
+                // Block re-applying: show the already-applied card instead of the form.
+                var existing = db.Offre_Postuler
+                    .FirstOrDefault(a => a.C_idOffre == obj.id && a.C_idProfil == profil.id);
+                if (existing != null)
+                {
+                    ViewBag.AlreadyApplied = true;
+                    ViewBag.AppliedDate = existing.DatePostuler;
+                    return View(model);
+                }
             }
 
             TempData["AMP"] = model.adresseMailAPostuler;

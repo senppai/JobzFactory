@@ -4,7 +4,7 @@
 }
 
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link href="~/css/job-modern.css" rel="stylesheet" />
+<link href="~/css/job-modern.css?v=20260702b" rel="stylesheet" />
 
 <div class="jf-job-page">
 
@@ -34,6 +34,24 @@
                         <p><strong>@Model.titreOffre</strong> — fill in your details below and upload your CV to complete your application.</p>
                     </div>
 
+                    @if (ViewBag.AlreadyApplied != null && (bool)ViewBag.AlreadyApplied)
+                    {
+                        <div class="jf-apply-done">
+                            <div class="jf-apply-done__icon"><span class="icon-check"></span></div>
+                            <h2 class="jf-apply-done__title">You've already applied to this offer</h2>
+                            <p class="jf-apply-done__text">
+                                You submitted your application on
+                                <strong>@(ViewBag.AppliedDate != null ? ((DateTime)ViewBag.AppliedDate).ToString("dd MMM yyyy") : "this offer")</strong>.
+                                You can track its status from your dashboard.
+                            </p>
+                            <div class="jf-apply-done__actions">
+                                <a href="@Url.Action("Applications", "Profile")" class="jf-btn jf-btn--primary"><span class="icon-briefcase"></span> View my applications</a>
+                                <a href="~/job/@Model.url" class="jf-btn jf-btn--ghost">Back to job details</a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
                     <form action="~/Apply/@Model.url" method="post" enctype="multipart/form-data" class="jf-apply-form">
                         @Html.HiddenFor(m => m.idOffre)
                         @Html.AntiForgeryToken()
@@ -74,10 +92,10 @@
                         @{
                             var savedCvs = ViewBag.SavedCvs as IEnumerable<JF.DAL.Context.Profil_CV>;
                         }
-                        @if (savedCvs != null && savedCvs.Any())
-                        {
-                            <div class="form-group">
-                                <label>CV / Resume</label>
+                        <div class="form-group">
+                            <label>CV / Resume</label>
+                            @if (savedCvs != null && savedCvs.Any())
+                            {
                                 <div style="display:flex;flex-direction:column;gap:.5rem;margin-bottom:.75rem;">
                                     <label style="display:flex;align-items:center;gap:.5rem;font-weight:500;color:#475569;cursor:pointer;">
                                         <input type="radio" name="cvChoice" value="upload" checked onchange="jfToggleCvChoice()" /> Upload a new CV
@@ -85,35 +103,35 @@
                                     <label style="display:flex;align-items:center;gap:.5rem;font-weight:500;color:#475569;cursor:pointer;">
                                         <input type="radio" name="cvChoice" value="saved" onchange="jfToggleCvChoice()" /> Use a saved CV
                                     </label>
-                                    <select name="savedCvId" id="savedCvId" class="form-control" disabled style="margin-left:1.5rem;max-width:380px;">
+                                </div>
+                                <div id="cv-saved-group" hidden style="margin-bottom:.75rem;">
+                                    <select name="savedCvId" id="savedCvId" class="form-control" style="max-width:380px;">
                                         @foreach (var cv in savedCvs)
                                         {
                                             <option value="@cv.id">@cv.nomCV</option>
                                         }
                                     </select>
                                 </div>
-                            </div>
-                        }
-
-                        <div class="form-group" id="cv-upload-group">
-                            <label>CV / Resume</label>
-                            <div class="jf-upload" id="cv-upload">
-                                <input type="file" name="fichieCV" id="fichieCV" class="jf-upload__input" accept=".pdf,.doc,.docx" />
-                                <div class="jf-upload__zone" id="cv-upload-zone" tabindex="0" role="button" aria-label="Upload your CV">
-                                    <div class="jf-upload__icon"><span class="icon-cloud-upload"></span></div>
-                                    <p class="jf-upload__title">Drag &amp; drop your CV here</p>
-                                    <p class="jf-upload__hint">or <span class="jf-upload__browse">browse files</span></p>
-                                    <p class="jf-upload__formats">PDF, DOC, DOCX — max 10 MB</p>
-                                </div>
-                                <div class="jf-upload__file" id="cv-upload-file" hidden>
-                                    <div class="jf-upload__file-icon"><span class="icon-file-text"></span></div>
-                                    <div class="jf-upload__file-info">
-                                        <span class="jf-upload__file-name" id="cv-file-name"></span>
-                                        <span class="jf-upload__file-size" id="cv-file-size"></span>
+                            }
+                            <div id="cv-upload-group">
+                                <div class="jf-upload" id="cv-upload">
+                                    <input type="file" name="fichieCV" id="fichieCV" class="jf-upload__input" accept=".pdf,.doc,.docx" />
+                                    <div class="jf-upload__zone" id="cv-upload-zone" tabindex="0" role="button" aria-label="Upload your CV">
+                                        <div class="jf-upload__icon"><span class="icon-cloud-upload"></span></div>
+                                        <p class="jf-upload__title">Drag &amp; drop your CV here</p>
+                                        <p class="jf-upload__hint">or <span class="jf-upload__browse">browse files</span></p>
+                                        <p class="jf-upload__formats">PDF, DOC, DOCX — max 10 MB</p>
                                     </div>
-                                    <button type="button" class="jf-upload__remove" id="cv-upload-remove" aria-label="Remove file">
-                                        <span class="icon-close"></span>
-                                    </button>
+                                    <div class="jf-upload__file" id="cv-upload-file" hidden>
+                                        <div class="jf-upload__file-icon"><span class="icon-file-text"></span></div>
+                                        <div class="jf-upload__file-info">
+                                            <span class="jf-upload__file-name" id="cv-file-name"></span>
+                                            <span class="jf-upload__file-size" id="cv-file-size"></span>
+                                        </div>
+                                        <button type="button" class="jf-upload__remove" id="cv-upload-remove" aria-label="Remove file">
+                                            <span class="icon-close"></span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -127,6 +145,7 @@
                             <span class="icon-paper-plane"></span> Submit application
                         </button>
                     </form>
+                    }
                 </div>
 
                 <aside class="jf-job-sidebar">
@@ -164,14 +183,16 @@
     function jfToggleCvChoice() {
         var choice = document.querySelector('input[name="cvChoice"]:checked');
         if (!choice) return;
-        var savedSelect = document.getElementById('savedCvId');
+        var savedGroup = document.getElementById('cv-saved-group');
         var uploadGroup = document.getElementById('cv-upload-group');
+        var savedSelect = document.getElementById('savedCvId');
         if (choice.value === 'saved') {
-            if (savedSelect) savedSelect.disabled = false;
+            if (savedGroup) savedGroup.hidden = false;
             if (uploadGroup) uploadGroup.style.display = 'none';
         } else {
-            if (savedSelect) { savedSelect.disabled = true; savedSelect.value = ''; }
+            if (savedGroup) savedGroup.hidden = true;
             if (uploadGroup) uploadGroup.style.display = '';
+            if (savedSelect) savedSelect.value = '';
         }
     }
 </script>

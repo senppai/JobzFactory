@@ -10,7 +10,7 @@
 }
 
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link href="~/css/job-modern.css" rel="stylesheet" />
+<link href="~/css/job-modern.css?v=20260702b" rel="stylesheet" />
 
 <div class="jf-job-page">
 
@@ -93,7 +93,16 @@
                             </div>
                         }
 
-                        <a href="~/Apply/@Model.url" class="jf-btn jf-btn--primary">Apply for this job</a>
+                        @if (ViewBag.AlreadyApplied != null && (bool)ViewBag.AlreadyApplied)
+                        {
+                            <span class="jf-btn jf-btn--ghost" style="opacity:.75;cursor:default;pointer-events:none;">
+                                <span class="icon-check"></span> Applied
+                            </span>
+                        }
+                        else
+                        {
+                            <a href="~/Apply/@Model.url" class="jf-btn jf-btn--primary">Apply for this job</a>
+                        }
                     </div>
                 </aside>
 

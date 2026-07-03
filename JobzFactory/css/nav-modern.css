@@ -1,5 +1,48 @@
 /* Modern navbar action buttons */
 
+/* ---- Global modern <select> styling (every dropdown on the site) ---- */
+select.form-control,
+select.custom-select,
+.jf-form select.form-control,
+.jf-apply-form select.form-control {
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  cursor: pointer;
+  height: auto;
+  padding: .8rem 2.5rem .8rem 1rem !important;
+  font-size: .95rem;
+  color: #1e293b;
+  background-color: #fff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234f46e5' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 1rem center !important;
+  background-size: 16px !important;
+  -webkit-transition: border-color .15s ease, box-shadow .15s ease;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+select.form-control:focus,
+select.custom-select:focus,
+.jf-form select.form-control:focus,
+.jf-apply-form select.form-control:focus {
+  border-color: #818cf8 !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, .15) !important;
+  outline: none;
+}
+select.form-control[disabled],
+select.custom-select[disabled] {
+  background-color: #f1f5f9 !important;
+  color: #94a3b8 !important;
+  cursor: not-allowed;
+}
+/* Hide the native dropdown arrow in IE/Edge legacy */
+select.form-control::-ms-expand,
+select.custom-select::-ms-expand {
+  display: none;
+}
+
 .ftco-navbar-light .navbar-nav > .nav-item.jf-nav-item {
   display: flex;
   align-items: center;
@@ -67,6 +110,20 @@
   box-shadow: 0 8px 28px rgba(79, 70, 229, 0.55);
 }
 
+/* Ghost — outline button (Logout / Sign in) */
+.ftco-navbar-light .jf-nav-btn--ghost {
+  color: #fff !important;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.45) !important;
+}
+
+.ftco-navbar-light .jf-nav-btn--ghost:hover {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
 /* Scrolled navbar — solid light background */
 .ftco-navbar-light.scrolled .jf-nav-btn--employer {
   color: #4338ca !important;
@@ -86,6 +143,19 @@
   color: #fff !important;
   background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%) !important;
   box-shadow: 0 4px 16px rgba(79, 70, 229, 0.35);
+}
+
+.ftco-navbar-light.scrolled .jf-nav-btn--ghost {
+  color: #4338ca !important;
+  background: #fff !important;
+  border: 1px solid #c7d2fe !important;
+}
+
+.ftco-navbar-light.scrolled .jf-nav-btn--ghost:hover {
+  color: #3730a3 !important;
+  background: #eef2ff !important;
+  border-color: #a5b4fc !important;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.15);
 }
 
 /* Mobile collapsed menu */
@@ -116,5 +186,12 @@
     color: #4338ca !important;
     background: #eef2ff !important;
     border-color: #c7d2fe !important;
+  }
+
+  .ftco-navbar-light .jf-nav-btn--ghost,
+  .ftco-navbar-light.scrolled .jf-nav-btn--ghost {
+    color: #fff !important;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.35) !important;
   }
 }

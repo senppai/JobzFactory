@@ -27,7 +27,7 @@
 .jf-profile__header {
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #312e81 100%);
   color: #fff;
-  padding: 2.5rem 0 6rem;
+  padding: 7.5rem 0 6rem;
   position: relative;
   overflow: hidden;
 }
@@ -76,9 +76,10 @@
   font-weight: 800;
   letter-spacing: -0.02em;
   margin: 0;
+  color: #fff;
 }
 .jf-profile__subtitle {
-  color: #94a3b8;
+  color: #cbd5e1;
   margin: .35rem 0 0;
   font-size: .95rem;
 }
@@ -330,7 +331,32 @@
   border-color: #818cf8;
   box-shadow: 0 0 0 3px rgba(99, 102, 241, .15);
 }
-.jf-form select.form-control { appearance: none; }
+
+/* Modern select dropdowns (City / Sector / saved CV) */
+.jf-form select.form-control,
+.jf-form select.form-control:not([size]):not([multiple]) {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  height: auto;
+  padding: .8rem 2.5rem .8rem 1rem;
+  color: var(--jf-slate-900);
+  background-color: #fff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 16px;
+}
+.jf-form select.form-control:focus {
+  border-color: #818cf8;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, .15);
+}
+.jf-form select.form-control[disabled] {
+  background-color: #f1f5f9;
+  color: #94a3b8;
+  cursor: not-allowed;
+}
 .jf-form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .jf-form__error {
   margin-top: .4rem;

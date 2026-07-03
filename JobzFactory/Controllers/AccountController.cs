@@ -21,7 +21,15 @@ namespace JobzFactory.Controllers
         {
             if (HttpContext.User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Profile");
+                // Authenticated candidate -> straight to the dashboard.
+                if (HttpContext.User.IsInRole("Candidate"))
+                {
+                    return RedirectToAction("Index", "Profile");
+                }
+                // Authenticated as a different portal's user (Recruteur / Admin share the
+                // machine key + forms cookie). Drop the foreign ticket to avoid a redirect
+                // loop between /profile (role denied) and /login (already authenticated).
+                FormsAuthentication.SignOut();
             }
             ViewBag.ReturnUrl = returnUrl;
             return View(new LoginViewModel());

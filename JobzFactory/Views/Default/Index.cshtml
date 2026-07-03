@@ -30,9 +30,18 @@
                 <a href="#jobs" class="jf-btn jf-btn--primary">
                     <span class="icon-briefcase"></span> Browse <span id="hero-total-count">@totalJobs</span> openings
                 </a>
-                <a href="@Url.Action("Register", "SignUp")" class="jf-btn jf-btn--ghost">
-                    <span class="icon-user"></span> My Profile
-                </a>
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Candidate"))
+                {
+                    <a href="@Url.Action("Index", "Profile")" class="jf-btn jf-btn--ghost">
+                        <span class="icon-user"></span> My Profile
+                    </a>
+                }
+                else
+                {
+                    <a href="@Url.Action("Register", "SignUp")" class="jf-btn jf-btn--ghost">
+                        <span class="icon-user"></span> Create Profile
+                    </a>
+                }
             </div>
             <div class="jf-hero__stats">
                 <div class="jf-stat">

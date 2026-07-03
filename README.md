@@ -1,10 +1,18 @@
 # JobzFactory
 
-JobzFactory is a French job board platform built as a multi-portal ASP.NET MVC application. Candidates browse and apply to offers (and register with email verification) on the public site, recruiters manage listings and applications, and administrators maintain reference data and moderate content.
+JobzFactory is a French job board platform built as a multi-portal ASP.NET MVC application. Candidates register, verify their email, log in, manage a profile and CV library, and apply to offers (once per offer) on the public site; recruiters manage listings and applications; and administrators maintain reference data and moderate content.
 
 ## Features
 
-- **Public job site (`JobzFactory`)** — searchable listings with filters (title, city, sector), AJAX pagination, job detail pages, CV upload, and candidate registration with email verification
+- **Public job site (`JobzFactory`)** — searchable listings with filters (title, city, sector), AJAX pagination, job detail pages, and a full candidate account area:
+  - **Signup + email verification** (`/signup`) and **login** (`/login`) with a password set during registration
+  - **Candidate dashboard** (`/profile`) — profile summary, application/CV stats, email verification status, saved CV library, recent applications, and matched offers
+  - **Profile editing** (`/profile/edit`) — personal details, city, sector, and password change
+  - **Applications history** (`/profile/applications`)
+  - **CV library** — upload/delete/download reusable CVs; reuse a saved CV when applying
+  - **Forgot / reset password** via emailed token
+  - **Apply-once enforcement** — a candidate can apply to a given offer only once; the Apply page and job detail button switch to an "Applied" state
+  - Prefilled application form (name, email, mobile) from the authenticated profile
 - **Recruiter portal (`Recruteur`)** — dashboard, offer CRUD, publish/unpublish, candidate board, application history, signed CV download links
 - **Admin portal (`Administration`)** — authenticated CRUD for recruiters and job offers
 - **Shared data layer (`JF.DAL`)** — Entity Framework 6 database-first model, plus shared security helpers (password hashing, role authorization, CV tokens, HTML sanitization)
@@ -18,7 +26,7 @@ JobzFactory is a French job board platform built as a multi-portal ASP.NET MVC a
 | Web | ASP.NET MVC 5, Razor |
 | ORM | Entity Framework 6 (Database First) |
 | Database | SQL Server (LocalDB for dev) |
-| Auth | Forms Authentication + PBKDF2 password hashing (Recruteur & Administration) |
+| Auth | Forms Authentication + PBKDF2 password hashing (JobzFactory candidates, Recruteur & Administration), shared `machineKey` |
 | CI/CD | Azure Pipelines (`azure-pipelines.yml`) — 3 web packages + DACPAC |
 
 ## Solution structure
@@ -48,7 +56,7 @@ JobzFactory/
 ### 1. Clone the repository
 
 ```powershell
-git clone https://github.com/YOUR_USERNAME/JobzFactory.git
+git clone https://github.com/senppai/JobzFactory.git
 cd JobzFactory
 ```
 
@@ -122,7 +130,9 @@ Stop sites from the IIS Express tray icon.
 
 | Portal | URL |
 |--------|-----|
-| Public site + signup | http://localhost:59579/ |
+| Public site + candidate account | http://localhost:59579/ |
+| Candidate login | http://localhost:59579/login |
+| Candidate dashboard | http://localhost:59579/profile |
 | Recruiter | http://localhost:60658/Login |
 | Administration | https://localhost:44303/Account/Login |
 
@@ -140,9 +150,9 @@ Demo data is loaded by `jobzFactory_SampleData.sql` (dev/staging only — not lo
 
 Passwords are stored as PBKDF2 hashes. Legacy plaintext passwords (from older demo data) are automatically upgraded to a hash on the first successful login, so existing accounts keep working after the migration — no forced reset required. **Change the admin password immediately on any real deployment** by generating a new hash with `JF.DAL.Security.PasswordHasher` and setting `AdminUsername` / `AdminPasswordHash` in `Administration/Web.config`.
 
-## Email (candidate verification)
+## Email (candidate verification & password reset)
 
-Candidate verification emails are sent via SMTP configured in `JobzFactory/Web.config`:
+Candidate verification and password-reset emails are sent via SMTP configured in `JobzFactory/Web.config`:
 
 ```xml
 <add key="Email" value="no-reply@jobzfactory.com" />
